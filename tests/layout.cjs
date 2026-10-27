@@ -52,7 +52,10 @@ for (const item of fs.readdirSync(path.join(root, 'games'), {withFileTypes:true}
   }
   assert.ok(!page.resources.includes('layout.js'), `${item.name}: 过期入口`);
   assert.ok(html.includes(`data-game="${item.name}"`), `${item.name}: 缺少游戏标识`);
+  assert.ok(html.includes(`data-landscape="${item.name}"`),`${item.name}: 缺少横屏登记`);
+  assert.ok(page.resources.includes('landscape.css'),`${item.name}: 缺少本地横屏资源`);
   count++;
 }
 assert.ok(fs.readFileSync(path.join(root,'src/icons.js')).equals(fs.readFileSync(path.join(root,'game-icons.js'))));
 console.log(`PASS: ${count}款游戏静态页面结构、唯一ID、脚本绑定、本地资源与公共副本一致。`);
+require('node:child_process').execFileSync(process.execPath,[path.join(root,'scripts/sync-interface.cjs'),'--check'],{stdio:'pipe'});

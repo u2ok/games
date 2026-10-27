@@ -17,3 +17,5 @@
 script.js为独立规则及本地Canvas物件绘制；logo.svg用于标题和导航卡片。base.css/interface.js/icons.js从根公共源同步，私有CSS仅定义输入手势。画布与命中统一600×600逻辑坐标。单一requestAnimationFrame，无业务setTimeout或异步动画回调。
 
 物理类为面向玩法的近似模拟，不宣称精确现实物理；离线单机，不依赖远程图片或音频。测试范围与浏览器模拟/真机区别见根TEST-REPORT.md。
+
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。

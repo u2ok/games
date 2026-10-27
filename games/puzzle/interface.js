@@ -1,6 +1,10 @@
 /* 界面适配：移动已有控件而非复制，保留游戏原有事件与状态。 */
 (function () {
   'use strict';
+  // 大手机横屏仅对横屏适配游戏启用，并以粗指针区分普通PC窗口。
+  function mobileMedia() {
+    return window.matchMedia('(max-width:850px)' + (document.body.hasAttribute('data-landscape') ? ', (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse)' : ''));
+  }
   /* 全站快捷键捕获层：先处理通用动作，未处理的按键继续交给玩法。 */
   function installGameShortcuts() {
     var start = document.getElementById('start');
@@ -50,8 +54,11 @@
   /* 手机双行摘要：原成绩节点与完整信息保留，精简状态只做只读投影。 */
   function installSummaryCard(media) {
     var card, head, metrics, essential, extra, toggle;
-    // 各游戏可在body声明初始状态；未声明时统一展开。
-    var open = document.body.dataset.summaryDefault !== 'collapsed';
+    // 移动端统一默认展开；横竖屏分别保留用户在本次会话中的选择。
+    var open = true;
+    var preference = {portrait:null,landscape:null};
+    var activeMode;
+    var landscapeMedia = window.matchMedia('(max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse)');
     var detail = document.getElementById('detail');
     var status = document.getElementById('status');
     var pause = document.getElementById('pause');
@@ -76,15 +83,44 @@
         }
       }
       essential.dataset.tone = important ? status.dataset.tone || 'normal' : 'normal';
-      // 完整投影的原文在展开区不再重复；棋类的节选仍保留完整详情。
-      card.dataset.summaryProjection = important || !detail || !detail.textContent.trim() ? 'status' : boardGame ? 'excerpt' : 'detail';
     }
     function render() {
       extra.hidden = !open;
+      // 摘要只服务收起状态；展开后展示原节点，避免同一回合或提示重复。
+      essential.hidden = open;
       toggle.setAttribute('aria-expanded', String(open));
       toggle.querySelector('span').textContent = open ? '收起' : '展开';
       card.classList.toggle('summary-expanded', open);
     }
+    function adaptSummaryMode() {
+      if (!card || !media.matches) return;
+      activeMode = landscapeMedia.matches ? 'landscape' : 'portrait';
+      open = preference[activeMode] === null ? true : preference[activeMode];
+      render();
+      // 空间不足时才默认收起：横屏检查详情预算，竖屏检查剩余游戏区。
+      // 长内容可正常滚动，不因内容长就收起；手动选择不再被自动覆盖。
+      var stage = document.querySelector('.game-stage');
+      var board = document.querySelector('.board,.board-wrap');
+      var stageHeight = stage.clientHeight || board.getBoundingClientRect().height;
+      var ratio = Number(board.getAttribute('data-board-ratio'));
+      if (!(ratio > 0)) {
+        var parts = getComputedStyle(board).aspectRatio.split('/').map(Number);
+        ratio = parts.length === 2 && parts[0] > 0 && parts[1] > 0 ? parts[0] / parts[1] : 1;
+      }
+      var boardHeader = board.querySelector('[data-board-header]');
+      var boardHeaderHeight = boardHeader ? boardHeader.getBoundingClientRect().height : 0;
+      // 竖屏应尽量容纳按舞台宽度等比显示的棋盘，而非只保留一块最小可玩区域。
+      // 超高棋盘以视口65%为预算，避免无论如何都无法满宽时一律收起。
+      var boardBudget = Math.min(stage.clientWidth / ratio + boardHeaderHeight, window.innerHeight * .65);
+      var limited = activeMode === 'landscape' ? card.clientHeight < 112 && card.scrollHeight > card.clientHeight + 1 : stageHeight + 2 < boardBudget;
+      if (preference[activeMode] === null && limited) {
+        open = false;
+        render();
+      }
+      card.dataset.summaryDefaultReason = preference[activeMode] === null ? open ? activeMode + '-expanded' : 'limited-height' : 'preference';
+    }
+    landscapeMedia.addEventListener('change', adaptSummaryMode);
+    window.addEventListener('resize', adaptSummaryMode);
     return function () {
       if (!media.matches) return;
       card = document.querySelector('.mobile-summary, .link-mobile-summary');
@@ -110,8 +146,16 @@
         extra.className = 'summary-details';
         extra.id = 'summary-details';
         card.append(head, essential, extra);
-        toggle.addEventListener('click', function () { open = !open; render(); });
-        sourceObserver = new MutationObserver(syncEssential);
+        toggle.addEventListener('click', function () { open = !open; preference[activeMode] = open; render(); });
+        var spaceFrame = 0;
+        sourceObserver = new MutationObserver(function () {
+          syncEssential();
+          // 暂停、回合或提示换行也会占用空间，不能只在窗口resize时判断。
+          if (preference[activeMode] === null && !spaceFrame) spaceFrame = window.requestAnimationFrame(function () {
+            spaceFrame = 0;
+            adaptSummaryMode();
+          });
+        });
         [detail, status, pause].forEach(function (node) {
           if (node) sourceObserver.observe(node, { childList:true, characterData:true, subtree:true, attributes:true, attributeFilter:['data-tone'] });
         });
@@ -135,8 +179,10 @@
       Array.from(card.children).forEach(function (node) {
         if (node !== head && node !== essential && node !== extra) extra.appendChild(node);
       });
-      render();
+      adaptSummaryMode();
       syncEssential();
+      // 等首轮尺寸适配与字体布局完成再核对，避免用到旋转前或初始化前的舞台高度。
+      window.requestAnimationFrame(adaptSummaryMode);
     };
   }
   /* 公共导航：保留原控件及设置保存入口，只切换它们的展示位置。 */
@@ -321,9 +367,10 @@
       [top, bottom].forEach(function (button) { button.setAttribute('aria-expanded', String(menu.open)); });
     }
     new MutationObserver(expanded).observe(menu, { attributes:true, attributeFilter:['open'] });
-    var mq = window.matchMedia('(max-width:850px)');
+    var mq = mobileMedia();
     var adaptSummary = installSummaryCard(mq);
     function adaptChrome() {
+      document.body.classList.toggle('mobile-layout', mq.matches);
       if (menu.open) menu.close();
       if (mq.matches) {
         if (level) content.appendChild(level);
@@ -393,7 +440,7 @@
   sync();
   // 手机独立的信息层级：实际节点移动而非克隆，切回桌面按占位恢复。
   var layout = document.querySelector('.game-layout');
-  var media = window.matchMedia('(max-width:850px)');
+  var media = mobileMedia();
   var records = [];
   var compact = document.createElement('div');
   compact.className = 'link-mobile-summary';
@@ -480,7 +527,7 @@
   var pause = document.getElementById('pause');
   var restart = document.getElementById('restart');
   var settings = document.querySelector('.settings-button');
-  var media = window.matchMedia('(max-width: 850px)');
+  var media = mobileMedia();
   var mobile = false;
   var homes = [];
   // 接龙与其他游戏使用同一页面骨架，横向比例只由牌桌内部样式决定。
@@ -572,6 +619,11 @@
       // 舞台是固定视口的剩余空间，方向区独立占位，不依赖猜测屏幕尺寸。
       var declaredRatio = Number(board.getAttribute('data-board-ratio'));
       var ratio = declaredRatio > 0 && declaredRatio <= 2 ? declaredRatio : document.body.dataset.game === 'xiangqi' ? 520 / 600 : document.body.dataset.game === 'jungle' ? 7 / 9 : 1;
+      // 横屏牌桌沿用CSS声明的比例以充分占高，不改变原竖屏尺寸策略。
+      if (!declaredRatio && window.matchMedia('(max-height:480px) and (orientation:landscape) and (pointer:coarse)').matches) {
+        var parts = getComputedStyle(board).aspectRatio.split('/').map(Number);
+        if (parts.length === 2 && parts[0] > 0 && parts[1] > 0) ratio = parts[0] / parts[1];
+      }
       // 棋盘内的种子卡等输入区自然占高，剩余空间再按画布比例计算。
       var boardHeader = board.querySelector('[data-board-header]');
       var headerHeight = boardHeader ? boardHeader.getBoundingClientRect().height : 0;

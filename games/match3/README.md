@@ -23,3 +23,5 @@ P暂停/继续；Enter准备、暂停和终局时开始/继续/再玩；Shift+En
 index.html入口；script.js玩法闭包；style.css仅图案棋盘与消除反馈；logo.svg本地宝石标识；base.css、interface.js、icons.js是公共源副本。复制单个目录可离线运行，返回链接按需调整。
 
 遵循[统一规范](../../GAME-STANDARD.md)，验证范围见[测试记录](../../TEST-REPORT.md)。模拟DOM和浏览器视口模拟不代表真机触控或所有随机关局通关。
+
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。

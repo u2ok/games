@@ -4,4 +4,3 @@ body[data-game="tower-defense"] .tower-picker{display:flex;align-items:center;ga
 body[data-game="tower-defense"] .tower-picker select{min-width:0;flex:1;}
 @media(min-width:851px){body[data-game="tower-defense"] .tower-picker{max-width:230px;}}
 @media(max-width:850px){body[data-game="tower-defense"] .tower-picker{flex-basis:100%;order:-1;}}
-@media(max-width:850px) and (orientation:landscape){body[data-game="tower-defense"] .tower-picker{flex-basis:160px;}}

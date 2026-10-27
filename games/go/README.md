@@ -31,3 +31,5 @@ P暂停/继续；Enter准备/暂停/终局时开始/继续/再玩；Shift+Enter�
 index.html为入口；script.js为规则、计分、电脑和状态；style.css仅棋盘、交叉点及棋子样式；logo.svg为本地物件标识。base.css、interface.js、icons.js为公共副本，禁止在本目录直接维护。独立复制后返回大厅链接按需调整。
 
 遵循[统一规范](../../GAME-STANDARD.md)，验证范围见[测试记录](../../TEST-REPORT.md)。浏览器视口模拟、模拟DOM回归均不能代替真机或专业棋力评估。
+
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。

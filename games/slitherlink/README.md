@@ -21,3 +21,5 @@ P 暂停/继续，Enter 开始/继续/下一关，Shift+Enter 重开。更多、
 script.js 为独立规则，style.css 仅维护玩法舞台，logo.svg 为本地物件式图形；base.css、interface.js、icons.js 由根公共源同步。验证范围见根 TEST-REPORT.md，不等同真机和所有随机局通关。
 
 规则参考：[Nikoli官方说明](https://www.nikoli.co.jp/en/puzzles/slitherlink/)。题面、代码和SVG均为本项目实现，运行不请求外站。
+
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。

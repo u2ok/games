@@ -16,5 +16,4 @@
 }
 @media(max-width:850px) and (max-height:480px) and (orientation:landscape){
   .game-layout:has(.tank-controls) { grid-template-columns:minmax(0,1fr) 240px; }
-  .touch-controls.tank-controls { grid-template-columns:repeat(3,44px) minmax(64px,1fr); }
 }
