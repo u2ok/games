@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const elements = {};
-const context = new Proxy({}, { get: () => function () {} });
+const context = new Proxy({}, { get: (target, name) => name === 'createLinearGradient' ? function () { return { addColorStop() {} }; } : function () {} });
 function element(id) { return elements[id] || (elements[id] = { textContent: '', hidden: false, dataset: {}, addEventListener() {}, setAttribute() {}, querySelectorAll() { return []; }, getContext() { return context; }, focus() {} }); }
 const storage = {};
 const sandbox = { document: { getElementById: element, querySelector: element, querySelectorAll() { return []; }, addEventListener() {} }, window: { addEventListener() {} }, localStorage: { getItem(key) { return storage[key] || null; }, setItem(key, value) { storage[key] = value; } }, setInterval() { return 1; }, clearInterval() {}, console };

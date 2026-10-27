@@ -165,18 +165,57 @@
   function roundedRect(x, y, width, height, radius) {
     context.beginPath(); context.moveTo(x + radius, y); context.arcTo(x + width, y, x + width, y + height, radius); context.arcTo(x + width, y + height, x, y + height, radius); context.arcTo(x, y + height, x, y, radius); context.arcTo(x, y, x + width, y, radius); context.closePath(); context.fill();
   }
+  function paintGradient(x, y, width, height, light, dark) {
+    var paint = context.createLinearGradient(x, y, x + width, y + height);
+    paint.addColorStop(0, light); paint.addColorStop(1, dark); return paint;
+  }
+  function disc(x, y, radius, paint) {
+    context.fillStyle = paint; context.beginPath(); context.arc(x, y, radius, 0, Math.PI * 2); context.fill();
+  }
   function draw() {
-    context.fillStyle = '#e3eadc'; context.fillRect(0, 0, 600, 600);
-    if (settings.grid) { context.strokeStyle = '#cbd6c2'; context.lineWidth = 1; context.beginPath(); for (var i = 1; i < SIZE; i += 1) { context.moveTo(i * CELL, 0); context.lineTo(i * CELL, 600); context.moveTo(0, i * CELL); context.lineTo(600, i * CELL); } context.stroke(); }
-    obstacles.forEach(function (cell) { context.fillStyle = '#8b9388'; roundedRect(cell.x * CELL + 2, cell.y * CELL + 2, 26, 26, 4); });
-    if (food) { context.fillStyle = '#df9a5c'; context.beginPath(); context.arc(food.x * CELL + 15, food.y * CELL + 16, 10, 0, Math.PI * 2); context.fill(); context.fillStyle = '#527450'; context.beginPath(); context.ellipse(food.x * CELL + 20, food.y * CELL + 5, 6, 3, -0.6, 0, Math.PI * 2); context.fill(); }
-    snake.forEach(function (part, index) { context.fillStyle = index === 0 ? '#245c4a' : '#41755b'; roundedRect(part.x * CELL + 1.5, part.y * CELL + 1.5, 27, 27, 7); });
+    // 所有装饰都留在原有逻辑格内，不改变格数、命中与移动坐标；网格开关仍可关闭全部格纹。
+    context.fillStyle = paintGradient(0, 0, 600, 600, '#f1f5e9', '#e0e9d8'); context.fillRect(0, 0, 600, 600);
+    if (settings.grid) {
+      context.fillStyle = '#ffffff25';
+      for (var row = 0; row < SIZE; row += 1) for (var col = 0; col < SIZE; col += 1) {
+        if ((row + col) % 2 === 0) context.fillRect(col * CELL, row * CELL, CELL, CELL);
+      }
+      context.strokeStyle = '#afc2a840'; context.lineWidth = 1; context.beginPath();
+      for (var i = 1; i < SIZE; i += 1) { context.moveTo(i * CELL, 0); context.lineTo(i * CELL, 600); context.moveTo(0, i * CELL); context.lineTo(600, i * CELL); }
+      context.stroke();
+    }
+    obstacles.forEach(function (cell) {
+      var x = cell.x * CELL, y = cell.y * CELL;
+      context.fillStyle = '#697c6c'; roundedRect(x + 2, y + 4, 26, 25, 6);
+      context.fillStyle = paintGradient(x, y, CELL, CELL, '#b7c3af', '#879c86'); roundedRect(x + 2, y + 2, 26, 24, 6);
+      context.strokeStyle = '#e5ebd7'; context.lineWidth = 1.3; context.beginPath(); context.moveTo(x + 7, y + 6); context.lineTo(x + 22, y + 6); context.stroke();
+      disc(x + 9, y + 16, 1.6, '#758b76'); disc(x + 20, y + 20, 1, '#cbd4be');
+    });
+    if (food) {
+      var fx = food.x * CELL + 15, fy = food.y * CELL + 16;
+      context.fillStyle = '#7057351c'; context.beginPath(); context.ellipse(fx, fy + 10, 9, 3, 0, 0, Math.PI * 2); context.fill();
+      disc(fx, fy + 1, 9.5, '#c18a4e'); disc(fx, fy - 1, 9.5, paintGradient(fx - 8, fy - 10, 17, 18, '#f7ce8d', '#df9a5c'));
+      context.strokeStyle = '#fff1ce'; context.lineWidth = 2; context.lineCap = 'round'; context.beginPath(); context.arc(fx, fy - 1, 6, Math.PI * 1.06, Math.PI * 1.42); context.stroke();
+      context.strokeStyle = '#78905c'; context.lineWidth = 1.8; context.beginPath(); context.moveTo(fx, fy - 9); context.lineTo(fx + 2, fy - 13); context.stroke();
+      context.fillStyle = '#527450'; context.beginPath(); context.ellipse(fx + 5, fy - 11, 5, 2.6, -.5, 0, Math.PI * 2); context.fill();
+    }
+    // 逐格保留蛇节间隙，避免装饰把非相邻蛇段连成一体；尾节略收窄，保持完整的碰撞语义。
+    for (var partIndex = snake.length - 1; partIndex >= 0; partIndex -= 1) {
+      var part = snake[partIndex], px = part.x * CELL, py = part.y * CELL;
+      var headPart = partIndex === 0, inset = !headPart && partIndex === snake.length - 1 ? 3 : 1.5;
+      var edge = CELL - inset * 2;
+      context.fillStyle = headPart ? '#214d3c' : '#35654b'; roundedRect(px + inset, py + inset + 1.5, edge, edge - 1.5, 7.5);
+      context.fillStyle = paintGradient(px, py, CELL, CELL, headPart ? '#4e8b69' : '#86b38d', headPart ? '#245c4a' : '#447c58');
+      roundedRect(px + inset, py + inset, edge, edge - 2, 7.5);
+      context.strokeStyle = headPart ? '#a5c6a480' : '#d4e5ba90'; context.lineWidth = 1.2; context.lineCap = 'round';
+      context.beginPath(); context.moveTo(px + inset + 5, py + inset + 4); context.lineTo(px + CELL - inset - 6, py + inset + 4); context.stroke();
+    }
     if (snake.length) {
       var head = snake[0];
-      // 眼睛随方向旋转，帮助玩家迅速识别蛇头朝向。
-      var eyeX = head.x * CELL + 15 + direction.x * 6;
-      var eyeY = head.y * CELL + 15 + direction.y * 6;
-      [-1, 1].forEach(function (side) { var x = eyeX + (direction.y ? side * 6 : 0); var y = eyeY + (direction.x ? side * 6 : 0); context.fillStyle = '#fffefa'; context.beginPath(); context.arc(x, y, 4, 0, Math.PI * 2); context.fill(); context.fillStyle = '#24352d'; context.beginPath(); context.arc(x + direction.x, y + direction.y, 1.7, 0, Math.PI * 2); context.fill(); });
+      // 蛇头局部坐标统一朝右，随实际方向旋转眼睛与嘴线，四个方向保持相同间距。
+      context.save(); context.translate(head.x * CELL + 15, head.y * CELL + 15); context.rotate(Math.atan2(direction.y, direction.x));
+      [-1, 1].forEach(function (side) { disc(5.5, side * 5.5, 4.2, '#fffefa'); disc(6.7, side * 5.5, 1.9, '#24352d'); disc(6.1, side * 5.5 - .6, .55, '#fffefa'); });
+      context.strokeStyle = '#183e31'; context.lineWidth = 1.1; context.beginPath(); context.moveTo(10, -1.8); context.quadraticCurveTo(11.5, 0, 10, 1.8); context.stroke(); context.restore();
     }
   }
   document.getElementById('start').addEventListener('click', begin);

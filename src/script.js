@@ -83,13 +83,18 @@
     { id: 'memory', name: '记忆翻牌', description: '翻开卡片，找到每一对相同的图案。', tags: ['益智', '休闲'], controls: '鼠标 · 触屏', ready: true },
     { id: 'breakout', name: '打砖块', description: '接住小球，击碎砖块，享受每一次反弹。', tags: ['街机'], controls: '键盘 · 鼠标 · 触屏', ready: true }
   ];
+  // 首页先展示效果图中的八款入门游戏，其余保持登记顺序；最近玩过仍按时间排序。
+  var discoveryOrder = ['snake','2048','gomoku','tangram','stack-tower','solitaire','spot-difference','water-sort'];
   // 存储可能因隐私模式或浏览器权限失败；失败时保留内存状态，不影响浏览。
   function readList(key) { try { var value = JSON.parse(localStorage.getItem(key)); return Array.isArray(value) ? value.filter(function (id) { return typeof id === 'string'; }).map(function (id) { return id === 'twenty' ? 'twenty-four' : id; }).filter(function (id, index, ids) { return ids.indexOf(id) === index; }) : []; } catch (error) { return []; } }
   function saveList(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) { /* 无存储权限时仅在当前页面记忆。 */ } }
   var favorites = readList('mini-games:favorites');
-  // 游戏数量由数据生成，后续增加游戏无需再手改首页文案。
+  // 原生弹窗承载详细品牌说明，首页仅保留简短寓意。
 
-  document.getElementById('collection-description').textContent = games.length + ' 款轻松有趣的小游戏，随时打开，放松一下。';
+  var aboutDialog = document.getElementById('about-u2ok');
+  document.getElementById('about-open').addEventListener('click', function () {
+    if (!aboutDialog.open) aboutDialog.showModal();
+  });
   var recent = readList('mini-games:recent');
   var filter = 'all';
   var input = document.getElementById('search');
@@ -111,6 +116,10 @@
       var matchesFilter = filter === 'all' || (filter === 'favorites' ? favorites.indexOf(game.id) !== -1 : filter === 'recent' ? recent.indexOf(game.id) !== -1 : game.tags.indexOf(filter) !== -1);
       return matchesFilter && (game.name + game.description + game.tags.join(' ') + game.controls).toLocaleLowerCase().indexOf(query) !== -1;
     });
+    if (filter !== 'recent') visible.sort(function (a, b) {
+      var aRank = discoveryOrder.indexOf(a.id), bRank = discoveryOrder.indexOf(b.id);
+      return (aRank < 0 ? discoveryOrder.length : aRank) - (bRank < 0 ? discoveryOrder.length : bRank);
+    });
     if (filter === 'recent') visible.sort(function (a, b) { return recent.indexOf(a.id) - recent.indexOf(b.id); });
     list.innerHTML = '';
     visible.forEach(function (game) {
@@ -118,16 +127,17 @@
       card.className = 'game-card';
       var selected = favorites.indexOf(game.id) !== -1;
       // 此处模板内容全部来自上方固定数据；用户输入仅参与筛选，不进入 HTML。
-      card.innerHTML = '<div class="art game-thumbnail" aria-hidden="true"><img src="games/' + game.id + '/logo.svg" width="112" height="112" alt="" loading="lazy" decoding="async"></div><div class="card-title"><h3>' + game.name + '</h3><button class="favorite" data-favorite="' + game.id + '" aria-label="' + (selected ? '取消收藏' : '收藏') + game.name + '" aria-pressed="' + selected + '">' + GameIcons.svg('star', selected) + '</button></div><p class="description">' + game.description + '</p><div class="tags">' + game.tags.map(function (tag) { return '<span>' + tag + '</span>'; }).join('') + '<span>' + game.controls + '</span></div>' + (game.ready ? '<a class="button" data-play="' + game.id + '" href="games/' + game.id + '/index.html">开始游戏 ' + GameIcons.svg('external') + '</a>' : '<button class="button" disabled>即将上线</button>');
+      card.innerHTML = '<div class="game-thumbnail" aria-hidden="true"><img src="games/' + game.id + '/logo.svg" width="112" height="112" alt="" loading="lazy" decoding="async"></div><div class="card-title"><h3>' + game.name + '</h3><button class="favorite" data-favorite="' + game.id + '" aria-label="' + (selected ? '取消收藏' : '收藏') + game.name + '" aria-pressed="' + selected + '">' + GameIcons.svg('star', selected) + '</button></div><p class="description">' + game.description + '</p><div class="card-meta"><p class="tags">' + game.tags.map(function (tag) { return '<span class="category-tag">' + tag + '</span>'; }).join('') + game.controls.split(' · ').map(function (control) { return '<span class="control-tag">' + control + '</span>'; }).join('') + '</p>' + (game.ready ? '<a class="button" data-play="' + game.id + '" href="games/' + game.id + '/index.html" title="' + game.controls + '">开始游戏 ' + GameIcons.svg('right') + '</a>' : '<button class="button" disabled>即将上线</button>') + '</div>';
       card.querySelector('.tags').title = game.tags.join(' · ') + ' · ' + game.controls;
       list.appendChild(card);
     });
-    document.getElementById('result-count').textContent = '共 ' + visible.length + ' 款游戏';
+    document.getElementById('result-count').textContent = visible.length + ' 款游戏';
     document.getElementById('clear-search').hidden = !input.value;
     document.getElementById('empty-state').hidden = visible.length !== 0;
     document.getElementById('empty-title').textContent = query ? '没有找到游戏' : filter === 'favorites' ? '还没有收藏的游戏' : filter === 'recent' ? '还没有玩过的游戏' : '没有找到游戏';
     document.getElementById('empty-description').textContent = query ? '试试其他名称或玩法关键词。' : filter === 'favorites' ? '点击游戏卡片上的星标，将喜欢的游戏留在这里。' : '选择一款游戏，开始轻松的一局。';
-    document.getElementById('games-title').textContent = filter === 'favorites' ? '我的收藏' : filter === 'recent' ? '最近玩过' : '探索游戏';
+    document.getElementById('games-title').textContent = filter === 'favorites' ? '我的收藏' : filter === 'recent' ? '最近玩过' : '游戏列表';
+    updateBackToTop();
   }
   document.getElementById('filters').addEventListener('click', function (event) { var button = event.target.closest('[data-filter]'); if (!button) return; filter = button.dataset.filter; document.querySelectorAll('[data-filter]').forEach(function (item) { var active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)); }); render(); });
   list.addEventListener('click', function (event) {
@@ -137,10 +147,34 @@
     if (play) { recent = [play.dataset.play].concat(recent.filter(function (id) { return id !== play.dataset.play; })).slice(0, 20); saveList('mini-games:recent', recent); updateFilterCounts(); }
   });
   input.addEventListener('input', render);
+  // 页面快捷搜索不抢占编辑、输入法、组合键或弹窗内的键盘操作。
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== '/' || event.defaultPrevented || event.repeat || event.isComposing || event.keyCode === 229 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || document.querySelector('dialog[open]')) return;
+    var target = event.target;
+    if (target && (target.isContentEditable || target.closest('input,textarea,select,[role="textbox"]'))) return;
+    event.preventDefault(); input.focus(); input.select();
+  });
   document.getElementById('search-form').addEventListener('submit', function (event) { event.preventDefault(); });
   document.getElementById('clear-search').addEventListener('click', function () { input.value = ''; render(); input.focus(); });
   document.getElementById('reset-filters').addEventListener('click', function () { input.value = ''; document.querySelector('[data-filter="all"]').click(); });
   document.querySelectorAll('[data-filter]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.filter === filter)); });
+  var backToTop = document.getElementById('back-to-top');
+  var mainScroll = document.querySelector('.main-scroll');
+  var mobileViewport = window.matchMedia('(max-width:850px)');
+  // 手机滚动整页，PC滚动内容栏；断点切换后始终读取当前真正的滚动容器。
+  function scrollTarget() { return mobileViewport.matches ? window : mainScroll; }
+  function updateBackToTop() {
+    if (!backToTop) return;
+    var top = mobileViewport.matches ? window.scrollY : mainScroll.scrollTop;
+    backToTop.hidden = top < 320;
+  }
+  window.addEventListener('scroll', updateBackToTop, { passive:true });
+  mainScroll.addEventListener('scroll', updateBackToTop, { passive:true });
+  window.addEventListener('resize', updateBackToTop);
+  backToTop.addEventListener('click', function () {
+    scrollTarget().scrollTo({ top:0, behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' });
+    document.getElementById('intro-title').focus({ preventScroll:true });
+  });
   render();
 }());
 

@@ -1,63 +1,87 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>小游戏 · 给自己，一局的时间</title>
-    <link rel="icon" type="image/svg+xml" href="src/logo.svg">
-    <link rel="stylesheet" href="src/style.css">
-    <script src="src/icons.js" defer></script>
-    <script src="src/script.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="U2OK，You too, OK. 愿你也有好状态。休闲、益智、街机小游戏，无需下载，打开即玩。">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>U2OK · 随时来一局，快乐刚刚好</title>
+  <link rel="icon" type="image/svg+xml" href="src/logo.svg">
+  <link rel="stylesheet" href="src/style.css">
+  <script src="src/icons.js" defer></script>
+  <script src="src/script.js" defer></script>
 </head>
 <body>
-<!-- 导航与游戏均为静态页面，使用相对地址以兼容本地文件打开。 -->
-
+<a class="skip-link" href="#games-title">跳到游戏列表</a>
 <div class="layout">
-    <aside class="sidebar">
-        <header class="site-header">
-            <a class="brand" href="index.html">
-                <img class="brand-logo" src="src/logo.svg" width="32" height="32" alt="">
-            小游戏</a>
-        </header>
-        <form role="search" id="search-form"><label class="sr-only" for="search">搜索游戏</label>
-            <div class="search-box">
-                <span aria-hidden="true">⌕</span>
-                <input id="search" type="search" placeholder="搜索游戏、玩法或标签" autocomplete="off">
-                <button type="button" id="clear-search" aria-label="清空搜索" hidden>×</button>
-            </div>
-        </form>
-        <h2>游戏分类</h2>
-        <nav aria-label="游戏筛选" id="filters">
-            <button class="filter active" data-filter="all">全部游戏 <span class="filter-count">0</span></button>
-            <button class="filter" data-filter="休闲"><span data-icon="cup"></span> 休闲<span class="filter-count">0</span></button>
-            <button class="filter" data-filter="益智"><span data-icon="puzzle"></span> 益智<span class="filter-count">0</span></button>
-            <button class="filter" data-filter="街机"><span data-icon="arcade"></span> 街机<span class="filter-count">0</span></button>
-            <hr>
-            <button class="filter" data-filter="favorites">☆ 我的收藏<span class="filter-count">0</span></button>
-            <button class="filter" data-filter="recent">◷ 最近玩过<span class="filter-count">0</span></button>
-        </nav>
-        <p class="sidebar-note">无需下载<br>打开即玩</p></aside>
-    <main>
-        <div class="main-scroll">
-            <section class="intro">
-                <div><h1>给自己，一局的时间。</h1>
-                    <p id="collection-description">17 款轻松有趣的小游戏，随时打开，放松一下。</p></div>
-            </section>
-            <section aria-labelledby="games-title">
-                <div class="section-heading">
-                    <h2 id="games-title">探索游戏</h2>
-                    <span id="result-count" aria-live="polite"></span>
-                </div>
-                <div class="game-grid" id="game-list"></div>
-                <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">⌕</span>
-                    <h3 id="empty-title">没有找到游戏</h3>
-                    <p id="empty-description">试试其他名称或玩法关键词。</p>
-                    <button class="button secondary" id="reset-filters">查看全部游戏</button>
-                </div>
-            </section>
+  <aside class="sidebar">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="U2OK 游戏大厅首页">
+        <img class="brand-logo" src="src/logo.svg" width="52" height="52" alt="">
+        <span class="brand-text"><strong>U2OK</strong><span>轻量小游戏平台</span></span>
+      </a>
+    </header>
+    <form role="search" id="search-form">
+      <label class="sr-only" for="search">搜索游戏、玩法或标签</label>
+      <div class="search-box">
+        <span data-icon="search" aria-hidden="true"></span>
+        <input id="search" type="search" placeholder="搜索游戏或玩法" autocomplete="off" aria-keyshortcuts="/" title="按 / 搜索游戏">
+        <button type="button" id="clear-search" aria-label="清空搜索" hidden><span data-icon="close"></span></button>
+        <kbd class="search-shortcut" aria-hidden="true">/</kbd>
+      </div>
+    </form>
+    <nav aria-label="游戏筛选" id="filters">
+      <div class="filter-categories">
+      <button class="filter active" data-filter="all" aria-pressed="true"><span data-icon="collection"></span><span>全部游戏</span><span class="filter-count">0</span></button>
+      <button class="filter" data-filter="休闲" aria-pressed="false"><span data-icon="coffee"></span><span>休闲</span><span class="filter-count">0</span></button>
+      <button class="filter" data-filter="益智" aria-pressed="false"><span data-icon="puzzle"></span><span>益智</span><span class="filter-count">0</span></button>
+      <button class="filter" data-filter="街机" aria-pressed="false"><span data-icon="joystick"></span><span>街机</span><span class="filter-count">0</span></button>
+      </div>
+      <hr>
+      <div class="filter-personal">
+      <button class="filter" data-filter="favorites" aria-pressed="false"><span data-icon="star"></span><span>我的收藏</span><span class="filter-count">0</span></button>
+      <button class="filter" data-filter="recent" aria-pressed="false"><span data-icon="clock"></span><span>最近玩过</span><span class="filter-count">0</span></button>
+      </div>
+    </nav>
+    <p class="sidebar-note">You too, OK.<br>愿你也有好状态。</p>
+  </aside>
+  <main>
+    <div class="main-scroll">
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-content">
+          <h1 id="intro-title" tabindex="-1">随时来一局，快乐刚刚好。</h1>
+          <p class="mobile-motto">You too, OK. 愿你也有好状态。</p>
+          <p id="collection-description">休闲、益智、街机小游戏，打开即玩。</p>
         </div>
-        <footer>原生小游戏合集 <span>无需下载 · 打开即玩</span></footer>
-    </main>
+        <button class="about-open" id="about-open" aria-haspopup="dialog"><span class="mobile-info" data-icon="info"></span><span class="desktop-about">关于 U2OK</span><span class="mobile-about">关于</span></button>
+      </section>
+      <section class="games-section" aria-labelledby="games-title">
+        <h2 class="sr-only" id="games-title" tabindex="-1">游戏列表</h2>
+        <span class="sr-only" id="result-count" role="status" aria-live="polite"></span>
+        <div class="game-grid" id="game-list"></div>
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-icon" data-icon="search" aria-hidden="true"></span>
+          <h3 id="empty-title">没有找到游戏</h3>
+          <p id="empty-description">试试其他名称或玩法关键词。</p>
+          <button class="button secondary" id="reset-filters">查看全部游戏</button>
+        </div>
+      </section>
+    </div>
+    <footer>把片刻空闲，变成一点快乐。</footer>
+  </main>
 </div>
+<button class="back-to-top" id="back-to-top" type="button" aria-label="回到顶部" title="回到顶部" hidden><span data-icon="up" aria-hidden="true"></span></button>
+<dialog id="about-u2ok" aria-labelledby="about-title">
+  <div class="about-header">
+    <div class="about-brand"><img src="src/logo.svg" width="44" height="44" alt=""><div><strong>U2OK</strong><p>You too, OK.</p></div></div>
+    <form method="dialog"><button class="about-close" aria-label="关闭关于 U2OK" value="close"><span data-icon="close" aria-hidden="true"></span></button></form>
+  </div>
+  <div class="about-body">
+    <h2 id="about-title">愿你也有好状态。</h2>
+    <p class="about-meaning"><strong>U</strong> 是 You，<strong>2</strong> 读作 too，<strong>OK</strong> 是轻松自在的好状态。</p>
+    <p>U2OK 汇集休闲、益智与街机小游戏。无需下载，打开即玩，给自己一局的时间。</p>
+  </div>
+  <form method="dialog" class="about-footer"><button class="button about-confirm" value="confirm">知道了</button></form>
+</dialog>
 </body>
 </html>
