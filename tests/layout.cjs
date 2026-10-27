@@ -24,14 +24,15 @@ function parse(html) {
 function checkResources(folder, resources) {
   for (const resource of resources) {
     const file = path.resolve(folder, resource);
-    assert.ok(file.startsWith(folder + path.sep) && isFile(file), `${folder}: 非本地或缺失资源 ${resource}`);
+    const sharedFiles=['game-base.css','game-interface.js','game-icons.js','game-landscape.css'].map(name=>path.join(root,name));
+    assert.ok((file.startsWith(folder + path.sep)||sharedFiles.includes(file)) && isFile(file), `${folder}: 非项目内或缺失资源 ${resource}`);
   }
 }
 const nav = parse(read(path.join(root, 'index.html')));
 checkResources(root, nav.resources);
 for (const resource of ['src/script.js','src/style.css']) assert.ok(nav.resources.includes(resource), resource);
 assert.ok(isFile(path.join(root, 'src/logo.svg')));
-const shared = {'base.css':'game-base.css', 'interface.js':'game-interface.js', 'icons.js':'game-icons.js'};
+const shared = {'base.css':'game-base.css', 'interface.js':'game-interface.js', 'icons.js':'game-icons.js','landscape.css':'game-landscape.css'};
 let count = 0;
 for (const item of fs.readdirSync(path.join(root, 'games'), {withFileTypes:true})) {
   if (!item.isDirectory()) continue;
@@ -47,15 +48,17 @@ for (const item of fs.readdirSync(path.join(root, 'games'), {withFileTypes:true}
     assert.ok(page.ids.includes(match[2]), `${item.name}: 缺失脚本绑定 ${match[2]}`);
   }
   for (const [copy, source] of Object.entries(shared)) {
-    assert.ok(fs.readFileSync(path.join(folder, copy)).equals(fs.readFileSync(path.join(root, source))), `${item.name}: ${copy} 未同步`);
-    assert.ok(page.resources.includes(copy), `${item.name}: 未加载 ${copy}`);
+    assert.ok(!fs.existsSync(path.join(folder,copy)),`${item.name}: 不得保留公共副本${copy}`);
+    assert.ok(page.resources.includes('../../'+source), `${item.name}: 未直接引用根公共文件 ${source}`);
   }
+  assert.ok(page.resources.indexOf('../../game-base.css')<page.resources.indexOf('style.css')&&page.resources.indexOf('style.css')<page.resources.indexOf('../../game-landscape.css'),`${item.name}: CSS加载顺序`);
+  assert.ok(page.resources.indexOf('../../game-icons.js')<page.resources.indexOf('script.js')&&page.resources.indexOf('script.js')<page.resources.indexOf('../../game-interface.js'),`${item.name}: 脚本加载顺序`);
   assert.ok(!page.resources.includes('layout.js'), `${item.name}: 过期入口`);
   assert.ok(html.includes(`data-game="${item.name}"`), `${item.name}: 缺少游戏标识`);
   assert.ok(html.includes(`data-landscape="${item.name}"`),`${item.name}: 缺少横屏登记`);
-  assert.ok(page.resources.includes('landscape.css'),`${item.name}: 缺少本地横屏资源`);
   count++;
 }
-assert.ok(fs.readFileSync(path.join(root,'src/icons.js')).equals(fs.readFileSync(path.join(root,'game-icons.js'))));
-console.log(`PASS: ${count}款游戏静态页面结构、唯一ID、脚本绑定、本地资源与公共副本一致。`);
-require('node:child_process').execFileSync(process.execPath,[path.join(root,'scripts/sync-interface.cjs'),'--check'],{stdio:'pipe'});
+assert.ok(nav.resources.includes('game-icons.js'));
+assert.ok(!isFile(path.join(root,'src/icons.js')));
+console.log(`PASS: ${count}款游戏结构、唯一ID、脚本绑定、项目内资源及根公共文件直接引用，无公共副本。`);
+require('node:child_process').execFileSync(process.execPath,[path.join(root,'scripts/build-shared-css.cjs'),'--check'],{stdio:'pipe'});

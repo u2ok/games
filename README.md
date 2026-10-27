@@ -2,7 +2,7 @@
 
 **U2OK，You too, OK. 愿你也有好状态。** 随时来一局，快乐刚刚好。
 
-汇集休闲、益智与街机玩法，电脑手机都能玩，无需下载，打开即玩。原生 HTML、CSS、JavaScript 实现的79款独立小游戏，不使用构建工具、框架或 ES6 Modules。
+汇集休闲、益智与街机玩法，电脑手机都能玩，无需下载，打开即玩。原生 HTML、CSS、JavaScript 实现的79款小游戏，不使用构建工具、框架或 ES6 Modules。
 
 直接打开根目录 `index.html`，或由静态服务器托管项目根目录。导航站资源在 `src/`；移动资源不改变首页地址及游戏入口。
 
@@ -96,11 +96,11 @@
 
 - `index.html`：导航入口。
 - `src/`：导航站 `style.css`、`script.js`、`logo.svg`。
-- `games/`：79款游戏，各目录可复制独立运行，具体规则和操作见各自README。
-- `game-base.css`、`game-interface.js`：公共样式与界面源文件。
-- `scripts/`：公共资源同步等开发维护工具。
+- `games/`：79款游戏，各目录保存玩法资源并直接引用根公共代码，具体规则和操作见各自README。
+- `game-base.css`、`game-interface.js`：页面直接引用的公共样式与界面文件。
+- `scripts/`：共享横屏CSS生成等开发维护工具。
 - `tests/`：结构检查、全站静态检查、快捷键与游戏规则回归。
-- `game-icons.js`：公共SVG图标源，随公共界面一起同步。
+- `game-icons.js`：公共SVG图标入口，大厅及所有游戏直接引用。
 
 ## 维护与规范
 
@@ -117,12 +117,30 @@
 在项目根目录执行（开发检查只需要Node.js，游戏运行不需要）：
 
 ```text
-node scripts/sync-interface.cjs
+node scripts/build-shared-css.cjs
 node tests/layout.cjs
 node tests/check.cjs
 node tests/shortcuts.cjs
 ```
 
-同步工具仅更新内容变化的公共资源副本，不改写游戏HTML。布局检查覆盖页面结构、本地资源与公共副本一致性；Node检查覆盖全站JavaScript语法、导航登记、现存贪吃蛇规则回归和公共快捷键模拟DOM。浏览器、真机及其他游戏规则验证另行进行，历史记录不能替代当前检查。不要使用按属性名全局去重的CSS脚本，以免改变级联与兼容回退。
+所有页面直接引用根公共文件，不再生成游戏目录内副本。布局检查验证共享文件引用、无遗留副本及共享横屏CSS是否最新；规则和快捷键检查范围见测试记录。
 
-全站79款游戏已接入触屏横屏布局：左棋盘、右侧紧凑导航与信息操作，导航和操作沿用竖屏移动规则并自然换行；鼠标PC与手机竖屏沿用原布局。landscape.css为各目录的本地生成资源，统一通过同步脚本维护。可用node scripts/sync-interface.cjs --check检查全部公共及横屏副本是否同步。
+全站79款游戏已接入触屏横屏布局：左棋盘、右侧紧凑导航与信息操作，导航和操作沿用竖屏移动规则并自然换行；鼠标PC与手机竖屏沿用原布局。game-landscape.css为根目录唯一的共享横屏补充资源，由开发维护脚本汇总公共移动样式及按游戏限定的私有移动规则。
+## 公共代码直接引用
+
+全部游戏直接引用项目根目录的公共文件，不再在各游戏目录保存副本：
+
+| 公共文件 | 职责 |
+|---|---|
+| `game-base.css` | 公共布局、配色、按钮、信息卡和弹窗 |
+| `game-interface.js` | 公共快捷键、导航、菜单和移动端适配 |
+| `game-icons.js` | 大厅与所有游戏共用的SVG图标 |
+| `game-landscape.css` | 大手机横屏补充规则，按游戏隔离私有选择器 |
+
+游戏页面使用`../../game-base.css`等相对路径，按公共基础CSS、游戏私有style.css、公共game-landscape.css的顺序加载样式；图标脚本先于玩法脚本，公共界面脚本最后加载。
+
+可以直接打开根index.html或games/<游戏>/index.html，也可静态托管；必须保留项目目录结构。**只复制一个游戏子目录不再能够完整运行**，部署时应携带根公共文件并保留上述相对路径，或自行调整资源引用。
+
+修改公共JS/CSS后所有游戏立即共用该修改，无需同步副本。修改game-base.css或游戏私有style.css后，运行`node scripts/build-shared-css.cjs`更新根game-landscape.css；`node scripts/build-shared-css.cjs --check`可只读检查生成资源是否最新。该脚本无外部依赖，不是游戏启动步骤。
+
+可选实际浏览器检查：开发机提供Playwright和Edge后运行node tests/shared-browser.cjs，可用PLAYWRIGHT_PATH指定测试包。该检查遍历79款游戏的PC、竖屏、横屏、图标加载、菜单和操作区边界，不属于游戏运行依赖。

@@ -18,10 +18,12 @@
 
 ## 数据与文件
 
-本机 localStorage 保存音效、难度、模式和分模式胜局；存储失败降级为本页内存，不上传数据。script.js为独立规则与AI，style.css仅棋盘专用样式，logo.svg为本地狮子物件图形；base.css、interface.js、icons.js由根公共源同步。
+本机 localStorage 保存音效、难度、模式和分模式胜局；存储失败降级为本页内存，不上传数据。script.js为独立规则与AI，style.css仅棋盘专用样式，logo.svg为本地狮子物件图形；../../game-base.css、../../game-interface.js、../../game-icons.js由页面直接引用根公共源。
 
 ## 验证边界
 
 规则回归采用模拟DOM执行实际脚本；响应式检查采用浏览器视口模拟，非真机认证，也不代表穷举完整对局。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+
+公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

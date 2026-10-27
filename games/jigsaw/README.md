@@ -31,7 +31,7 @@ forest.svg/coast.svg/night.svg为手工绘制的原创场景，不使用远程�
 
 所有动画由单一requestAnimationFrame循环推进，重新开始清除待完成动作和粒子。系统偏好减少动态效果时取消位移过渡、参考图淡化与粒子，保留必要的最终放置反馈。图片未加载时禁止开始并显示反馈；文件缺失时提示检查本地资源。
 
-style.css仅规定拼图画布比例和拖动手势；导航、按钮、信息卡、菜单与快捷键沿用公共源，base.css/interface.js/icons.js通过根sync-interface.py同步。
+style.css仅规定拼图画布比例和拖动手势；导航、按钮、信息卡、菜单与快捷键沿用公共源，../../game-base.css/../../game-interface.js/../../game-icons.js通过根sync-interface.py同步。
 
 ## 保存与验证范围
 
@@ -39,4 +39,6 @@ style.css仅规定拼图画布比例和拖动手势；导航、按钮、信息�
 
 验证证据见根TEST-REPORT.md。程序化规则拼合不等同人工通关，浏览器触摸模拟不等同真机。最小手机视口为320×568；托盘卡片是触控区域，拼块图案本身可能小于卡片。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。本地landscape.css由根同步脚本生成，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+
+公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
