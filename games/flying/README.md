@@ -20,7 +20,7 @@
 
 ## 数据与资源
 
-本机localStorage保存设置与对战模式，不保存进行中的棋局，失败回退当前页内存，不上传数据。script.js为独立规则；style.css只维护棋盘；logo.svg为本地SVG物件图形；../../game-base.css、../../game-interface.js、../../game-icons.js由页面直接引用根公共源。
+本机localStorage保存设置与对战模式，不保存进行中的棋局，失败回退当前页内存，不上传数据。script.js为独立规则；style.css只维护棋盘；logo.svg为本地SVG物件图形；../../shared/base.css、../../shared/interface.js、../../shared/icons.js由页面直接引用根公共源。
 
 ## 已知范围与限制
 
@@ -35,6 +35,6 @@
 
 参考实体棋盘的分格、机场与十字归航结构，自行绘制所有画面，不使用外站图片作为运行资源：[自制式飞行棋说明与附图](https://patents.google.com/patent/CN204952222U/zh)。仍采用本文声明的双人简化玩法。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

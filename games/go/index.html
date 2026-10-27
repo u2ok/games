@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>围棋 · 小游戏</title>
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="stylesheet" href="../../game-base.css">
+  <link rel="stylesheet" href="../../shared/base.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="../../game-landscape.css">
-  <script src="../../game-icons.js" defer></script>
+  <link rel="stylesheet" href="../../shared/landscape.css">
+  <script src="../../shared/icons.js" defer></script>
   <script src="script.js" defer></script>
-  <script src="../../game-interface.js" defer></script>
+  <script src="../../shared/interface.js" defer></script>
 </head>
 <body data-game="go" data-landscape="go">
   <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
@@ -36,8 +36,8 @@
       
       <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
       <div class="scores">
-        <div class="score-card"><span id="score-label">黑方提子</span><strong id="score">0</strong></div>
-        <div class="score-card"><span id="best-label">白方提子</span><strong id="best">0</strong></div>
+        <div class="score-card"><span class="summary-score-caption" data-side="black" aria-label="黑方提子"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>黑提</span><span id="score-label">黑方提子</span><strong id="score">0</strong></div>
+        <div class="score-card"><span class="summary-score-caption" data-side="white" aria-label="白方提子"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>白提</span><span id="best-label">白方提子</span><strong id="best">0</strong></div>
       </div>
       
       <p class="rule-label" id="rule-label">9 路 · 黑先 · 白贴7.5目</p>

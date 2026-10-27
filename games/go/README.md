@@ -28,10 +28,12 @@ P暂停/继续；Enter准备/暂停/终局时开始/继续/再玩；Shift+Enter�
 
 沿用公共PC侧栏、手机顶部信息与下方操作栏。棋盘默认方形，19路在小屏交叉点较密，9路更适合手机休闲操作。
 
-index.html为入口；script.js为规则、计分、电脑和状态；style.css仅棋盘、交叉点及棋子样式；logo.svg为本地物件标识。../../game-base.css、../../game-interface.js、../../game-icons.js为根目录共享入口，禁止在本目录直接维护。独立复制后返回大厅链接按需调整。
+index.html为入口；script.js为规则、计分、电脑和状态；style.css仅棋盘、交叉点及棋子样式；logo.svg为本地物件标识。../../shared/base.css、../../shared/interface.js、../../shared/icons.js为根目录共享入口，禁止在本目录直接维护。独立复制后返回大厅链接按需调整。
 
 遵循[统一规范](../../GAME-STANDARD.md)，验证范围见[测试记录](../../TEST-REPORT.md)。浏览器视口模拟、模拟DOM回归均不能代替真机或专业棋力评估。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+
+成绩栏黑白提子图形在本游戏index.html内定义，移动端显示及棋子配色在style.css维护；公共界面只移动原成绩节点，不再生成围棋图形。

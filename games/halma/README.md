@@ -26,7 +26,7 @@
 
 ## 独立资源
 
-`../../game-base.css`、`../../game-interface.js` 是统一基础副本，`style.css` 定义工具栏，`script.js` 包含121孔坐标、营地、移步、连续跳跃、电脑与绘制。复制目录可独立运行，返回大厅地址按目标目录调整。
+`../../shared/base.css`、`../../shared/interface.js` 是统一基础副本，`style.css` 定义工具栏，`script.js` 包含121孔坐标、营地、移步、连续跳跃、电脑与绘制。复制目录可独立运行，返回大厅地址按目标目录调整。
 
 Canvas 提供键盘输入和状态文字，但不提供完整读屏棋盘。历史浏览器抽查见合集测试报告；不代表当前版本所有状态或真实设备均已验收。
 
@@ -37,8 +37,8 @@ P 暂停／继续；Enter 在准备、暂停或终局时开始／继续／再玩
 
 公共界面与响应式约定见 [统一规范](../../GAME-STANDARD.md)。PC 配置在顶部；手机通过顶部或底部“更多”调整模式和设置、选择关卡及查看规则，竖屏局内操作保留在游戏区下方，横屏集中右栏。
 
-本地 `logo.svg` 同时用于标题与浏览器标签图标。`../../game-base.css`、`../../game-interface.js` 直接引用根目录公共源，不直接编辑。合集内维护要求见 [统一规范](../../GAME-STANDARD.md)，历史验证范围见 [测试记录](../../TEST-REPORT.md)；仅复制本目录不能完整运行，需携带根公共文件并保留相对路径。
+本地 `logo.svg` 同时用于标题与浏览器标签图标。`../../shared/base.css`、`../../shared/interface.js` 直接引用根目录公共源，不直接编辑。合集内维护要求见 [统一规范](../../GAME-STANDARD.md)，历史验证范围见 [测试记录](../../TEST-REPORT.md)；仅复制本目录不能完整运行，需携带shared公共文件并保留相对路径。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

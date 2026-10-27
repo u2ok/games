@@ -1,6 +1,6 @@
 # 数织
 
-打开本目录index.html或静态托管即可运行。原生HTML/CSS/JavaScript，无构建、框架、ES6 Modules或远程资源；部署时须携带根公共文件并保留相对路径。
+打开本目录index.html或静态托管即可运行。原生HTML/CSS/JavaScript，无构建、框架、ES6 Modules或远程资源；部署时须携带shared公共文件并保留相对路径。
 
 ## 规则与题目
 
@@ -24,10 +24,10 @@ P暂停/继续；Enter在准备/暂停/结束时开始/继续/再玩；Shift+Ent
 
 沿用公共PC右侧信息面板和手机顶部信息卡，填图工具与暂停/重开分组。提示随棋盘调整字号，行列提示留白一致，填色格保持方形。大尺寸在小屏交叉格较密，手机优先5×5。
 
-index.html为入口；script.js包含线段、解计数、题目、拖涂和计时；style.css仅棋盘/提示/必要输入区；logo.svg为本地物件标识；../../game-base.css、../../game-interface.js、../../game-icons.js是公共源独立副本。独立复制后大厅链接按需调整。
+index.html为入口；script.js包含线段、解计数、题目、拖涂和计时；style.css仅棋盘/提示/必要输入区；logo.svg为本地物件标识；../../shared/base.css、../../shared/interface.js、../../shared/icons.js是公共源独立副本。独立复制后大厅链接按需调整。
 
 遵循[统一规范](../../GAME-STANDARD.md)，验证范围见[测试记录](../../TEST-REPORT.md)。模拟DOM和浏览器视口测试不等同真机拖涂或全部图案手工通关。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

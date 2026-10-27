@@ -1,4 +1,11 @@
 /* 交叉点棋盘与棋子专属样式；页面和操作区使用公共布局。 */
+/* 提子棋子图形与颜色归围棋自身维护，公共界面只负责移动原成绩节点。 */
+@media(max-width:850px){
+  html body[data-game="go"] .summary-head #score-label, html body[data-game="go"] .summary-head #best-label{display:none}
+  html body[data-game="go"] .summary-head .summary-score-caption{display:flex;align-items:center;gap:6px}
+  .summary-score-caption .ui-icon{width:11px;height:11px;fill:#263a31;stroke:#263a31}
+  .summary-score-caption[data-side=white] .ui-icon{fill:#fffef5;stroke:#b3b8b0}
+}
 body[data-game="go"] .go-grid { width:100%; height:100%; position:relative; display:grid; background:#e6d5b2; }
 .go-lines { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 .go-grid .go-cell { position:relative; display:grid; place-items:center; min-width:0; min-height:0; padding:1px; background:transparent; border:0; border-radius:0; z-index:1; }

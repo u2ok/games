@@ -18,12 +18,12 @@
 
 ## 文件与适配
 
-index.html为入口，script.js为独立闭包玩法，style.css仅维护棋盘与必要输入，logo.svg为本地地图物件标识。../../game-base.css、../../game-interface.js、../../game-icons.js由公共源同步，单独复制目录仍可离线运行。返回大厅链接可按复制位置调整。
+index.html为入口，script.js为独立闭包玩法，style.css仅维护棋盘与必要输入，logo.svg为本地地图物件标识。../../shared/base.css、../../shared/interface.js、../../shared/icons.js由公共源同步，单独复制目录仍可离线运行。返回大厅链接可按复制位置调整。
 
 PC复用中央棋盘、右信息面板和下方操作栏；手机顶部完整信息、棋盘、操作栏和方向区；横屏左右布局。画布为600×600逻辑单位，CSS等比例展示。
 
 维护遵循[统一规范](../../GAME-STANDARD.md)，验证范围见[测试记录](../../TEST-REPORT.md)。模拟DOM和浏览器视口模拟不替代真机测试。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

@@ -14,10 +14,10 @@
 
 ## 文件与限制
 
-script.js包含规则、固定场景数据生成和Canvas矢量绘制；logo.svg为本地物件式放大镜与风景卡。style.css只定义画布比例和输入，公共base.css/../../game-interface.js/../../game-icons.js由根同步。localStorage损坏时校验回退，写入失败仅在当前页面保留状态。
+script.js包含规则、固定场景数据生成和Canvas矢量绘制；logo.svg为本地物件式放大镜与风景卡。style.css只定义画布比例和输入，公共base.css/../../shared/interface.js/../../shared/icons.js由根同步。localStorage损坏时校验回退，写入失败仅在当前页面保留状态。
 
 画面为原创简约矢量插画，36关不使用远程图片。为照顾小屏，点击允许适度容差；可放大查看。验证范围见根TEST-REPORT.md，浏览器视口模拟不等同真机。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

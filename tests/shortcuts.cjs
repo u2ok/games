@@ -2,7 +2,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const source = fs.readFileSync(__dirname + '/../game-interface.js', 'utf8');
+const source = fs.readFileSync(__dirname + '/../shared/interface.js', 'utf8');
 const end = source.indexOf('  installGameShortcuts();');
 assert.ok(end > 0);
 let handler, dialog = false;

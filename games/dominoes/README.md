@@ -20,7 +20,7 @@ P暂停/继续，Enter开始/继续，Shift+Enter重开。触控和鼠标均按�
 
 ## 资源与范围
 
-script.js为独立规则与绘制；style.css仅玩法输入；logo.svg本地物件图形；../../game-base.css/../../game-interface.js/../../game-icons.js由页面直接引用根公共源。
+script.js为独立规则与绘制；style.css仅玩法输入；logo.svg本地物件图形；../../shared/base.css/../../shared/interface.js/../../shared/icons.js由页面直接引用根公共源。
 
 双人摸牌型双六规则；电脑只查看自己手牌与公开牌链，不查看玩家手牌决策。轻松随机合法牌，标准优先高点数，挑战兼顾自己手牌的端点支援。
 
@@ -28,6 +28,6 @@ script.js为独立规则与绘制；style.css仅玩法输入；logo.svg本地物
 
 测试范围及证据见根TEST-REPORT.md，浏览器视口/输入模拟不等同物理手机或人工全部通关。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

@@ -164,16 +164,6 @@
       var clock = card.querySelector('.link-clock');
       if (clock) metrics.appendChild(clock);
       if (scores) {
-        if (document.body.dataset.game === 'go' && !scores.querySelector('.summary-score-caption')) {
-          Array.from(scores.querySelectorAll('.score-card')).forEach(function (score, index) {
-            var caption = document.createElement('span');
-            caption.className = 'summary-score-caption';
-            caption.dataset.side = index ? 'white' : 'black';
-            caption.setAttribute('aria-label', index ? '白方提子' : '黑方提子');
-            caption.innerHTML = window.GameIcons.svg('stone') + (index ? '白提' : '黑提');
-            score.insertBefore(caption, score.firstChild);
-          });
-        }
         metrics.appendChild(scores);
       }
       Array.from(card.children).forEach(function (node) {

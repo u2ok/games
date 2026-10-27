@@ -26,7 +26,7 @@
 ## 文件
 
 - `index.html`：独立语义化页面。
-- `../../game-base.css`、`../../game-interface.js`：统一设计与手机游戏台的独立副本。
+- `../../shared/base.css`、`../../shared/interface.js`：统一设计与手机游戏台的独立副本。
 - `style.css`：地图、人物、箱子和目标的本地 CSS 图形。
 - `script.js`：关卡、移动、撤销、进度和音效逻辑，封闭作用域运行。
 
@@ -39,8 +39,8 @@ P 暂停／继续；Enter 在准备、暂停或终局时开始／继续／再玩
 
 公共界面与响应式约定见 [统一规范](../../GAME-STANDARD.md)。PC 配置在顶部；手机通过顶部或底部“更多”调整模式和设置、选择关卡及查看规则，竖屏局内操作保留在游戏区下方，横屏集中右栏。
 
-本地 `logo.svg` 同时用于标题与浏览器标签图标。`../../game-base.css`、`../../game-interface.js` 直接引用根目录公共源，不直接编辑。合集内维护要求见 [统一规范](../../GAME-STANDARD.md)，历史验证范围见 [测试记录](../../TEST-REPORT.md)；仅复制本目录不能完整运行，需携带根公共文件并保留相对路径。
+本地 `logo.svg` 同时用于标题与浏览器标签图标。`../../shared/base.css`、`../../shared/interface.js` 直接引用根目录公共源，不直接编辑。合集内维护要求见 [统一规范](../../GAME-STANDARD.md)，历史验证范围见 [测试记录](../../TEST-REPORT.md)；仅复制本目录不能完整运行，需携带shared公共文件并保留相对路径。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

@@ -18,12 +18,12 @@
 
 ## 数据与文件
 
-本机localStorage保存设置、解锁和分难度/分关纪录，失败回退内存。新版使用mini-games:parking:v2命名空间，旧随机关卡数据保留但不混入固定题纪录。script.js含题库、规则、交互；style.css仅停车场及玩法表现；logo.svg为本地SVG；../../game-base.css、../../game-interface.js、../../game-icons.js由页面直接引用根公共源。
+本机localStorage保存设置、解锁和分难度/分关纪录，失败回退内存。新版使用mini-games:parking:v2命名空间，旧随机关卡数据保留但不混入固定题纪录。script.js含题库、规则、交互；style.css仅停车场及玩法表现；logo.svg为本地SVG；../../shared/base.css、../../shared/interface.js、../../shared/icons.js由页面直接引用根公共源。
 
 ## 验证范围
 
 60关最短解与完整移动回放属于模拟DOM验证；Chrome五种视口检查布局、拖动及暂停，另有触屏输入模拟。不是物理手机或人工逐关通关，证据见根TEST-REPORT.md。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

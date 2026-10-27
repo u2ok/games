@@ -41,7 +41,9 @@
   // 直接访问游戏时也更新历史；只接受数组中的字符串，避免损坏数据中断游戏。
   try { var recent = JSON.parse(read('mini-games:recent')); if (!Array.isArray(recent)) recent = []; var gameId = key.split(':')[1]; save('mini-games:recent', JSON.stringify([gameId].concat(recent.filter(function (item) { return typeof item === 'string' && item !== gameId; })).slice(0, 20))); } catch (error) { /* 历史记录不影响核心玩法。 */ }
   /* Klondike 接龙：牌堆始终保存真实顺序，选择只保存来源坐标。 */
-  var suits = ['♠', '♥', '♣', '♦'];
+  // 花色属于接龙牌面，不依赖公共界面图标或字符替换观察器。
+  var suitPaths = ['M12 2C-5 14 1 22 10 16l-2 6h8l-2-6C23 22 29 14 12 2Z','M12 21 3 12C-3 3 7-1 12 6 17-1 27 3 21 12Z','M12 12C0-1 0 18 9 14c-9 10 12 10 3 0 10 5 14-12 0-2Zm0 3-3 7h6Z','m12 2 10 10-10 10L2 12Z'];
+  function suitSVG(index) { return '<span class="icon-inline"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="fill:currentColor"><path d="' + suitPaths[index] + '"/></svg></span>'; }
   var suitNames = ['黑桃', '红桃', '梅花', '方块'];
   var stock = [];
   var waste = [];
@@ -163,8 +165,8 @@
     button.setAttribute('aria-label', card.up ? cardName(card) : '背面牌');
     button.setAttribute('aria-pressed', String(Boolean(active)));
     if (card.up) {
-      var corner = document.createElement('span'); corner.className = 'card-corner'; corner.textContent = rank(card) + suits[card.suit];
-      var center = document.createElement('span'); center.className = 'card-suit'; center.textContent = suits[card.suit];
+      var corner = document.createElement('span'); corner.className = 'card-corner'; corner.innerHTML = rank(card) + suitSVG(card.suit);
+      var center = document.createElement('span'); center.className = 'card-suit'; center.innerHTML = suitSVG(card.suit);
       button.appendChild(corner); button.appendChild(center); button.draggable = true;
     }
     return button;
@@ -173,7 +175,8 @@
     var element = document.createElement('div');
     element.className = 'card-slot' + (suggested && suggested.kind === kind && suggested.col === col ? ' suggested' : '');
     element.dataset.target = kind; element.dataset.col = col;
-    var empty = document.createElement('button'); empty.className = 'empty-slot'; empty.textContent = label;
+    var empty = document.createElement('button'); empty.className = 'empty-slot';
+    if (kind === 'foundation') empty.innerHTML = suitSVG(col); else empty.textContent = label;
     empty.setAttribute('aria-label', kind === 'foundation' ? suitNames[col] + '收牌区' : '第' + (col + 1) + '列空位，仅可放K');
     element.appendChild(empty);
     return element;
@@ -196,7 +199,7 @@
     if (waste.length) wasteSlot.appendChild(cardButton(waste[waste.length - 1], { kind: 'waste', col: 0, index: waste.length - 1 }));
     top.appendChild(wasteSlot);
     var spacer = document.createElement('span'); spacer.className = 'card-spacer'; top.appendChild(spacer);
-    foundations.forEach(function (cards, col) { var target = slot('foundation', col, suits[col]); if (cards.length) target.appendChild(cardButton(cards[cards.length - 1], { kind: 'foundation', col: col, index: cards.length - 1 })); top.appendChild(target); });
+    foundations.forEach(function (cards, col) { var target = slot('foundation', col, suitNames[col]); if (cards.length) target.appendChild(cardButton(cards[cards.length - 1], { kind: 'foundation', col: col, index: cards.length - 1 })); top.appendChild(target); });
     boardElement.appendChild(top);
     var bottom = document.createElement('div'); bottom.className = 'solitaire-tableau';
     tableau.forEach(function (cards, col) {

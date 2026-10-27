@@ -37,10 +37,10 @@
 
 ## 文件及验证
 
-`script.js`实现规则、输入和AI；`style.css`仅定义棋盘比例；`../../game-base.css/../../game-interface.js/../../game-icons.js`是公共源同步副本；`logo.svg`为本地旗帜与军棋物件图案。复制整个目录仍可运行，返回大厅路径按需调整。
+`script.js`实现规则、输入和AI；`style.css`仅定义棋盘比例；`../../shared/base.css/../../shared/interface.js/../../shared/icons.js`是公共源同步副本；`logo.svg`为本地旗帜与军棋物件图案。复制整个目录仍可运行，返回大厅路径按需调整。
 
 自动规则回归、资源检查及浏览器视口验证范围见根`TEST-REPORT.md`，不将模拟DOM或桌面视口模拟视作真机验证。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。game-landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用根game-base.css、game-interface.js、game-icons.js、game-landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
