@@ -1,0 +1,2 @@
+/* 仅棋盘、玩法及专用输入；导航/面板/按钮主题沿用公共源。 */
+.play-grid{height:100%;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));grid-template-rows:repeat(var(--n),minmax(0,1fr));gap:2px}.pipe-cell{min-width:0;min-height:0;padding:0;border:1px solid #d3dcc8;border-radius:3px;background:#eef0e3}.pipe-cell svg{width:100%;height:100%;display:block}.pipe-cell.cursor{box-shadow:inset 0 0 0 3px var(--green)}

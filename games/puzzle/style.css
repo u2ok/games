@@ -1,0 +1,33 @@
+/* 数字华容道只定义棋盘，页面与控件使用独立保存的基础样式。 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--puzzle-size, 4), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--puzzle-size, 4), minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.puzzle-tile {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid #cbd3be;
+  background: #fff7e6;
+  color: #725039;
+  font-size: clamp(16px, 3vw, 36px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.puzzle-tile.correct { background: #c9dbc0; color: #245c4a; }
+.puzzle-tile.movable { border-color: #648266; box-shadow: inset 0 0 0 1px #648266; }
+.puzzle-tile.blank { border: 1px dashed #9fb18e; background: #d8e2cc; }
+.puzzle-tile:not(.blank):hover { background: #e3eadc; }
+@media (max-width: 850px) {
+  .grid { gap: 6px; }
+  .puzzle-tile { font-size: clamp(15px, 5vw, 28px); }
+}

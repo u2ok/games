@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>军棋 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="junqi" data-stable-feedback>
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">军棋</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board" data-board-ratio="0.75" >
+      <canvas id="canvas" width="600" height="800" tabindex="0" aria-label="军棋棋盘。方向键选择站点，回车或空格选子、移动或翻棋。">浏览器需要支持 Canvas。</canvas>
+      <div class="cover" id="game-cover" >
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls junqi-tools"><button id="deploy" class="primary">完成布局</button><button id="random-layout">随机布局</button><button id="resign">认输</button></div><div class="toolbar"><span id="detail"></span><span>铁路远行，行营避战</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作"><div class="mode-switch" aria-label="对战模式"><button data-mode="layout" aria-pressed="true">布局对弈</button><button data-mode="flip" aria-pressed="false">翻棋对弈</button></div>
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">我方胜局</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">电脑胜局</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">布局暗棋 · 标准电脑</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <details class="instructions" open>
+        <summary>操作与规则</summary>
+        <p>布局对弈为暗棋对碰：点击两枚己方棋子交换。军旗放大本营，地雷放后两排，炸弹不能放最前排，行营留空。完成布局后红方先行，只显示己方军衔。敌棋可直接碰子，由系统判定输赢，存活敌棋不自动亮明。</p>
+        <p>翻棋采用混排变体：每次可翻一子或走一步，首次翻子决定你的颜色；未翻棋子阻挡路线，不能被攻击。军旗也参与混排。</p>
+        <p>公路走一步；铁路可直线远行，工兵可沿铁路拐弯。行营内棋子免遭攻击，大本营内可移动棋子可以走出；军旗、地雷仍不能移动。</p>
+        <p>司令到工兵依次由大到小，同级同归于尽；翻棋禁止小子主动攻击大子。工兵可排雷，翻棋中其他普通棋子不能主动碰雷，布局暗棋碰雷损失；炸弹与任何棋子同归于尽。夺旗或对手无棋可走获胜；司令阵亡亮出本方军旗。</p>
+        <p>同一局面同一方行动出现三次，或连续100步未吃子、未翻棋，判和。电脑使用限时搜索并随机选择近优走法，不读取敌方隐藏军衔，根据公开走法和碰子结果推测。P暂停，Enter开始/继续，Shift+Enter重开。打开设置或失焦后手动继续。</p>
+      </details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>难度<select id="option"><option value="easy">轻松</option><option value="normal" selected>标准</option><option value="hard">挑战</option></select></label>
+    <p>设置自动保存在本机，关闭设置后请手动继续。规则设置在新的一局生效。</p>
+    
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>
+
+

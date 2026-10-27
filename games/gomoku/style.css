@@ -1,0 +1,4 @@
+/* 棋盘线与棋子全部本地 Canvas 绘制。 */
+.canvas-board canvas { cursor: crosshair; touch-action: none; }
+.gomoku-tools { display: flex; justify-content: center; }
+.gomoku-tools button { min-width: 120px; }

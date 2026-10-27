@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>知识答题 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="question-bank.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="quiz" data-summary-default="collapsed">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">知识答题</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board">
+      <div class="quiz-play" id="quiz-play">
+        <div class="quiz-meta"><span id="topic-label">随机知识挑战</span><span id="question-progress">1 / 10</span></div>
+        <progress id="quiz-progress" value="0" max="10" aria-label="答题进度"></progress>
+        <h2 id="question-title" tabindex="-1">准备来一场知识小挑战？</h2>
+        <div id="answer-list" class="quiz-answers" aria-label="四个单选答案"></div>
+        <section class="quiz-feedback" id="quiz-feedback" aria-live="polite"><strong id="feedback-title">不限时，慢慢想</strong><p id="explanation">每题只提交一次，答后查看解析。</p><a id="question-source" hidden target="_blank" rel="noopener noreferrer">查看知识来源</a><span id="source-note" hidden></span></section>
+        <label id="review-field" hidden>回顾本局<select id="review-select" aria-label="选择题目回顾"></select></label>
+      </div>
+      <div class="cover" id="game-cover" hidden>
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls"><button id="skip">跳过本题</button><button id="next">下一题</button></div><div class="toolbar"><span id="detail"></span><span>轻松一局，专注当下</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作">
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">本局得分</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">最佳得分</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">每题10分 · 答后看解析</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <details class="instructions" open>
+        <summary>操作与规则</summary>
+        <p>从128题本地题库随机抽取，题目和选项都会洗牌，一局内不重复。可选数学、科学、宇宙、地球自然或综合，以及每局5/10/15题；新局生效。答对10分，答错或跳过0分，无限时。答后锁定答案并显示解析与来源，点击下一题继续；最后可逐题回顾。最佳分按分类与题量分别记录。</p>
+        <p>优先抽近期未出的题，题目不足时再补入旧题。数字1–4选答案；Enter进入下一题。P暂停/继续、Shift+Enter重开。打开更多、页面隐藏或窗口失焦自动暂停，关闭后手动继续。题库为科普练习，不是考试题库。</p>
+      </details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>题目分类<select id="category"><option value="mixed">综合随机</option><option value="math">数学推理</option><option value="science">科学常识</option><option value="space">宇宙探索</option><option value="earth">地球自然</option></select></label>
+    <label>每局题量<select id="option"><option value="5">5题 · 小试身手</option><option value="10" selected>10题 · 标准挑战</option><option value="15">15题 · 深度练习</option></select></label>
+    <p>设置保存在本机，新的一局生效。答题不联网；只有主动打开来源链接才会访问外部网站。</p>
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>

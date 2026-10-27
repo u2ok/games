@@ -1,0 +1,13 @@
+/* 方向键独立首行；其余动作复用公共按钮，PC三项、手机含更多共四项。 */
+body[data-game="bomber"] .bomber-input { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; width:100%; flex-basis:100%; order:-1; }
+body[data-game="bomber"] .bomber-input button { padding:6px; min-height:44px; }
+body[data-game="bomber"] .bomber-input .ui-icon { width:20px; height:20px; }
+@media(max-width:850px){html body.unified-game[data-game="bomber"] .game-layout .stage-controls.unified-controls > button { flex:1 1 0; min-width:0; }}
+/* 手机与横屏触控使用十字方向区；桌面仍为单排方向键。 */
+@media(max-width:850px) {
+  body[data-game="bomber"] .bomber-input { grid-template-columns:repeat(3,minmax(44px,64px)); grid-template-rows:repeat(2,44px); justify-content:center; gap:6px; }
+  body[data-game="bomber"] .bomber-input [data-dir="ArrowUp"] { grid-column:2; grid-row:1; }
+  body[data-game="bomber"] .bomber-input [data-dir="ArrowLeft"] { grid-column:1; grid-row:2; }
+  body[data-game="bomber"] .bomber-input [data-dir="ArrowDown"] { grid-column:2; grid-row:2; }
+  body[data-game="bomber"] .bomber-input [data-dir="ArrowRight"] { grid-column:3; grid-row:2; }
+}

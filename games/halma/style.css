@@ -1,0 +1,6 @@
+/* 星形中国跳棋棋盘，工具区在手机上单独计入可用高度。 */
+.halma-tools { display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;margin-top:12px; }
+.halma-tools button { padding:8px 12px;font-size:12px; }
+.halma-tools .primary { min-width:112px; }
+canvas { touch-action:none; }
+@media(max-width:850px){ .halma-tools { flex:none;margin-top:8px;gap:6px; } .halma-tools button { padding:6px 10px; } }

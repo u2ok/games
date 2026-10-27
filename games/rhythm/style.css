@@ -1,0 +1,5 @@
+/* 仅棋盘、玩法及专用输入；导航/面板/按钮主题沿用公共源。 */
+body[data-game="rhythm"] .rhythm-pads{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;flex-basis:100%;order:-1}
+body[data-game="rhythm"] .rhythm-pads button{touch-action:manipulation;min-height:44px}
+/* 四轨独占首行，公共暂停、重开及手机更多共用第二行。 */
+@media(max-width:850px){html body.unified-game[data-game="rhythm"] .game-layout .stage-controls.unified-controls>button{flex:1 1 0;min-width:0}}

@@ -1,0 +1,8 @@
+/* 棋盘为 9×10 交叉点，正方形舞台内按比例居中绘制。 */
+.xiangqi-tools { display:flex;justify-content:center;width:100%;margin-top:12px; }
+.xiangqi-tools button { min-width:100px; }
+canvas { touch-action:none; }
+@media(max-width:850px){ .xiangqi-tools { margin-top:8px;flex:none; } }
+/* 原生竖向舞台，九路十线保持等距，圆棋子不受CSS拉伸。 */
+body[data-game="xiangqi"] .board{aspect-ratio:13 / 15;height:auto}
+@media(min-width:851px){body[data-game="xiangqi"] .board{width:min(100%,calc(var(--board-size)*.866667))}}

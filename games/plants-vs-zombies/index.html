@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>植物大战僵尸 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="plants-vs-zombies" data-summary-default="collapsed">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">植物大战僵尸</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board" data-board-ratio="1.4">
+      <div id="seed-bank" class="seed-bank" data-board-header aria-label="植物选择"></div>
+      <canvas id="canvas" width="700" height="500" tabindex="0" aria-label="草坪，方向键选择格子，回车种植；数字1至5选择植物，0选择铲子">浏览器需要支持Canvas。</canvas>
+      <div class="cover" id="game-cover" >
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls garden-tools"><button id="collect-sun">收集阳光</button></div><div class="toolbar"><span id="detail"></span><span>轻松一局，专注当下</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作"><div class="mode-switch" aria-label="游戏模式"><button data-mode="campaign" aria-pressed="true">关卡闯关</button><button data-mode="classic" aria-pressed="false">经典防守</button></div>      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">阳光</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">最佳得分</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">5条路线 · 5波防守</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <section id="level-section"><h3>关卡选择</h3><div class="level-grid" id="level-list" aria-label="关卡选择"></div><p class="storage" id="level-hint"></p><p class="storage" id="level-description"></p></section>
+      <details class="instructions" open>
+        <summary>操作与规则</summary>
+        <p>选择植物卡，再点击草坪空格种植。向日葵50阳光，每10秒产25阳光；豌豆射手100，寒冰射手175可减速；坚果墙50，樱桃炸弹150，延迟爆炸清除邻近九格范围内的僵尸。铲除植物不返还阳光。</p>
+        <p>点击掉落阳光或“收集阳光”按钮拾取。植物需要阳光且有独立冷却；灰色卡暂不可种。僵尸从右向左，普通、路障和铁桶耐久依次增加。每行割草机只救场一次，之后被突破即失败。闯关模式有12关，不同关卡改变波次、初始阳光、天空阳光、敌人类型与强度、进攻路线、可用植物和道具。清除本关全部波次获胜，解锁下一关；经典模式保持原有五波规则。</p>
+        <p>铲子和三种道具与植物同时显示在游戏区顶部，直接点击使用：阳光补给增加100阳光；全场冰冻阻止移动和啃食5秒；全场爆破造成180伤害。每关初始数量不同，每击退指定数量敌人轮换补给一道具，单种最多3份。本关道具不带入下一关。V/F/B分别使用这三种道具，0直接选铲子。</p>
+        <p>数字1–5选择植物，0选择铲子；方向键选择格子，Enter/空格种植或铲除，C收集全部阳光。P暂停/继续，Shift+Enter重开。难度下一局生效；失焦、打开设置或说明自动暂停，手动恢复。</p>
+      </details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>难度系数<select id="option"><option value="easy">轻松</option><option value="normal" selected>标准</option><option value="hard">挑战</option></select></label>
+    <p>设置自动保存在本机，关闭设置后请手动继续。规则设置在新的一局生效。</p>
+    
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>
+
+

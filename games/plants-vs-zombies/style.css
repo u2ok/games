@@ -1,0 +1,11 @@
+/* 选择卡属于草坪内输入区，画布保持700×500等比例；公共操作在草坪下方。 */
+body[data-game="plants-vs-zombies"] .board{aspect-ratio:auto;height:auto;container-type:inline-size;background:#eaf0dc}
+body[data-game="plants-vs-zombies"] canvas{width:100%;height:auto;aspect-ratio:7/5}
+.seed-bank{height:104px;grid-template-rows:repeat(2,44px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:6px;width:100%;background:#eaf0dc}
+.seed-bank.has-items{height:152px;grid-template-rows:repeat(3,44px)}
+.seed-bank button{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;text-align:left;column-gap:4px;padding:4px 6px;min-width:0;min-height:44px;white-space:nowrap;font-size:12px}
+.seed-bank button svg{grid-row:1/3;width:28px;height:28px;pointer-events:none}.seed-bank button small{font-size:10px;color:var(--muted)}.seed-bank button[aria-pressed="true"]{background:var(--sage);border-color:var(--green);color:var(--green);font-weight:700}.seed-bank .seed-unavailable{opacity:.65}
+@container(max-width:300px){.seed-bank button{grid-template-columns:1fr;text-align:center;padding:2px;font-size:12px}.seed-bank button svg{display:none}}
+@media(min-width:851px){body[data-game="plants-vs-zombies"] .board{width:min(100%,calc((100dvh - 300px)*1.4))}body[data-game="plants-vs-zombies"] .board:has(.has-items){width:min(100%,calc((100dvh - 348px)*1.4))}}
+@media(max-width:850px){.seed-bank button{column-gap:3px}html body.unified-game[data-game="plants-vs-zombies"] .unified-controls>button{flex:1 1 0;min-width:0}}
+@media(max-width:850px) and (orientation:landscape){.seed-bank{padding:4px;gap:4px}}

@@ -1,0 +1,44 @@
+/* 数独格线、选中态和数字键盘，不覆盖其他游戏的基础组件。 */
+.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(9, minmax(0, 1fr)); width: 100%; height: 100%; border: 2px solid #52704e; background: #52704e; gap: 1px; }
+.sudoku-cell { position: relative; display: grid; place-items: center; min-width: 0; min-height: 0; padding: 0; border: 0; border-radius: 0; background: #fffefa; color: #27688c; font-size: clamp(16px, 2.5vw, 28px); font-weight: 700; line-height: 1; }
+.sudoku-cell.given { color: #24352d; font-weight: 700; }
+.sudoku-cell.related { background: #e8efdf; }
+/* 相同数字仅强调字色和字重，不覆盖格子的原有背景。 */
+.sudoku-cell.same-value { color: var(--green); font-weight: 700; }
+.sudoku-cell.selected { background: #c2d7b6; box-shadow: inset 0 0 0 2px #245c4a; z-index: 1; }
+.sudoku-cell.conflict { color: #a33e32; background: #fae0d7; }
+.sudoku-cell[data-col="2"], .sudoku-cell[data-col="5"] { border-right: 2px solid #52704e; }
+.sudoku-cell[data-row="2"], .sudoku-cell[data-row="5"] { border-bottom: 2px solid #52704e; }
+.sudoku-cell:focus-visible { outline-offset: -3px; z-index: 2; }
+.cell-notes { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); width: 100%; height: 100%; padding: 2px; color: #667060; }
+.cell-notes span { display: grid; place-items: center; font-size: clamp(6px, .85vw, 11px); }
+.stage-controls { flex: none; width: min(100%, var(--board-size)); margin-top: 8px; }
+.number-pad { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; }
+@media(max-width:850px) {
+  html body.sudoku-game .game-layout { grid-template-rows:48px minmax(0,1fr) 54px auto; }
+  html body.sudoku-game .game-layout > .stage-controls { display:flex; height:auto; flex-wrap:wrap; }
+  .sudoku-game .number-pad, .sudoku-game .sudoku-tools { flex:1 0 100%; width:100%; }
+  .sudoku-game .sudoku-tools { margin-top:0; }
+  .sudoku-game .number-pad { order:1; }
+  .sudoku-game .sudoku-tools { order:2; }
+  .sudoku-game .stage-controls > button { order:3; }
+}
+.number-pad button { min-width: 0; padding: 4px; font-size: 18px; font-weight: 700; }
+.number-pad button { position: relative; }
+.number-pad button::after { content: attr(data-remaining); position: absolute; right: 4px; bottom: 3px; color: var(--green); font-size: 10px; font-weight: 400; line-height: 1; pointer-events: none; }
+.sudoku-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.sudoku-tools button { padding: 4px; font-size: 12px; }
+#note-mode[aria-pressed="true"] { background: var(--green); color: white; }
+@media (max-width: 850px) {
+  .stage-controls { width: 100%; }
+  .sudoku-cell { font-size: clamp(13px, 4.5vw, 22px); }
+  .cell-notes span { font-size: clamp(5px, 1.6vw, 8px); }
+  .game-stage .toolbar { line-height: 16px; }
+}
+/* 顶部信息随内容增长，数字键盘独立占位，避免旧四行布局挤出操作。 */
+@media(max-width:850px){html body.sudoku-game.unified-game[data-game] .game-layout{grid-template-rows:auto minmax(0,1fr) auto}html body.sudoku-game.unified-game[data-game] .game-layout>.stage-controls{grid-row:3;height:auto}}
+@media(max-width:850px) and (max-height:480px) and (orientation:landscape){html body.sudoku-game.unified-game[data-game] .game-layout{grid-template-rows:auto auto minmax(0,1fr)}html body.sudoku-game.unified-game[data-game] .game-layout>.stage-controls{grid-column:2;grid-row:2}}/* PC数字键盘保留独立一行，普通辅助动作由公共样式自然排列。 */
+@media(min-width:851px){
+ html body.sudoku-game .number-pad{flex:1 0 100%;width:100%;gap:4px;order:-1}
+ html body.sudoku-game .number-pad button{min-height:44px;font-size:18px;padding:4px 1px;white-space:nowrap}
+}

@@ -1,0 +1,5 @@
+/* 私有样式仅承载画布及玩法专用输入，公共界面保持同源。 */
+body[data-game="lights-out"] canvas{touch-action:none}
+body[data-game="lights-out"] .play-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;flex-basis:100%;order:-1}
+body[data-game="lights-out"] .play-inputs button{min-height:44px;touch-action:manipulation}
+@media(max-width:850px){html body.unified-game[data-game="lights-out"] .game-layout .stage-controls.unified-controls>button{flex:1 1 0;min-width:0}}

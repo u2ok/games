@@ -1,0 +1,2 @@
+/* 只定义本游戏棋盘，不覆盖基础布局与组件。 */
+@media (max-width: 850px) { .grid { gap: 8px; } .mines-grid { gap: 4px; } }

@@ -1,0 +1,5 @@
+/* 私有规则仅用于画布与蓄力输入；PC、手机和横屏沿用公共方形舞台。 */
+body[data-game="jump-hop"] canvas{touch-action:none;user-select:none;cursor:pointer}
+body[data-game="jump-hop"] #charge{touch-action:none;user-select:none;-webkit-user-select:none}
+body[data-game="jump-hop"] #charge[data-holding="true"]{background:var(--sage);border-color:var(--green);color:var(--green)}
+@media(prefers-reduced-motion:reduce){body[data-game="jump-hop"] #charge{transition:none}}

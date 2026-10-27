@@ -1,0 +1,16 @@
+<!-- 导航站物件式Logo：奶油白手柄、深墨绿方向键和彩色按键，代表多种小游戏。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="shell" x1="20" y1="15" x2="43" y2="51" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFCF1"/><stop offset="1" stop-color="#E6D9BD"/></linearGradient>
+  </defs>
+  <ellipse cx="32" cy="54" rx="24" ry="4" fill="#493D2B" opacity=".12"/>
+  <!-- 加深下沿形成轻薄厚度，背景保持透明。 -->
+  <path d="M18 19h28c9 0 12 9 14 23 2 12-5 18-13 8l-6-7H23l-6 7C9 60 2 54 4 42c2-14 5-23 14-23Z" fill="#B8AE98"/>
+  <path d="M18 15h28c9 0 12 9 14 23 2 12-5 18-13 8l-6-7H23l-6 7C9 56 2 50 4 38c2-14 5-23 14-23Z" fill="url(#shell)" stroke="#C9BDA5" stroke-width="1"/>
+  <path d="M11 28q2-8 9-8h23" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M17 24h6v6h6v6h-6v6h-6v-6h-6v-6h6Z" fill="#425B51"/>
+  <circle cx="45" cy="25" r="4" fill="#E2AC5E"/>
+  <circle cx="53" cy="33" r="4" fill="#D97C6C"/>
+  <circle cx="37" cy="33" r="4" fill="#80AC9A"/>
+  <circle cx="45" cy="41" r="4" fill="#9B8ABC"/>
+</svg>

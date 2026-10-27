@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>找茬 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="spot-difference" data-summary-default="collapsed">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">找茬</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board" data-board-ratio="0.7894736842">
+      <canvas id="canvas" width="600" height="760" tabindex="0" aria-label="找茬游戏区域，点击两幅图的不同处；方向键移动游标，回车确认">浏览器需要支持Canvas。</canvas>
+      <div class="cover" id="game-cover" hidden>
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls"><button id="hint">提示位置</button><button id="zoom">放大细看</button><button id="next-level">下一关</button></div><div class="toolbar"><span id="detail"></span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作">
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">已找到</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">最快 / 秒</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">对照两幅风景，找出两幅画面的不同。</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <section id="level-section"><h3>关卡选择</h3><div id="level-list" class="level-grid"></div><p id="level-hint" class="storage">共36关，自由选择；完成进度自动保存。</p></section>
+      <details class="instructions" open><summary>操作与规则</summary><p>比较原画与找茬图，点击任意一幅的差异位置，两幅图会同时圈出。每关5至7处，没有倒计时，点错只记录次数，不扣时间。重复点击已找到的位置不计错。</p><p>“放大细看”切换原画、找茬图与上下对照；放大后可用“切换画面”对照。位置提示会圈出一处3秒，仍需自己点击；提示局不计最快。全部找齐后解锁通关反馈，可进入下一关。每关独立保存无提示最快用时。</p><p>画布聚焦后方向键移动游标，Shift精调，Enter确认；P暂停/继续，Enter开始，Shift+Enter重开。打开设置、失焦、隐藏页面自动暂停，关闭菜单需手动继续。所有关卡可自由选择。</p></details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <p>点击两幅图的不同位置。关卡可自由选择，记录自动保存在本机。</p>
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!-- 连连看：独立游戏物件式标志，无统一底板；错位图块、自然暖色及薄厚感。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="coral" x1="12" y1="9" x2="35" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#FFA98D"/><stop offset="1" stop-color="#DE735B"/></linearGradient>
+    <linearGradient id="cream" x1="32" y1="23" x2="53" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFAEB"/><stop offset="1" stop-color="#F3DBAC"/></linearGradient>
+  </defs>
+  <!-- 底部柔和投影与加深侧面使用实体路径，保证标签尺寸下的清晰度。 -->
+  <ellipse cx="34" cy="56" rx="23" ry="4" fill="#6D4635" opacity=".12"/>
+  <g transform="rotate(-12 23 25)">
+    <rect x="8" y="9" width="29" height="34" rx="8" fill="#B95745"/>
+    <rect x="8" y="5" width="29" height="34" rx="8" fill="url(#coral)"/>
+    <path d="M13 15q0-5 5-5h12" stroke="#FFD6BB" stroke-width="2" stroke-linecap="round"/>
+    <path d="M22.5 29 15 22c-5-6 3-11 7.5-5 4.5-6 12.5-1 7.5 5Z" fill="#FFF6E4"/>
+  </g>
+  <g transform="rotate(10 43 39)">
+    <rect x="28" y="23" width="29" height="34" rx="8" fill="#D6AD77"/>
+    <rect x="28" y="19" width="29" height="34" rx="8" fill="url(#cream)" stroke="#E3C79E" stroke-width=".8"/>
+    <path d="M33 29q0-5 5-5h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    <path d="M42.5 43 35 36c-5-6 3-11 7.5-5 4.5-6 12.5-1 7.5 5Z" fill="#DB775F"/>
+  </g>
+</svg>

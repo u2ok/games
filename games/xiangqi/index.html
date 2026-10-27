@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>中国象棋 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="xiangqi">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">中国象棋</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board" >
+      <canvas id="canvas" width="520" height="600" tabindex="0" aria-label="中国象棋棋盘，点击选子和走棋，方向键移动光标，回车确认">浏览器需要支持 Canvas。</canvas>
+      <div class="cover" id="game-cover" >
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls xiangqi-tools"><button id="undo">悔棋</button></div><div class="toolbar"><span id="detail"></span><span>轻松一局，专注当下</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作"><div class="mode-switch" aria-label="对战模式"><button data-mode="ai" aria-pressed="true">人机对战</button><button data-mode="local" aria-pressed="false">双人对弈</button></div>
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">我方胜局</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">电脑胜局</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">9 × 10 · 红方先行</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <details class="instructions" open>
+        <summary>操作与规则</summary>
+        <p>明棋：红方先行，点击己方棋子查看合法走法，再点击目标位置。支持马腿、象眼、炮架、九宫、过河兵与将帅照面限制。必须解除将军；无合法着法判负，包括困毙。方向键移动光标，Enter/空格确认。</p>
+        <p>翻棋：32子随机盖放，先翻者以首枚颜色定边。相邻走一格；按将、士、象、车、马、炮、兵等级吃子，同级可吃，兵可吃将、将不能吃兵；炮吃子必须隔恰好一枚棋子，可吃任意等级的明子，不能直接吃暗子。无将军/九宫限制。吃尽或封死对方获胜；三次重复或80手无吃子/翻子判和。电脑仅使用已公开信息。</p>
+        <p>明棋人机模式你执红，电脑执黑；悔棋撤回最近一轮，双人撤回一手。重复局面三次或120手无吃子判和，暂不按竞赛规则裁定长将长捉。两种玩法均支持人机或双人；人机悔棋撤回一轮，双人撤回一手，结束后不可悔棋。切换对战模式重开；玩法选择在新局生效。</p><p>打开设置、切换页面或窗口失焦时自动暂停，回来后请手动继续。</p>
+      </details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>玩法<select id="variant"><option value="classic">明棋 · 标准象棋</option><option value="dark">翻棋 · 4×8暗棋</option></select></label>
+    <label>机器水平<select id="option"><option value="easy">轻松 · 入门</option><option value="normal" selected>标准 · 均衡</option><option value="hard">进阶 · 深思</option></select></label>
+    <p>机器在评价接近的合法走法中随机选择，开局和应对会变化；进阶档随机幅度更小。机器水平在新的一局生效。</p>
+    <p>设置自动保存在本机，关闭设置后请手动继续。规则设置在新的一局生效。</p>
+    
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>
+
+
+

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>吃豆迷宫 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="pac-maze" data-summary-default="expanded">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">吃豆迷宫</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board">
+      <canvas id="canvas" width="600" height="600" tabindex="0" aria-label="吃豆迷宫游戏区域">浏览器需要支持Canvas。</canvas>
+      <div class="cover" id="game-cover" hidden>
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls"><div class="play-inputs"><button id="left">向左</button><button id="up">向上</button><button id="down">向下</button><button id="right">向右</button></div></div><div class="toolbar"><span id="detail"></span><span>轻松一局，专注当下</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作">
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">得分</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">最佳得分</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">穿过回廊收集豆子，强化后反击追兵。</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <section id="level-section"><h3>关卡选择</h3><div id="level-list" class="level-grid"></div><p id="level-hint" class="storage"></p></section>
+      <details class="instructions" open><summary>操作与规则</summary><p>方向键/WASD或方向按钮移动，吃完所有豆子获胜。大能量豆提供六秒反击时间，碰到敌人可将其送回出生点；普通状态碰敌损失生命，三条生命耗尽结束。敌人会追踪路线，普通豆10分，能量豆50分，反击200分。</p><p>P暂停/继续，Enter开始/继续，Shift+Enter重开。打开更多、页面隐藏或失焦自动暂停，关闭后手动继续。难度在下一局生效。</p></details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>难度<select id="option"><option value="easy">轻松</option><option value="normal" selected>标准</option><option value="hard">挑战</option></select></label><p>设置保存在本机，下一局生效。</p>
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>

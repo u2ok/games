@@ -1,0 +1,9 @@
+/* 私有样式仅负责洞口与地鼠；页面使用公共界面。 */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:12px;width:100%;height:100%;padding:8px;background:#e4eddb;border-radius:10px}
+.mole-hole{position:relative;display:grid;place-items:center;min-width:0;min-height:0;padding:0;border:0;background:transparent;overflow:hidden;touch-action:manipulation}
+.mole-hole::before{content:'';position:absolute;left:8%;right:8%;bottom:14%;height:28%;border-radius:50%;background:#624b3c;box-shadow:inset 0 5px 0 #46372933}
+.mole-body{display:block;width:86%;height:86%;transform:translateY(105%);visibility:hidden;transition:transform .12s;pointer-events:none}
+.mole-body svg{display:block;width:100%;height:100%}
+.is-up .mole-body{transform:translateY(0);visibility:visible}
+.hole-number{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:12px;color:#68745f;pointer-events:none}
+@media(max-width:850px){.grid{gap:6px;padding:4px}}

@@ -1,0 +1,4 @@
+/* 固定双画幅逻辑坐标；放大仅改变画内布局，不另造公共界面。 */
+body[data-game="spot-difference"] .board{aspect-ratio:15/19;height:auto}
+body[data-game="spot-difference"] canvas{touch-action:manipulation;cursor:crosshair}
+@media(min-width:851px){body[data-game="spot-difference"] .board{width:min(100%,calc(var(--board-size)*var(--scene-ratio,.7894736842)))}}

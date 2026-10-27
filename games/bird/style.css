@@ -1,0 +1,7 @@
+/* 小鸟飞行使用统一舞台与大尺寸单键触屏区。 */
+.bird-controls { display:none; }
+canvas { touch-action:none; }
+@media(max-width:850px){
+  .touch-controls.bird-controls { display:grid;grid-template-columns:1fr; }
+  .bird-controls button { min-height:52px;touch-action:manipulation;font-size:16px; }
+}

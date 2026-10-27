@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>小游戏 · 给自己，一局的时间</title>
+    <link rel="icon" type="image/svg+xml" href="src/logo.svg">
+    <link rel="stylesheet" href="src/style.css">
+    <script src="src/icons.js" defer></script>
+    <script src="src/script.js" defer></script>
+</head>
+<body>
+<!-- 导航与游戏均为静态页面，使用相对地址以兼容本地文件打开。 -->
+
+<div class="layout">
+    <aside class="sidebar">
+        <header class="site-header">
+            <a class="brand" href="index.html">
+                <img class="brand-logo" src="src/logo.svg" width="32" height="32" alt="">
+            小游戏</a>
+        </header>
+        <form role="search" id="search-form"><label class="sr-only" for="search">搜索游戏</label>
+            <div class="search-box">
+                <span aria-hidden="true">⌕</span>
+                <input id="search" type="search" placeholder="搜索游戏、玩法或标签" autocomplete="off">
+                <button type="button" id="clear-search" aria-label="清空搜索" hidden>×</button>
+            </div>
+        </form>
+        <h2>游戏分类</h2>
+        <nav aria-label="游戏筛选" id="filters">
+            <button class="filter active" data-filter="all">全部游戏 <span class="filter-count">0</span></button>
+            <button class="filter" data-filter="休闲"><span data-icon="cup"></span> 休闲<span class="filter-count">0</span></button>
+            <button class="filter" data-filter="益智"><span data-icon="puzzle"></span> 益智<span class="filter-count">0</span></button>
+            <button class="filter" data-filter="街机"><span data-icon="arcade"></span> 街机<span class="filter-count">0</span></button>
+            <hr>
+            <button class="filter" data-filter="favorites">☆ 我的收藏<span class="filter-count">0</span></button>
+            <button class="filter" data-filter="recent">◷ 最近玩过<span class="filter-count">0</span></button>
+        </nav>
+        <p class="sidebar-note">无需下载<br>打开即玩</p></aside>
+    <main>
+        <div class="main-scroll">
+            <section class="intro">
+                <div><h1>给自己，一局的时间。</h1>
+                    <p id="collection-description">17 款轻松有趣的小游戏，随时打开，放松一下。</p></div>
+            </section>
+            <section aria-labelledby="games-title">
+                <div class="section-heading">
+                    <h2 id="games-title">探索游戏</h2>
+                    <span id="result-count" aria-live="polite"></span>
+                </div>
+                <div class="game-grid" id="game-list"></div>
+                <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">⌕</span>
+                    <h3 id="empty-title">没有找到游戏</h3>
+                    <p id="empty-description">试试其他名称或玩法关键词。</p>
+                    <button class="button secondary" id="reset-filters">查看全部游戏</button>
+                </div>
+            </section>
+        </div>
+        <footer>原生小游戏合集 <span>无需下载 · 打开即玩</span></footer>
+    </main>
+</div>
+</body>
+</html>

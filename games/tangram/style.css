@@ -1,0 +1,9 @@
+/* 私有CSS仅承载拼板比例、触控与选块输入。 */
+body[data-game="tangram"] .board{aspect-ratio:15 / 17;height:auto}
+body[data-game="tangram"] canvas{touch-action:none;cursor:grab}
+body[data-game="tangram"] canvas.dragging{cursor:grabbing}
+body[data-game="tangram"] .piece-picker{display:flex;flex:1 1 64px;min-width:64px;margin:0}
+body[data-game="tangram"] #piece-select{width:100%;max-width:none;flex:1;min-width:0;min-height:44px;padding:6px 22px 6px 6px;background-position:right 5px center}
+body[data-game="tangram"] .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:851px){body[data-game="tangram"] .board{width:min(100%,calc(var(--board-size)*.8823529412))}}
+@media(max-width:850px){html body.unified-game[data-game="tangram"] .stage-controls>button,body[data-game="tangram"] .piece-picker{flex:1 1 calc(25% - 6px);min-width:0;padding:6px 2px}body[data-game="tangram"] .piece-picker{padding:0}body[data-game="tangram"] #piece-select{font-size:13px}}

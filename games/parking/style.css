@@ -1,0 +1,27 @@
+/* 停车场与车身专用表现；操作栏和公共面板保持统一主题。 */
+body[data-game="parking"] .play-grid { height:100%; position:relative; overflow:hidden; isolation:isolate; border:7px solid #c5bdab; border-radius:12px; background:#e2e7e4; box-shadow:inset 0 0 0 2px #a3b1aa,inset 0 0 25px #334e4912; touch-action:none; }
+body[data-game="parking"] .parking-space { position:absolute; width:16.666667%; height:16.666667%; border:1px dashed #a4b4ab80; background:linear-gradient(135deg,#ffffff13,#7a938513); }
+body[data-game="parking"] .parking-mark { position:absolute; inset:18% 12%; display:grid; place-content:center; text-align:center; color:#80978a20; font:bold 100px/1 sans-serif; pointer-events:none; }
+body[data-game="parking"] .parking-mark span { display:block; margin-top:12px; font-size:14px; letter-spacing:.3em; }
+body[data-game="parking"] .parking-lane { position:absolute; z-index:1; background:#fff4c538; border:1px dashed #b3985d80; pointer-events:none; transition:width .16s,height .16s,left .16s,top .16s; }
+body[data-game="parking"] .parking-car { position:absolute; z-index:2; padding:4px; min-width:0; min-height:0; border:0; border-radius:10px; background:transparent; cursor:grab; transition:left .18s ease-out,top .18s ease-out,filter .18s; -webkit-user-select:none; user-select:none; }
+body[data-game="parking"] .parking-car:hover { background:transparent; filter:brightness(1.06); }
+body[data-game="parking"] .parking-car:active { cursor:grabbing; }
+body[data-game="parking"] .vehicle-art { display:block; width:100%; height:100%; filter:drop-shadow(0 3px 2px #30493a35); pointer-events:none; overflow:visible; }
+body[data-game="parking"] .parking-car.selected { z-index:3; }
+body[data-game="parking"] .parking-car.selected .vehicle-art { filter:drop-shadow(0 0 3px #5366d6) drop-shadow(0 3px 2px #30493a40); }
+body[data-game="parking"] .parking-car.selected:after { content:""; position:absolute; inset:3px; border:2px solid #5366d6; border-radius:9px; pointer-events:none; }
+body[data-game="parking"] .parking-exit { position:absolute; right:0; top:33.333333%; height:16.666667%; width:5%; z-index:4; display:grid; place-items:center; border-right:4px dashed #628c71; background:linear-gradient(90deg,transparent,#b0cda8b0); pointer-events:none; }
+body[data-game="parking"] .parking-exit svg { width:100%; fill:none; stroke:#3d7155; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; animation:parking-exit-pulse 1.8s ease-in-out infinite; }
+body[data-game="parking"] .parking-car.escaping { animation:parking-drive-out .65s ease-in forwards; }
+@keyframes parking-exit-pulse { 50% { opacity:.45; transform:translateX(2px); } }
+@keyframes parking-drive-out { to { transform:translateX(80%); opacity:0; } }
+@media(max-width:850px) {
+ body[data-game="parking"] .play-grid { border-width:5px; border-radius:9px; }
+ body[data-game="parking"] .parking-car { padding:2px; }
+ body[data-game="parking"] .parking-car.selected:after { inset:1px; border-width:1px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ body[data-game="parking"] .parking-car, body[data-game="parking"] .parking-lane { transition:none; }
+ body[data-game="parking"] .parking-exit svg, body[data-game="parking"] .parking-car.escaping { animation:none; }
+}

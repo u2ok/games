@@ -1,0 +1,2 @@
+/* 仅棋盘、玩法及专用输入；导航/面板/按钮主题沿用公共源。 */
+.play-grid{height:100%;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));gap:1px;background:#9caf9a;border:1px solid #9caf9a}.nuri-cell{border:0;border-radius:0;min-width:0;min-height:0;padding:0;background:#e8eddf;font-size:clamp(18px,4vw,34px);font-weight:700}.nuri-cell.island{background:#fffdf1}.nuri-cell.sea{background:#3d5b4e}.nuri-cell.cursor{box-shadow:inset 0 0 0 3px #8a9bf2}.nuri-cell.error{outline:3px solid #b46454;outline-offset:-4px}

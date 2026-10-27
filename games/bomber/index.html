@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>炸弹人 · 小游戏</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="icons.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="interface.js" defer></script>
+</head>
+<body data-game="bomber" data-summary-default="collapsed">
+  <!-- 页面骨架统一；棋盘与游戏规则保持独立实现。 -->
+  <header class="game-header">
+    <a href="../../index.html"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>游戏大厅</span></a>
+    <h1><img src="logo.svg" width="28" height="28" alt="">炸弹人</h1><span aria-hidden="true"></span>
+  </header>
+  <main class="game-layout">
+    <section class="game-stage" aria-label="游戏区域">
+      <div class="board canvas-board">
+      <canvas id="canvas" width="600" height="600" tabindex="0" aria-label="炸弹人游戏区域">浏览器需要支持Canvas。</canvas>
+      <div class="cover" id="game-cover" hidden>
+    
+    <h2 id="cover-title">准备好了吗？</h2>
+    <p id="cover-note">点击开始游戏，享受轻松一局。</p>
+    <button class="primary" id="cover-action">开始游戏</button>
+    
+  </div>
+    </div>
+      <div class="stage-controls"><div class="bomber-input"><button data-dir="ArrowLeft" aria-label="左移"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><button data-dir="ArrowUp" aria-label="上移"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button><button data-dir="ArrowDown" aria-label="下移"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></button><button data-dir="ArrowRight" aria-label="右移"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div><button id="bomb">放炸弹</button></div><div class="toolbar"><span id="detail"></span><span>轻松一局，专注当下</span></div>
+    </section>
+    <section class="game-panel" aria-label="游戏信息与操作">
+      
+      <div class="panel-heading"><h2 >本局游戏</h2><button class="settings-button" id="settings-open" aria-label="打开游戏设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h7m4 0h5M4 17h3m4 0h9 M15 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M11 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></svg><span>设置</span></button></div>
+      <div class="scores">
+        <div class="score-card"><span id="score-label">击退</span><strong id="score">0</strong></div>
+        <div class="score-card"><span id="best-label">最佳得分</span><strong id="best">0</strong></div>
+      </div>
+      
+      <p class="rule-label" id="rule-label">炸墙、收集道具，击退敌人寻找出口。</p>
+      <div class="game-actions">
+        <button class="primary" id="start">开始游戏</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+      </div>
+      <p class="game-status" id="status" role="status" aria-live="polite">准备好了吗？开始你的第一局。</p>
+      <p class="storage" id="storage" role="status"></p>
+      
+      <section id="level-section"><h3>关卡选择</h3><div id="level-list" class="level-grid"></div><p id="level-hint" class="storage"></p></section>
+      <details class="instructions" open><summary>操作与规则</summary><p>8关单人炸弹人。方向键/WASD或方向按钮移动，空格/放炸弹放置2.2秒后爆炸的炸弹。爆炸十字扩散，石墙阻断，木箱被毁后停止传播；炸弹可连锁引爆。火焰伤害敌我，受伤扣1命并回起点，短暂无敌。木箱随机掉火力、容量或速度提升；炸弹所在格离开后不能穿过。击退全部敌人、炸开右下出口并走入通关；敌人和超时会造成失败。下关重置本关资源。</p><p>打开更多、隐藏页面或失焦时自动暂停，关闭后手动继续。P暂停/继续，Enter开始/继续，Shift+Enter重新开始。难度在下一局生效。</p>
+      </details>
+    </section>
+    
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><h2 id="settings-title">游戏设置</h2><button class="icon-button" aria-label="关闭设置"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12m0-12L6 18"/></svg></button></div></form>
+    <label>音效<input id="sound" type="checkbox" role="switch"></label>
+    <label>难度<select id="option"><option value="easy">轻松</option><option value="normal" selected>标准</option><option value="hard">挑战</option></select></label><p>设置保存在本机，下一局生效。</p>
+    <button class="primary" id="settings-close">完成设置</button>
+  </dialog>
+  <footer class="game-footer">小游戏 · 给自己，一局的时间。</footer>
+</body>
+</html>

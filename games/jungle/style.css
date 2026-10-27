@@ -1,0 +1,11 @@
+/* 斗兽棋专用7列9行地形及兽棋；公共信息区、按钮与弹层沿用统一样式。 */
+body[data-game="jungle"] .board{aspect-ratio:7/9;height:auto;padding:8px;background:#e6e9d9}
+.jungle-grid{width:100%;height:100%;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(9,minmax(0,1fr));gap:1px;background:#b6c2aa;border:1px solid #9cae91}
+.jungle-grid .jungle-cell{position:relative;display:grid;place-items:center;min-width:0;min-height:0;padding:2px;border:0;border-radius:0;background:#eef0df;color:#8b6653;touch-action:manipulation}
+.jungle-cell.river{background:#cee3e6}.jungle-cell.trap-2,.jungle-cell.den-2{color:#547d98;background:#e1e9e4}.jungle-cell.trap-1,.jungle-cell.den-1{color:#a85e4e;background:#eee2d4}
+.jungle-cell>svg{width:72%;height:72%;pointer-events:none}.jungle-cell .animal{position:relative;display:grid;place-items:center;width:90%;height:90%;aspect-ratio:1;border-radius:50%;font-size:clamp(13px,2.4vw,26px);font-weight:700;background:#fff9e9;border:2px solid currentColor;box-shadow:0 2px 1px #263b3226;pointer-events:none}
+.animal.team-1{color:#9f473e}.animal.team-2{color:#356781}.animal small{position:absolute;right:6%;bottom:0;font-size:clamp(8px,1vw,11px);line-height:1.1;background:#fff9e9;border-radius:3px}
+.jungle-grid .selected{background:#d5dfb5}.jungle-grid .cursor{box-shadow:inset 0 0 0 2px #748f68;z-index:1}.jungle-grid .legal:after{content:"";position:absolute;width:22%;height:22%;border-radius:50%;background:#54785c;pointer-events:none}.jungle-grid .legal:has(.animal):after{width:94%;height:94%;background:transparent;border:2px dashed #52765b}.jungle-cell.last .animal{background:#f4ecd1}
+@media(min-width:851px){body[data-game="jungle"] .board{width:min(100%,calc((100dvh - 190px)*.777778))}}
+@media(max-width:850px){.jungle-cell .animal{font-size:clamp(12px,5vw,23px);border-width:1px}.animal small{font-size:8px}body[data-game="jungle"] .board{padding:5px}}
+@media(max-width:850px) and (orientation:landscape){.jungle-cell .animal{font-size:clamp(10px,3.5vh,18px)}.animal small{font-size:7px}}

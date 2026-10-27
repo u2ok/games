@@ -1,0 +1,47 @@
+/* 仅牌桌、牌列与牌面；公共导航、信息卡和操作栏保持统一。 */
+body[data-game="spider"] .board { padding:0; }
+body[data-game="spider"] .play-grid {
+  height:100%; min-height:0; display:grid; grid-template-columns:repeat(10,minmax(0,1fr));
+  grid-template-rows:40px minmax(0,1fr); gap:8px 5px; padding:10px;
+  background:radial-gradient(ellipse at 50% 0,#f4f7ee,transparent 80%),#e1eade;
+}
+body[data-game="spider"] .spider-top { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+body[data-game="spider"] .spider-foundations { display:flex; gap:5px; }
+body[data-game="spider"] .foundation { width:22px; height:30px; display:grid; place-items:center; border:1px solid #a5b79e; border-radius:4px; color:#6f826b; font-size:10px; background:#ffffff30; }
+body[data-game="spider"] .foundation.filled { color:#2e4f3d; background:#fffdf6; border-color:#829f7c; box-shadow:0 2px 3px #435a4212; }
+body[data-game="spider"] .foundation svg { width:13px; height:17px; }
+body[data-game="spider"] .spider-stock { font-size:11px; color:#53684e; white-space:nowrap; }
+body[data-game="spider"] .spider-column { grid-row:2; position:relative; min-width:0; min-height:0; border-radius:5px; background:#6c876209; }
+body[data-game="spider"] .column-number { position:absolute; left:0; right:0; top:0; color:#65775d; font-size:10px; line-height:16px; text-align:center; }
+body[data-game="spider"] .empty-column { position:absolute; left:0; right:0; top:20px; height:54px; display:grid; place-items:center; border:1px dashed #9daf91; border-radius:5px; color:#728568; font-size:10px; writing-mode:vertical-rl; letter-spacing:3px; }
+body[data-game="spider"] .spider-column.available .empty-column { border:2px dashed #7788d4; color:#5366d6; background:#ffffff70; }
+body[data-game="spider"] .spider-column.hint-target { box-shadow:0 0 0 2px #5366d6; background:#5366d617; }
+body[data-game="spider"] .spider-column.hint-target .column-number { color:#4354bb; font-weight:700; }
+body[data-game="spider"] .spider-card {
+  position:absolute; left:0; width:100%; min-width:0; min-height:0; padding:0;
+  border:1px solid #c8cfbf; border-radius:5px; background:#fffef9; color:#283f35;
+  box-shadow:0 2px 3px #32443118; overflow:hidden; line-height:1; touch-action:manipulation;
+}
+body[data-game="spider"] .spider-card:hover { background:#fffdf1; }
+body[data-game="spider"] .card-corner { position:absolute; inset:3px 3px auto; display:flex; justify-content:space-between; align-items:center; gap:1px; }
+body[data-game="spider"] .card-corner strong { font-size:clamp(11px,1.4vw,17px); line-height:18px; font-weight:750; }
+body[data-game="spider"] .card-corner svg { width:clamp(7px,1vw,12px); height:14px; flex:none; }
+body[data-game="spider"] .card-pip { position:absolute; inset:31% 20% 10%; display:grid; place-items:center; opacity:.8; }
+body[data-game="spider"] .card-pip svg { width:100%; height:100%; max-height:38px; }
+body[data-game="spider"] .spider-card.red { color:#a64e47; }
+body[data-game="spider"] .spider-card.back { background:#78978c; border-color:#69897c; }
+body[data-game="spider"] .card-back-pattern { position:absolute; inset:3px; border:1px solid #d5e3d655; border-radius:2px; background:repeating-linear-gradient(45deg,transparent 0 4px,#e5efdc27 4px 5px); }
+body[data-game="spider"] .spider-card.selected { border-color:#5366d6; background:#f0f2ff; box-shadow:inset 0 0 0 1px #5366d6,0 2px 4px #5366d633; }
+body[data-game="spider"] .spider-card.key-cursor { outline:2px solid #8d9ccf; outline-offset:-3px; }
+body[data-game="spider"] .spider-column.available .spider-card:last-child { border-color:#7788d4; box-shadow:inset 0 0 0 1px #7788d4; }
+@media(min-width:851px) { body[data-game="spider"] .play-grid { gap:9px 6px; padding:12px; } }
+@media(max-width:850px) {
+  body[data-game="spider"] .play-grid { grid-template-rows:26px minmax(0,1fr); gap:4px 3px; padding:5px 4px; }
+  body[data-game="spider"] .spider-foundations { gap:3px; }
+  body[data-game="spider"] .foundation { width:17px; height:24px; }
+  body[data-game="spider"] .spider-stock { font-size:10px; }
+  body[data-game="spider"] .card-corner { inset:0 2px auto; }
+  body[data-game="spider"] .card-corner strong { font-size:12px; line-height:12px; }
+  body[data-game="spider"] .card-corner svg { width:8px; height:11px; }
+}
+@media(max-width:360px) { body[data-game="spider"] .play-grid { column-gap:2px; } body[data-game="spider"] .card-corner { inset:0 1px auto; } body[data-game="spider"] .card-corner strong { font-size:11px; } }

@@ -1,0 +1,8 @@
+/* 棋盘内部为 10×20，正方形舞台两侧显示等级、消行和下一块提示。 */
+.tetris-controls { display: none; }
+.tetris-controls button { min-height: 44px; padding: 8px; touch-action: manipulation; user-select: none; font-size: 12px; }
+.tetris-controls .drop { background: var(--green); border-color: var(--green); color: white; }
+@media (max-width:850px) {
+  .touch-controls.tetris-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 0; }
+  .tetris-controls button { padding: 4px 8px; }
+}

@@ -1,0 +1,11 @@
+/* 军棋棋盘为纵向五列十二站；公共导航、信息卡、操作栏沿用基础样式。 */
+body[data-game="junqi"] .board { aspect-ratio: 3 / 4; height:auto; }
+@media (min-width:851px) {
+  body[data-game="junqi"] .board { width:min(100%,calc(var(--board-size) * .75)); }
+}
+@media (max-width:850px) {
+  body[data-game="junqi"] .board { max-width:100%; }
+}
+@media (max-width:850px) and (orientation:landscape) {
+  body[data-game="junqi"] .board { max-height:100%; }
+}

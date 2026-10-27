@@ -1,0 +1,21 @@
+/* 数字提示与像素格是玩法专属区，页面骨架与按钮沿用公共样式。 */
+body[data-game="nonogram"] .nonogram-board { width:100%; height:100%; container-type:inline-size; display:grid; grid-template-columns:var(--row-hint-space,25%) minmax(0,1fr); grid-template-rows:var(--col-hint-space,25%) minmax(0,1fr); gap:2px; font-variant-numeric:tabular-nums; }
+.column-clues,.row-clues { display:grid; min-width:0; min-height:0; }
+.nonogram-clue { display:flex; align-items:center; justify-content:flex-end; gap:3px; padding:2px; color:var(--ink); font-size:clamp(6px,calc(65cqw / var(--nono-size,5)),15px); font-weight:600; line-height:1.1; }
+.column-clues .nonogram-clue { flex-direction:column; justify-content:flex-end; }
+.row-clues .nonogram-clue { justify-content:flex-end; }
+.nonogram-clue.complete { color:var(--green); background:var(--sage); }
+.nonogram-grid { display:grid; min-width:0; min-height:0; border-top:1px solid #a8b4a8; border-left:1px solid #a8b4a8; touch-action:none; user-select:none; }
+.nonogram-grid .nonogram-cell { display:grid; place-items:center; min-width:0; min-height:0; padding:1px; background:var(--paper); border:0; border-right:1px solid #c1cbbf; border-bottom:1px solid #c1cbbf; border-radius:0; }
+.nonogram-grid .nonogram-cell.filled { background:#48695a; }
+.nonogram-grid .block-right { border-right:2px solid #7c8e7d; }
+.nonogram-grid .block-bottom { border-bottom:2px solid #7c8e7d; }
+.nonogram-cell svg { display:block; width:70%; height:70%; color:#7b8994; }
+.nonogram-grid .cell-cursor { box-shadow:inset 0 0 0 2px #8695ed; z-index:1; }
+.nonogram-grid .cell-error { box-shadow:inset 0 0 0 2px var(--danger); }
+@media(max-width:850px){.nonogram-clue{gap:2px;padding:1px}}
+
+/* 专用填图工具单独成组，暂停/重开/更多另排一行，减少窄屏操作栏占位。 */
+body[data-game="nonogram"] .nonogram-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;flex:1 0 100%;order:0}
+body[data-game="nonogram"] .nonogram-tools button{min-width:0;min-height:44px;padding:6px 4px;font-size:12px;white-space:nowrap}
+body[data-game="nonogram"] .stage-controls>button{order:1}

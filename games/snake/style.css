@@ -1,0 +1,24 @@
+/* 贪吃蛇专属：模式、关卡目标和进度，不覆盖统一布局。 */
+#level-progress  {
+   width:100%;
+   height:8px;
+   accent-color:var(--green);
+}
+#level-section  {
+   border-top:1px solid var(--line);
+   padding-top:16px;
+}
+#level-section h3  {
+   font-size:14px;
+   margin-bottom:12px;
+}
+#level-list small  {
+   display:block;
+   font-size:12px;
+}
+#level-hint  {
+   margin-top:12px;
+   color:var(--muted);
+   font-size:12px;
+   line-height:20px;
+}
