@@ -256,7 +256,7 @@
   animation: idiom-enter .2s ease-out;
 }
 
-body[data-idiom-paused="true"] .idiom-play *,body[data-idiom-paused="true"] #character-row .is-filled {
+[data-idiom-paused="true"] .idiom-play *,[data-idiom-paused="true"] #character-row .is-filled {
   animation-play-state: paused;
 }
 

@@ -95,7 +95,7 @@ h1, h2, h3, p {
   background: var(--bg);
 }
 
-.game-header > a {
+.hall-link {
   grid-column: 1;
   grid-row: 1;
   justify-self: start;
@@ -112,12 +112,12 @@ h1, h2, h3, p {
   transition: background .15s, border-color .15s;
 }
 
-.game-header > a:hover {
+.hall-link:hover {
   background: transparent;
   color: #4354bb;
 }
 
-.game-header h1 {
+.game-title {
   grid-column: 2;
   grid-row: 1;
   display: flex;
@@ -130,7 +130,7 @@ h1, h2, h3, p {
   white-space: nowrap;
 }
 
-.game-header h1 img {
+.game-logo {
   display: block;
   flex: none;
   width: 32px;
@@ -734,17 +734,17 @@ dialog > .primary {
   .game-header > span {
     display: none;
   }
-  .game-header h1 {
+  .game-title {
     font-size: 17px;
     gap: 7px;
     letter-spacing: 0;
   }
-  .game-header h1 img {
+  .game-logo {
     width: 26px;
     height: 26px;
     border-radius: 0;
   }
-  .game-header > a {
+  .hall-link {
     font-size: 12px;
     padding: 0 6px;
     min-height: 40px;
@@ -793,11 +793,11 @@ dialog > .primary {
     padding: 4px 8px;
     gap: 4px;
   }
-  .mobile-summary .score-card span {
+  .mobile-summary .score-label {
     font-size: 11px;
     line-height: 16px;
   }
-  .mobile-summary .score-card strong {
+  .mobile-summary .score-value {
     font-size: 22px;
     line-height: 28px;
   }
@@ -952,10 +952,10 @@ dialog > .primary {
     grid-template-columns: minmax(0, 1fr) 184px;
     grid-template-rows: 48px minmax(0, 1fr);
   }
-  .game-layout:has(.touch-controls) .mobile-summary {
+  :where(.game-layout:has(.touch-controls)) .mobile-summary {
     grid-column: 1 / -1;
   }
-  .game-layout:has(.touch-controls) .touch-controls {
+  :where(.game-layout:has(.touch-controls)) .touch-controls {
     grid-column: 2;
     grid-row: 2;
     align-self: center;
@@ -1005,7 +1005,7 @@ dialog > .primary {
   padding-bottom: 24px;
 }
 
-.unified-game .game-header > .settings-button {
+.game-header > .settings-button {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
@@ -1014,15 +1014,15 @@ dialog > .primary {
   background: transparent;
 }
 
-.unified-game .game-header > .settings-button span {
+.game-header > .settings-button span {
   display: inline;
 }
 
-.unified-game .game-header > .settings-button:hover {
+.game-header > .settings-button:hover {
   background: var(--sage);
 }
 
-.unified-game .game-footer {
+.game-footer {
   display: none;
 }
 
@@ -1047,13 +1047,13 @@ dialog > .primary {
   font-size: 12px;
 }
 
-.unified-game .game-stage > .unified-controls {
+.game-stage > .unified-controls {
   width: 100%;
   max-width: var(--actual-board-width,var(--board-size));
   box-sizing: border-box;
 }
 
-.unified-game .unified-controls > button {
+.unified-action.stage-action {
   flex: 1 1 0;
   min-width: 0;
 }
@@ -1062,10 +1062,10 @@ dialog > .primary {
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) {
-  html body.unified-game[data-game]:not(.mobile-layout) .game-layout .stage-controls.unified-controls > [data-control-group="actions"] {
+  body:not(.mobile-layout) .action-group {
     display: contents;
   }
-  html body.unified-game[data-game]:not(.mobile-layout) .game-layout .stage-controls.unified-controls > button, html body.unified-game[data-game]:not(.mobile-layout) .game-layout .stage-controls.unified-controls > [data-control-group="actions"] > button {
+  body:not(.mobile-layout) .unified-action {
     flex: 1 0 auto;
     min-width: 44px;
     min-height: 44px;
@@ -1074,17 +1074,17 @@ dialog > .primary {
   }
 }
 
-.unified-game .game-panel > [id="detail"] {
+.game-panel > [id="detail"] {
   font-size: 12px;
   color: var(--muted);
 }
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) {
-  .unified-game .game-layout {
+  .game-layout {
     margin-bottom: 24px;
   }
-  .unified-game .game-panel {
+  .game-panel {
     padding: 16px;
     gap: 12px;
   }
@@ -1096,24 +1096,24 @@ dialog > .primary {
     height: 85dvh;
     padding-bottom: max(20px,env(safe-area-inset-bottom));
   }
-  .unified-game .game-layout > .game-status {
+  .game-layout > .game-status {
     grid-row: 3;
     min-height: 0;
     overflow: auto;
     padding: 7px 10px;
     line-height: 19px;
   }
-  .unified-game .game-header h1 {
+  .game-title {
     font-size: 16px;
   }
-  .unified-game .game-header > .settings-button {
+  .game-header > .settings-button {
     padding: 4px;
     min-height: 40px;
   }
-  .unified-game .mobile-summary .scores {
+  .mobile-summary .scores {
     width: 100%;
   }
-  .unified-game .unified-controls {
+  .unified-controls {
     width: 100%;
   }
 }
@@ -1188,20 +1188,13 @@ dialog::backdrop {
   display: none;
 }
 
-/* 移动端共用：竖屏与触屏横屏 */
-@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game="tanks"] .game-layout {
-    grid-template-rows: 88px minmax(0,1fr) 54px 56px auto;
-  }
-}
-
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game]:has(.touch-controls) .game-layout {
+  body:has(.touch-controls) .game-layout {
     grid-template-columns: minmax(0,1fr) 260px;
     grid-template-rows: 40px 54px 56px minmax(0,1fr);
   }
-  html body.unified-game[data-game]:has(.touch-controls) .touch-controls {
+  body:has(.touch-controls) .touch-controls {
     grid-column: 2;
     grid-row: 4;
     align-self: center;
@@ -1210,36 +1203,36 @@ dialog::backdrop {
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game:not(.wide-table) .game-layout {
+  .game-layout {
     grid-template-columns: minmax(0,1fr) 260px;
     grid-template-rows: 40px 54px auto minmax(0,1fr);
   }
-  html body.unified-game:not(.wide-table) .mobile-summary {
+  .mobile-summary {
     grid-column: 2;
     grid-row: 1;
   }
-  html body.unified-game:not(.wide-table) .game-stage {
+  .game-stage {
     grid-column: 1;
     grid-row: 1 / 5;
   }
-  html body.unified-game:not(.wide-table) .game-layout > .game-status {
+  .game-layout > .game-status {
     grid-column: 2;
     grid-row: 2;
   }
-  html body.unified-game:not(.wide-table) .game-layout > .stage-controls {
+  .game-layout > .stage-controls {
     grid-column: 2;
     grid-row: 3;
     height: auto;
     flex-wrap: wrap;
   }
-  html body.unified-game:not(.wide-table) .touch-controls {
+  .touch-controls {
     grid-column: 2;
     grid-row: 4;
     align-self: center;
   }
 }
 
-.unified-game .feedback-title, .linkmatch-game .feedback-title {
+.feedback-title, .linkmatch-game .feedback-title {
   font-size: 14px;
   font-weight: 600;
   line-height: 24px;
@@ -1248,13 +1241,13 @@ dialog::backdrop {
   padding-top: 12px;
 }
 
-.unified-game .game-status {
+.game-status {
   min-height: 64px;
 }
 
 /* PC端：桌面宽度适配 */
 @media (min-width:1100px) {
-  html .unified-game:not(.wide-table) .game-layout {
+  .game-layout {
     --board-size: min(calc(100dvh - var(--game-header-height,64px) - 106px - var(--extra-controls-height,0px)),calc(100vw - 600px));
     max-width: none;
     width: 100%;
@@ -1263,10 +1256,10 @@ dialog::backdrop {
     padding: 0 20px 24px;
     margin: 20px 0 0;
   }
-  .unified-game:not(.wide-table) .game-stage {
+  .game-stage {
     grid-column: 2;
   }
-  .unified-game:not(.wide-table) .game-panel {
+  .game-panel {
     grid-column: 3;
     width: 260px;
     max-width: 100%;
@@ -1277,7 +1270,7 @@ dialog::backdrop {
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) and (max-width:1099px) {
-  html .unified-game:not(.wide-table) .game-layout {
+  .game-layout {
     --board-size: min(calc(100dvh - var(--game-header-height,64px) - 130px - var(--extra-controls-height,0px)),calc(100vw - 340px));
     max-width: none;
     width: 100%;
@@ -1290,61 +1283,61 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] {
+  body {
     grid-template-rows: 48px minmax(0,1fr);
   }
-  html body[data-game] .game-header {
+  .game-header {
     height: 48px;
     padding-left: 10px;
     padding-right: 10px;
   }
-  html body[data-game] .game-header h1 {
+  .game-title {
     font-size: 16px;
     gap: 5px;
   }
-  html body[data-game] .game-header h1 img {
+  .game-logo {
     width: 30px;
     height: 30px;
   }
-  html body[data-game] .game-header > a {
+  .hall-link {
     padding: 0 2px;
   }
-  html body[data-game] .game-header > .settings-button {
+  .game-header > .settings-button {
     padding: 4px;
     font-size: 12px;
   }
-  html body[data-game] .game-layout {
+  .game-layout {
     padding: 8px 10px max(12px,env(safe-area-inset-bottom));
     gap: 8px;
     grid-template-rows: 48px minmax(0,1fr) 54px 56px;
   }
-  html body[data-game]:has(.touch-controls) .game-layout {
+  body:has(.touch-controls) .game-layout {
     grid-template-rows: 48px minmax(0,1fr) 54px 56px auto;
   }
-  html body[data-game] .game-layout > .stage-controls {
+  .game-layout > .stage-controls {
     height: 56px;
     padding: 5px;
     gap: 6px;
     align-items: stretch;
   }
-  html body[data-game] .game-layout > .stage-controls button {
+  .game-layout > .stage-controls button {
     font-size: 12px;
     min-height: 44px;
     border-radius: 8px;
   }
-  html body[data-game] .game-layout > .game-status {
+  .game-layout > .game-status {
     padding: 7px 10px;
     line-height: 19px;
     font-size: 12px;
     border-radius: 8px;
   }
-  html body[data-game] .mobile-summary {
+  .mobile-summary {
     padding: 6px 10px;
   }
-  html body[data-game] .mobile-summary .score-card {
+  .mobile-summary .score-card {
     padding: 0;
   }
-  html body[data-game] .mobile-summary .score-card strong {
+  .mobile-summary .score-value {
     font-size: 16px;
     line-height: 24px;
   }
@@ -1352,50 +1345,50 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  .unified-game .game-layout {
+  .game-layout {
     grid-template-rows: 48px minmax(0,1fr) 54px auto auto;
     padding-bottom: max(12px,env(safe-area-inset-bottom));
   }
-  .unified-game .feedback-title {
+  .feedback-title {
     display: none;
   }
-  .unified-game .mobile-summary .score-card {
+  .mobile-summary .score-card {
     border: 0;
     border-radius: 0;
     background: transparent;
     padding: 4px 8px;
   }
-  .unified-game .mobile-summary {
+  .mobile-summary {
     padding: 4px;
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: 10px;
   }
-  .unified-game .mobile-summary .score-card strong {
+  .mobile-summary .score-value {
     font-size: 20px;
     line-height: 26px;
   }
-  .unified-game .game-stage {
+  .game-stage {
     justify-content: center;
   }
-  .unified-game .game-layout > .unified-controls {
+  .game-layout > .unified-controls {
     grid-row: 4;
     margin: 0;
     flex-wrap: nowrap;
   }
-  .unified-game .unified-controls button {
+  .unified-controls button {
     flex: 1 1 0;
     min-width: 0;
     padding: 6px 4px;
     font-size: 11px;
   }
-  .unified-game .unified-more {
+  .unified-more {
     display: block;
   }
-  .unified-game .touch-controls {
+  .touch-controls {
     grid-row: 5;
   }
-  .unified-game .mobile-menu-content > #detail {
+  .mobile-menu-content > #detail {
     font-size: 12px;
     color: var(--muted);
   }
@@ -1403,40 +1396,26 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game="tanks"]:has(.touch-controls) .game-layout {
-    grid-template-rows: 88px minmax(0,1fr) 54px 56px auto;
-  }
-}
-
-/* 移动横屏：低高度适配 */
-@media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game="tanks"]:has(.touch-controls) .game-layout {
-    grid-template-rows: 88px 40px 50px minmax(0,1fr);
-  }
-}
-
-/* 移动端共用：竖屏与触屏横屏 */
-@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .mobile-summary {
+  .mobile-summary {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
   }
-  html body.unified-game[data-game] .mobile-summary .scores {
+  .mobile-summary .scores {
     order: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     flex: none;
     width: 100%;
   }
-  html body.unified-game[data-game] .mobile-summary .score-card {
+  .mobile-summary .score-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0;
     gap: 6px;
   }
-  html body.unified-game[data-game] .mobile-summary #rule-label {
+  .mobile-summary #rule-label {
     order: 1;
     margin: 0;
     padding: 0;
@@ -1444,45 +1423,45 @@ dialog::backdrop {
     font-size: 11px;
     line-height: 17px;
   }
-  html body.unified-game[data-game] .mobile-summary #detail {
+  .mobile-summary #detail {
     order: 2;
     font-size: 11px;
     line-height: 17px;
     color: var(--muted);
   }
-  html body.unified-game[data-game] .mobile-summary #power-status {
+  .mobile-summary #power-status {
     order: 3;
     margin: 0;
     font-size: 11px;
     line-height: 17px;
     color: var(--muted);
   }
-  html body.unified-game[data-game] .mobile-summary #status {
+  .mobile-summary #status {
     order: 4;
     min-height: 30px;
     flex: none;
     margin: 0;
     border: 0;
   }
-  html body.unified-game[data-game] .game-layout>.stage-controls {
+  .game-layout>.stage-controls {
     grid-row: 3;
   }
-  html body.unified-game[data-game] .touch-controls {
+  .touch-controls {
     grid-row: 4;
   }
 }
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game]:not(.wide-table) .game-layout, html body.unified-game[data-game]:has(.touch-controls):not(.wide-table) .game-layout {
+  .game-layout, body:has(.touch-controls) .game-layout {
     grid-template-columns: minmax(0,1fr) 260px;
   }
-  html body.unified-game[data-game]:not(.wide-table) .mobile-summary {
+  .mobile-summary {
     grid-column: 2;
     grid-row: 1;
     max-height: 155px;
   }
-  html body.unified-game[data-game]:not(.wide-table) .game-stage {
+  .game-stage {
     grid-column: 1;
     grid-row: 1 / 4;
   }
@@ -1490,30 +1469,30 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .mobile-summary {
+  .mobile-summary {
     padding: 12px 14px;
     gap: 8px;
     max-height: 240px;
     border-radius: 12px;
   }
-  html body.unified-game[data-game] .mobile-summary .scores {
+  .mobile-summary .scores {
     gap: 20px;
     padding-bottom: 4px;
   }
-  html body.unified-game[data-game] .mobile-summary .score-card span {
+  .mobile-summary .score-label {
     font-size: 12px;
     line-height: 24px;
   }
-  html body.unified-game[data-game] .mobile-summary .score-card strong {
+  .mobile-summary .score-value {
     font-size: 20px;
     line-height: 28px;
   }
-  html body.unified-game[data-game] .mobile-summary #rule-label, html body.unified-game[data-game] .mobile-summary #detail, html body.unified-game[data-game] .mobile-summary #power-status {
+  .mobile-summary #rule-label, .mobile-summary #detail, .mobile-summary #power-status {
     font-size: 12px;
     line-height: 20px;
     white-space: normal;
   }
-  html body.unified-game[data-game] .mobile-summary #status {
+  .mobile-summary #status {
     padding: 9px 10px;
     font-size: 12px;
     line-height: 20px;
@@ -1523,12 +1502,12 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px) and (max-height:650px), (min-width:851px) and (max-width:1200px) and (max-height:650px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .mobile-summary {
+  .mobile-summary {
     padding: 8px 10px;
     gap: 4px;
     max-height: 175px;
   }
-  html body.unified-game[data-game] .mobile-summary #status {
+  .mobile-summary #status {
     padding: 5px 7px;
     line-height: 18px;
   }
@@ -1536,23 +1515,23 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] #settings[open] {
+  #settings[open] {
     height: auto;
     min-height: 0;
     max-height: 85dvh;
     padding: 20px 20px max(20px,env(safe-area-inset-bottom));
     gap: 0;
   }
-  html body[data-game] #settings>.settings-content {
+  #settings>.settings-content {
     flex: 0 1 auto;
     min-height: 0;
     overflow-y: auto;
     padding-bottom: 20px;
   }
-  html body[data-game] #settings .dialog-heading {
+  #settings .dialog-heading {
     margin-bottom: 12px;
   }
-  html body[data-game] #settings-close, html body[data-game] #close-settings {
+  #settings-close, #close-settings {
     flex: none;
     margin-top: 0;
   }
@@ -1568,38 +1547,38 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .mobile-summary .mode-switch {
+  .mobile-summary .mode-switch {
     order: -1;
     flex: none;
   }
-  html body.unified-game[data-game] .mobile-summary #level-progress {
+  .mobile-summary #level-progress {
     order: 2;
     flex: none;
   }
-  html body.unified-game[data-game] .mobile-summary .storage {
+  .mobile-summary .storage {
     order: 5;
     font-size: 11px;
   }
-  html body.unified-game[data-game] .game-layout>.stage-controls {
+  .game-layout>.stage-controls {
     height: auto;
     min-height: 56px;
     flex-wrap: wrap;
   }
-  html body.unified-game[data-game] .game-layout, html body.unified-game[data-game]:has(.touch-controls) .game-layout {
+  .game-layout, body:has(.touch-controls) .game-layout {
     grid-template-rows: auto minmax(0,1fr) auto auto;
   }
 }
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .game-layout>.unified-controls {
+  .game-layout>.unified-controls {
     display: flex;
     flex-wrap: wrap;
     height: auto;
     gap: 6px;
     padding: 6px;
   }
-  html body.unified-game[data-game] .unified-controls>button {
+  .unified-action.stage-action {
     flex: 1 1 76px;
     min-width: 0;
     min-height: 44px;
@@ -1607,27 +1586,27 @@ dialog::backdrop {
     font-size: 12px;
     padding: 6px 8px;
   }
-  html body.unified-game[data-game] .controls-multiline>button {
+  .controls-multiline .stage-action {
     flex: 1 1 calc((100% - 12px)/3);
   }
-  html body.unified-game[data-game="sudoku"] .unified-controls>button {
+  .unified-game[data-game="sudoku"] .stage-action {
     flex: 1 1 0;
   }
-  html body.unified-game[data-game="halma"] .halma-tools .primary {
+  .unified-game[data-game="halma"] .halma-tools .primary {
     min-width: 0;
   }
 }
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game]:not(.wide-table) .game-layout, html body.unified-game[data-game]:has(.touch-controls):not(.wide-table) .game-layout {
+  .game-layout, body:has(.touch-controls) .game-layout {
     grid-template-rows: auto auto minmax(0,1fr);
   }
-  html body.unified-game[data-game]:not(.wide-table) .game-layout>.stage-controls {
+  .game-layout>.stage-controls {
     grid-row: 2;
     grid-column: 2;
   }
-  html body.unified-game[data-game]:not(.wide-table) .touch-controls {
+  .touch-controls {
     grid-row: 3;
     grid-column: 2;
   }
@@ -1635,7 +1614,7 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] .segmented {
+  .segmented {
     padding: 3px;
     gap: 4px;
     border: 1px solid #e3e7f0;
@@ -1644,7 +1623,7 @@ dialog::backdrop {
     box-shadow: none;
   }
   /* 轨道仅32px高，实际按钮仍有44px触控区；宽度随文字，不再铺满信息卡。 */
-  html body[data-game] .mode-switch {
+  .mode-switch {
     position: relative;
     isolation: isolate;
     align-self: flex-start;
@@ -1658,7 +1637,7 @@ dialog::backdrop {
     background: transparent;
     box-shadow: none;
   }
-  html body[data-game] .mode-switch::before {
+  .mode-switch::before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -1668,7 +1647,7 @@ dialog::backdrop {
     background: #f1f3f8;
     pointer-events: none;
   }
-  html body[data-game] .mode-switch button {
+  .mode-switch button {
     position: relative;
     isolation: isolate;
     flex: 0 1 auto;
@@ -1685,7 +1664,7 @@ dialog::backdrop {
     box-shadow: none;
     transition: color .15s;
   }
-  html body[data-game] .mode-switch button::before {
+  .mode-switch button::before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -1695,60 +1674,60 @@ dialog::backdrop {
     pointer-events: none;
     transition: background .15s,border-color .15s;
   }
-  html body[data-game] .mode-switch button[aria-pressed="true"] {
+  .mode-switch button[aria-pressed="true"] {
     background: transparent;
     color: var(--green);
     font-weight: 700;
     box-shadow: none;
   }
-  html body[data-game] .mode-switch button[aria-pressed="true"]::before {
+  .mode-switch button[aria-pressed="true"]::before {
     background: var(--paper);
     border-color: #dfe4f3;
     box-shadow: 0 1px 2px #25304708;
   }
-  html body[data-game] .mode-switch button:not([aria-pressed="true"]):hover {
+  .mode-switch button:not([aria-pressed="true"]):hover {
     background: transparent;
     color: var(--ink);
   }
-  html body[data-game] .mode-switch button:not([aria-pressed="true"]):hover::before {
+  .mode-switch button:not([aria-pressed="true"]):hover::before {
     background: #e7ebf4;
   }
-  html body[data-game] .segmented label {
+  .segmented label {
     min-height: 44px;
   }
-  html body[data-game] .segmented span {
+  .segmented span {
     min-height: 44px;
     border-radius: 8px;
     color: var(--muted);
     font-size: 13px;
   }
-  html body[data-game] .segmented input:checked+span {
+  .segmented input:checked+span {
     background: white;
     color: var(--green);
     font-weight: 700;
     box-shadow: inset 0 0 0 1px #e0e5f0,0 1px 3px #2530470a;
   }
-  html body[data-game] .segmented input:focus-visible+span {
+  .segmented input:focus-visible+span {
     outline: 2px solid var(--green);
     outline-offset: 2px;
   }
-  html body.unified-game[data-game] .mobile-summary .mode-switch {
+  .mobile-summary .mode-switch {
     margin-bottom: 0;
   }
 }
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-game] .mobile-summary, html body.unified-game[data-game]:not(.wide-table) .mobile-summary {
+  .mobile-summary, .mobile-summary {
     height: auto;
     min-height: min-content;
     max-height: none;
     overflow: visible;
   }
-  html body.unified-game[data-game] .mobile-summary>* {
+  .mobile-summary>* {
     flex-shrink: 0;
   }
-  html body.unified-game[data-game] .mobile-summary #status {
+  .mobile-summary #status {
     max-height: none;
     overflow: visible;
     white-space: normal;
@@ -1793,7 +1772,7 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-stable-feedback] .mobile-summary #status {
+  .unified-game[data-stable-feedback] .mobile-summary #status {
     min-height: 78px;
     min-height: calc(3lh + 18px);
   }
@@ -1801,18 +1780,18 @@ dialog::backdrop {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px) and (max-height:650px), (min-width:851px) and (max-width:1200px) and (max-height:650px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game[data-stable-feedback] .mobile-summary #status {
+  .unified-game[data-stable-feedback] .mobile-summary #status {
     min-height: 64px;
     min-height: calc(3lh + 10px);
   }
 }
 
 /* 顶部配置与移动端更多共用原控件，端别由公共适配器移动节点。 */
-html body[data-game] {
+body {
   grid-template-rows: var(--game-header-height,64px) minmax(0,1fr);
 }
 
-html body[data-game] .game-header {
+.game-header {
   height: auto;
   align-self: start;
   min-height: 76px;
@@ -1824,13 +1803,13 @@ html body[data-game] .game-header {
   padding: 14px 24px;
 }
 
-html body[data-game] .game-header h1 {
+.game-title {
   order: 0;
   justify-content: flex-start;
   flex: none;
 }
 
-html body[data-game] .game-header>a {
+.hall-link {
   order: 1;
   flex: none;
   min-width: max-content;
@@ -2096,7 +2075,7 @@ html body[data-game] .game-header>a {
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) {
-  html body[data-game] .game-header h1 img {
+  .game-logo {
     width: 30px;
     height: 30px;
   }
@@ -2106,7 +2085,7 @@ html body[data-game] .game-header>a {
   .header-config .setting-caption[data-compact="路数"]+select {
     width: 78px;
   }
-  html body[data-game] .game-header>a {
+  .hall-link {
     color: var(--muted);
     font-size: 12px;
     padding-right: 12px;
@@ -2115,16 +2094,16 @@ html body[data-game] .game-header>a {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] .game-header {
+  .game-header {
     min-height: 48px;
     flex-wrap: wrap;
     gap: 8px;
     padding: 0 10px;
   }
-  html body[data-game] .game-header h1 {
+  .game-title {
     font-size: 16px;
   }
-  html body[data-game] .game-header>a {
+  .hall-link {
     min-width: max-content;
     min-height: 44px;
     font-size: 12px;
@@ -2132,7 +2111,7 @@ html body[data-game] .game-header>a {
     gap: 4px;
     color: var(--green);
   }
-  html body[data-game] .game-header>a .ui-icon {
+  .hall-link .ui-icon {
     display: none;
   }
   .header-config {
@@ -2157,7 +2136,7 @@ html body[data-game] .game-header>a {
     padding: 16px 20px max(20px,env(safe-area-inset-bottom));
     border-radius: 20px 20px 0 0;
   }
-  .game-more .settings-content label {
+  .game-more .settings-content > label {
     min-height: 52px;
   }
 }
@@ -2178,7 +2157,7 @@ html body[data-game] .game-header>a {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] .game-layout .summary-card[data-foldable] {
+  .summary-card {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -2193,21 +2172,21 @@ html body[data-game] .game-header>a {
     max-height: none;
     overflow: visible;
   }
-  html body[data-game] .summary-card .summary-head {
+  .summary-head {
     display: grid;
     grid-template-columns: minmax(0,1fr);
     align-items: center;
     gap: 8px;
     order: -3;
   }
-  html body[data-game] .summary-metrics {
+  .summary-metrics {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
     min-width: 0;
   }
-  html body[data-game] .summary-card .summary-head .scores {
+  .scores.summary-scores {
     display: flex;
     flex-wrap: wrap;
     flex: 1 1 190px;
@@ -2216,7 +2195,7 @@ html body[data-game] .game-header>a {
     padding: 0;
     width: 100%;
   }
-  html body[data-game] .summary-card .summary-head .score-card {
+  .score-card.summary-score {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -2229,15 +2208,15 @@ html body[data-game] .game-header>a {
     min-width: max-content;
     max-width: 100%;
   }
-  html body[data-game] .summary-card .summary-head .score-card span {
+  .score-label.summary-score-label {
     font-size: 12px;
     line-height: 20px;
   }
-  html body[data-game] .summary-card .summary-head .score-card strong {
+  .score-value.summary-score-value {
     font-size: 20px;
     line-height: 24px;
   }
-  html body[data-game] .summary-toggle {
+  .summary-toggle {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -2258,7 +2237,7 @@ html body[data-game] .game-header>a {
   .summary-expanded .summary-toggle .ui-icon {
     transform: rotate(180deg);
   }
-  html body[data-game] .summary-essential {
+  .summary-essential {
     order: -2;
     margin: 0;
     font-size: 12px;
@@ -2266,7 +2245,7 @@ html body[data-game] .game-header>a {
     color: var(--muted);
     overflow-wrap: anywhere;
   }
-  html body[data-game] .summary-card .summary-essential[data-tone=error] {
+  .summary-essential[data-tone=error] {
     color: var(--danger);
   }
   .summary-details {
@@ -2284,7 +2263,7 @@ html body[data-game] .game-header>a {
     white-space: normal;
     overflow-wrap: anywhere;
   }
-  html body[data-game] .summary-card .summary-details #rule-label {
+  .summary-details #rule-label {
     order: 0;
     margin: 0;
     padding: 0;
@@ -2292,64 +2271,64 @@ html body[data-game] .game-header>a {
     font-size: 12px;
     line-height: 20px;
   }
-  html body[data-game] .summary-card .summary-details #detail {
+  .summary-details #detail {
     order: 1;
     font-size: 12px;
     line-height: 20px;
     color: var(--muted);
   }
-  html body[data-game] .summary-card .summary-details #power-status {
+  .summary-details #power-status {
     order: 2;
     font-size: 12px;
     line-height: 20px;
     color: var(--muted);
   }
-  html body[data-game] .summary-card .summary-details #status {
+  .summary-details #status {
     order: 3;
     margin: 0;
     padding: 10px;
     font-size: 12px;
     line-height: 20px;
   }
-  html body[data-game] .summary-card .summary-head .link-clock {
+  .link-clock.summary-clock {
     flex: none;
     gap: 6px;
   }
-  html body[data-game] .summary-card .summary-head .link-clock span {
+  .clock-value.summary-clock-value {
     font-size: 20px;
     line-height: 26px;
   }
-  html body[data-game] .summary-card .summary-head .link-clock small {
+  .clock-label.summary-clock-label {
     font-size: 12px;
   }
-  html body[data-game] .summary-card .summary-head:has(.link-clock) .scores {
+  .summary-has-clock .summary-scores {
     display: flex;
     flex: 1 1 0;
     width: auto;
   }
-  html body[data-game] .summary-card .summary-head:has(.link-clock) .score-card:first-child {
+  .summary-has-clock .summary-score:first-child {
     display: none;
   }
-  html body[data-game] .summary-card .summary-head:has(.link-clock) .score-card:last-child {
+  .summary-has-clock .summary-score:last-child {
     justify-content: flex-end;
   }
 }
 
 /* 可复用的关卡网格：使用现有按钮主题，保留44px点击高度。 */
-html body[data-game] :is(#level-list,.level-grid) {
+:is(#level-list,.level-grid) {
   display: grid;
   grid-template-columns: repeat(5,minmax(0,1fr));
   gap: 6px;
   margin: 12px 0;
 }
 
-html body[data-game] :is(#level-list,.level-grid)>button {
+:is(#level-list,.level-grid)>button {
   min-width: 0;
   min-height: 44px;
   padding: 8px 2px;
 }
 
-html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
+:is(#level-list,.level-grid)>button[aria-pressed="true"] {
   background: var(--green);
   color: white;
   border-color: var(--green);
@@ -2359,38 +2338,38 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) {
-  html body[data-game] .game-panel {
+  .game-panel {
     container: score-panel / inline-size;
   }
-  html body[data-game] .game-panel .scores {
+  .game-panel .scores {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
-  html body[data-game] .game-panel .score-card {
+  .game-panel .score-card {
     display: block;
     flex: 1 1 calc(50% - 4px);
     min-width: max-content;
     max-width: 100%;
   }
-  html body[data-game] .game-panel .score-card strong {
+  .game-panel .score-card strong {
     font-size: 20px;
     line-height: 28px;
   }
   @container score-panel (min-width:264px) {
-    html body[data-game] .game-panel .score-card strong {
+    .game-panel .score-card strong {
       font-size: 24px;
       line-height: 32px;
     }
   }
   @container score-panel (min-width:344px) {
-    html body[data-game] .game-panel .score-card strong {
+    .game-panel .score-card strong {
       font-size: 32px;
       line-height: 40px;
     }
   }
   @container score-panel (min-width:568px) {
-    html body[data-game] .game-panel .score-card strong {
+    .game-panel .score-card strong {
       font-size: 24px;
       line-height: 32px;
     }
@@ -2399,11 +2378,11 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body[data-game] .summary-card {
+  .summary-card {
     container: score-summary / inline-size;
   }
   @container score-summary (min-width:261px) {
-    html body[data-game] .summary-card .summary-head {
+    .summary-head {
       grid-template-columns: minmax(0,1fr) 56px;
     }
   }
@@ -2415,7 +2394,7 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
 
 /* 移动横屏：公共区域重排 */
 @media (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] {
+  [data-landscape] {
     display: grid;
     grid-template-columns: minmax(0,1fr) min(52vw,clamp(320px,42vw,430px));
     grid-template-rows: auto minmax(0,1fr) auto auto;
@@ -2425,16 +2404,16 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
     padding: 6px max(10px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));
     overflow: hidden;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-layout {
+  [data-landscape] .game-layout {
     display: contents;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-header {
+  [data-landscape] .game-header {
     grid-column: 2;
     grid-row: 1;
     margin: 0;
     width: 100%;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-stage {
+  [data-landscape] .game-stage {
     grid-column: 1;
     grid-row: 1 / 5;
     height: 100%;
@@ -2442,7 +2421,7 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
     align-self: stretch;
     justify-content: center;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-layout .summary-card[data-foldable] {
+  [data-landscape] .summary-card {
     grid-column: 2;
     grid-row: 2;
     max-height: 100%;
@@ -2451,7 +2430,7 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-layout>.stage-controls.unified-controls {
+  [data-landscape] .game-layout>.stage-controls.unified-controls {
     grid-column: 2;
     grid-row: 3;
     width: 100%;
@@ -2459,19 +2438,19 @@ html body[data-game] :is(#level-list,.level-grid)>button[aria-pressed="true"] {
     margin: 0;
     align-self: end;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .touch-controls {
+  [data-landscape] .touch-controls {
     grid-column: 2;
     grid-row: 4;
     align-self: end;
     min-height: 0;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-panel {
+  [data-landscape] .game-panel {
     display: contents;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .feedback-title {
+  [data-landscape] .feedback-title {
     display: none;
   }
-  html:has(body[data-landscape]) body:is(.unified-game,.linkmatch-game)[data-game][data-landscape] .game-stage>:is(.board,.board-wrap) {
+  [data-landscape] .game-stage>:is(.board,.board-wrap) {
     width: var(--mobile-board-size);
     height: auto;
     max-height: none;

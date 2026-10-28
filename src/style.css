@@ -120,14 +120,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex="-1"]:focus-v
   flex-direction: column;
 }
 
-.brand-text strong {
+.brand-name {
   font-size: 32px;
   font-weight: 850;
   line-height: 1.15;
   letter-spacing: -1px;
 }
 
-.brand-text>span {
+.brand-caption {
   color: var(--muted);
   font-size: 12px;
   margin-top: 3px;
@@ -397,7 +397,7 @@ h1 {
   margin-top: 4px;
 }
 
-.card-title h3 {
+.card-name {
   min-width: 0;
   margin: 0;
   font-size: 17px;
@@ -490,7 +490,7 @@ h1 {
   height: 16px;
 }
 
-.game-card .button {
+.button.game-entry {
   flex: none;
   align-self: stretch;
   justify-content: center;
@@ -502,16 +502,16 @@ h1 {
   transition: background .15s,border-color .15s;
 }
 
-.game-card .button:hover {
+.button.game-entry:hover {
   background: #e2e7fc;
   border-color: #cbd3f4;
 }
 
-.game-card .button:active {
+.button.game-entry:active {
   background: #dbe2fb;
 }
 
-.game-card .button:disabled {
+.button.game-entry:disabled {
   background: var(--bg);
   border-color: var(--line);
   color: var(--muted);
@@ -781,7 +781,7 @@ footer {
     width: 44px;
     height: 44px;
   }
-  .brand-text strong {
+  .brand-name {
     font-size: 30px;
   }
   .main-scroll {
@@ -816,10 +816,10 @@ footer {
     width: 40px;
     height: 40px;
   }
-  .brand-text strong {
+  .brand-name {
     font-size: 30px;
   }
-  .brand-text>span,.sidebar-note {
+  .brand-caption,.sidebar-note {
     display: none;
   }
   .intro {
@@ -982,7 +982,7 @@ footer {
     margin: 0;
     min-width: 0;
   }
-  .card-title h3 {
+  .card-name {
     font-size: 17px;
   }
   .description {
@@ -1002,7 +1002,7 @@ footer {
   .tags .control-tag {
     display: none;
   }
-  .game-card .button {
+  .button.game-entry {
     flex: none;
     align-self: center;
     justify-content: center;
@@ -1012,7 +1012,7 @@ footer {
     padding: 8px 0;
     border-radius: 0;
   }
-  .game-card .button,.game-card .button:hover,.game-card .button:active,.game-card .button:disabled {
+  .button.game-entry,.button.game-entry:hover,.button.game-entry:active,.button.game-entry:disabled {
     background: transparent;
     border-color: transparent;
     box-shadow: none;

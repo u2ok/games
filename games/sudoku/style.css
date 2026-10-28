@@ -95,10 +95,10 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.sudoku-game .game-layout {
+  .sudoku-game .game-layout {
     grid-template-rows: 48px minmax(0,1fr) 54px auto;
   }
-  html body.sudoku-game .game-layout > .stage-controls {
+  .sudoku-game .game-layout > .stage-controls {
     display: flex;
     height: auto;
     flex-wrap: wrap;
@@ -121,7 +121,7 @@
   }
 }
 
-.number-pad button {
+:where(.number-pad) button {
   min-width: 0;
   padding: 4px;
   font-size: 18px;
@@ -152,7 +152,6 @@
 }
 
 .sudoku-tools button {
-  padding: 4px;
   font-size: 12px;
 }
 
@@ -181,10 +180,10 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.sudoku-game.unified-game .game-layout {
+  .sudoku-game .game-layout {
     grid-template-rows: auto minmax(0,1fr) auto;
   }
-  html body.sudoku-game.unified-game .game-layout>.stage-controls {
+  .sudoku-game .game-layout>.stage-controls {
     grid-row: 3;
     height: auto;
   }
@@ -192,10 +191,10 @@
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.sudoku-game.unified-game .game-layout {
+  .sudoku-game .game-layout {
     grid-template-rows: auto auto minmax(0,1fr);
   }
-  html body.sudoku-game.unified-game .game-layout>.stage-controls {
+  .sudoku-game .game-layout>.stage-controls {
     grid-column: 2;
     grid-row: 2;
   }
@@ -205,16 +204,22 @@
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) {
-  html body.sudoku-game .number-pad {
+  .sudoku-game:not(.mobile-layout) .number-pad {
     flex: 1 0 100%;
     width: 100%;
     gap: 4px;
     order: -1;
   }
-  html body.sudoku-game .number-pad button {
+  .sudoku-game:not(.mobile-layout) .number-pad button {
     min-height: 44px;
     font-size: 18px;
-    padding: 4px 1px;
     white-space: nowrap;
+  }
+  /* PC保留辅助操作的紧凑内边距；移动端使用公共按钮间距。 */
+  body:not(.mobile-layout) .sudoku-tools button {
+    padding: 4px;
+  }
+  .sudoku-game .number-pad button {
+    padding: 4px 1px;
   }
 }

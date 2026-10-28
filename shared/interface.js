@@ -5,6 +5,27 @@
   function mobileMedia() {
     return window.matchMedia('(max-width:850px)' + (document.body.hasAttribute('data-landscape') ? ', (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse)' : ''));
   }
+
+  // 标注现有控件的界面角色，不复制按钮或业务状态；动态子节点也沿用同一角色。
+  function markControlClasses(container) {
+    if (!container) return;
+    Array.from(container.querySelectorAll('button')).forEach(function (button) { button.classList.add('control-button'); });
+    Array.from(container.children).forEach(function (node) {
+      if (node.tagName === 'BUTTON') {
+        node.classList.add('stage-action');
+        node.classList.toggle('unified-action', container.classList.contains('unified-controls'));
+      }
+    });
+    Array.from(container.querySelectorAll('[data-control-group="actions"]')).forEach(function (group) {
+      group.classList.add('action-group');
+      Array.from(group.querySelectorAll('button')).forEach(function (button) {
+        button.classList.toggle('unified-action', container.classList.contains('unified-controls'));
+      });
+    });
+    Array.from(container.querySelectorAll('.play-inputs button, .bomber-input button, .flight-choices button')).forEach(function (button) {
+      button.classList.add('game-input-button');
+    });
+  }
   /* 全站快捷键捕获层：先处理通用动作，未处理的按键继续交给玩法。 */
   function installGameShortcuts() {
     var start = document.getElementById('start');
@@ -162,10 +183,27 @@
       }
       var scores = card.querySelector('.scores');
       var clock = card.querySelector('.link-clock');
-      if (clock) metrics.appendChild(clock);
+      head.classList.toggle('summary-has-clock', !!clock);
+      if (clock) {
+        clock.classList.add('summary-clock');
+        clock.querySelector('span').classList.add('clock-value', 'summary-clock-value');
+        clock.querySelector('small').classList.add('clock-label', 'summary-clock-label');
+        metrics.appendChild(clock);
+      }
       if (scores) {
+        // 组件身份跟随原成绩节点；移动端样式不再依赖三层祖先结构。
+        scores.classList.add('summary-scores');
+        Array.from(scores.querySelectorAll('.score-card')).forEach(function (score) {
+          score.classList.add('summary-score');
+          Array.from(score.children).forEach(function (node) {
+            if (node.tagName === 'SPAN') node.classList.add('score-label', 'summary-score-label');
+            if (node.tagName === 'STRONG') node.classList.add('score-value', 'summary-score-value');
+          });
+        });
         metrics.appendChild(scores);
       }
+      var progress = card.querySelector('.pair-progress');
+      if (progress) progress.classList.add('summary-progress');
       Array.from(card.children).forEach(function (node) {
         if (node !== head && node !== essential && node !== extra) extra.appendChild(node);
       });
@@ -358,6 +396,7 @@
     var mq = mobileMedia();
     var adaptSummary = installSummaryCard(mq);
     function adaptChrome() {
+      markControlClasses(document.querySelector('.stage-controls'));
       document.body.classList.toggle('mobile-layout', mq.matches);
       if (menu.open) menu.close();
       if (mq.matches) {
@@ -414,6 +453,7 @@
   document.querySelector('.instructions').open = true;
   var progress = document.createElement('progress');
   progress.id = 'pair-progress';
+  progress.className = 'pair-progress';
   progress.setAttribute('aria-label', '配对消除进度');
   panel.insertBefore(progress, detail);
   // 进度同步依据游戏实际输出，不另建一份计分状态。
@@ -559,6 +599,7 @@
   moreButton.className = 'unified-more';
   // 只统计直接操作按钮，数独数字键盘等嵌套专用控制区独立布局。
   function syncControlRows() {
+    markControlClasses(stageControls);
     var count = Array.from(stageControls.children).filter(function (node) { return node.tagName === 'BUTTON' && !node.hidden; }).length;
     stageControls.classList.toggle('controls-multiline', count > 4);
   }

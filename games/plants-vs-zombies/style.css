@@ -91,7 +91,7 @@ canvas {
   .seed-bank button {
     column-gap: 3px;
   }
-  .game-layout > .stage-controls.garden-tools.unified-controls > button {
+  .garden-tools .stage-action {
     flex: 1 1 0;
     min-width: 0;
   }

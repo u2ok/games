@@ -130,7 +130,7 @@
 }
 
 /* 仅固定选机区内边距；高度继续由公共移动规则及下方断点调整。 */
-.game-layout .stage-controls.unified-controls .flight-choices button {
+.flight-choices .game-input-button {
   padding: 5px 2px;
 }
 
@@ -154,7 +154,7 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game .game-layout .stage-controls.unified-controls > button {
+  .control-button.stage-action {
     flex: 1 1 0;
     min-width: 0;
   }
@@ -190,7 +190,7 @@
 
 /* 窄屏适配：按可用宽度调整 */
 @media (max-width:350px) {
-  html body.unified-game .game-layout .stage-controls.unified-controls > button {
+  .control-button.stage-action {
     padding: 6px 4px;
   }
 }

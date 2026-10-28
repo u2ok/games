@@ -8,9 +8,17 @@
   margin-top: 12px;
 }
 
-.halma-tools button {
-  padding: 8px 12px;
+:where(.halma-tools) button {
   font-size: 12px;
+}
+
+/* PC保留工具区原有间距，移动端交给公共按钮规则。 */
+
+/* PC端：桌面宽度适配 */
+@media (min-width:851px) {
+  body:not(.mobile-layout) .halma-tools button {
+    padding: 8px 12px;
+  }
 }
 
 .halma-tools .primary {
@@ -27,8 +35,5 @@ canvas {
     flex: none;
     margin-top: 8px;
     gap: 6px;
-  }
-  .halma-tools button {
-    padding: 6px 10px;
   }
 }

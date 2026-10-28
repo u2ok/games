@@ -3,10 +3,10 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html .summary-head #score-label, html .summary-head #best-label {
+  .summary-head #score-label, .summary-head #best-label {
     display: none;
   }
-  html .summary-head .summary-score-caption {
+  .summary-head .summary-score-caption {
     display: flex;
     align-items: center;
     gap: 6px;

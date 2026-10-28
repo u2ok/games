@@ -9,7 +9,7 @@
 }
 
 /* 专用方向区的内边距优先于公共动作按钮。 */
-.game-layout .stage-controls.unified-controls .bomber-input button {
+.bomber-input .game-input-button {
   padding: 6px;
   min-height: 44px;
 }
@@ -21,7 +21,7 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.unified-game .game-layout .stage-controls.unified-controls > button {
+  .control-button.stage-action {
     flex: 1 1 0;
     min-width: 0;
   }

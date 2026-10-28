@@ -33,12 +33,17 @@ checkResources(root, nav.resources);
 for (const resource of ['src/script.js','src/style.css']) assert.ok(nav.resources.includes(resource), resource);
 assert.ok(isFile(path.join(root, 'src/logo.svg')));
 const shared = {'base.css':'shared/base.css', 'interface.js':'shared/interface.js', 'icons.js':'shared/icons.js'};
+const publicCSS=read(path.join(root,'shared/base.css'));
+assert.ok(!/html:has\(body|html\s+body|wide-table/.test(publicCSS),'公共CSS不得重新引入重复根节点链或失效wide-table分支');
+assert.ok(!publicCSS.includes('[data-game]'),'普通公共组件无需重复使用data-game存在性前缀');
+assert.ok(!/\.summary-card\s+\.summary-head|\.game-header\s+h1/.test(publicCSS),'标题与摘要子组件应使用明确class，不依赖多层祖先');
 let count = 0;
 for (const item of fs.readdirSync(path.join(root, 'games'), {withFileTypes:true})) {
   if (!item.isDirectory()) continue;
   const folder = path.join(root, 'games', item.name);
   const html = read(path.join(folder, 'index.html'));
   const page = parse(html);
+  for(const cls of ['game-title','game-logo','hall-link','score-label','score-value'])assert.ok(page.classes.includes(cls),`${item.name}: 缺少公共组件角色${cls}`);
   assert.ok(!/\[data-game(?:=|\])/.test(read(path.join(folder,'style.css'))),`${item.name}: 私有CSS无需重复限定data-game，应使用玩法组件选择器`);
   assert.ok(/<html\b/i.test(html) && /<\/html>/i.test(html), item.name);
   assert.equal(page.ids.length, new Set(page.ids).size, `${item.name}: 重复ID`);

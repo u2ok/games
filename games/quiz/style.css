@@ -142,7 +142,7 @@
   animation: quiz-enter .2s ease-out;
 }
 
-body[data-quiz-paused="true"] .quiz-play * {
+[data-quiz-paused="true"] .quiz-play * {
   animation-play-state: paused;
 }
 

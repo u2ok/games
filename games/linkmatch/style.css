@@ -81,7 +81,7 @@
 
 /* PC端：桌面宽度适配 */
 @media (min-width: 851px) {
-  .linkmatch-game .game-layout {
+  :where(.linkmatch-game) .game-layout {
     --board-size: min(600px, calc(100dvh - var(--game-header-height,64px) - 196px));
   }
 }
@@ -157,27 +157,27 @@
   color: #6891c9;
 }
 
-.linkmatch-game .game-layout {
+:where(.game-layout) {
   padding-bottom: 24px;
 }
 
-.linkmatch-game .game-header {
+:where(.linkmatch-game) .game-header {
   height: 52px;
   max-width: none;
 }
 
 /* 物件式标志保留透明轮廓，不裁成通用圆角底板。 */
-.linkmatch-game .game-header h1 img {
+:where(.game-logo) {
   width: 36px;
   height: 36px;
   border-radius: 0;
 }
 
-.link-more, .link-mobile-summary {
+.link-more, :where(.link-mobile-summary) {
   display: none;
 }
 
-.linkmatch-game .game-header > .settings-button {
+:where(.linkmatch-game) .game-header > .settings-button {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
@@ -193,22 +193,22 @@
   font-size: 14px;
 }
 
-.linkmatch-game .game-header > .settings-button span {
+:where(.linkmatch-game) .game-header > .settings-button span {
   display: inline;
 }
 
-.linkmatch-game .game-header > .settings-button:hover {
+:where(.linkmatch-game) .game-header > .settings-button:hover {
   background: var(--sage);
   color: var(--green);
 }
 
-.linkmatch-game .game-header > .settings-button .ui-icon {
+:where(.linkmatch-game) .game-header > .settings-button .ui-icon {
   width: 19px;
   height: 19px;
   stroke-width: 1.7;
 }
 
-.linkmatch-game .game-footer, .linkmatch-game .toolbar, .linkmatch-game .game-actions {
+:where(.linkmatch-game) .game-footer, .linkmatch-game .toolbar, :where(.linkmatch-game) .game-actions {
   display: none;
 }
 
@@ -234,7 +234,7 @@
   margin-left: 8px;
 }
 
-.linkmatch-game .game-panel {
+:where(.linkmatch-game) .game-panel {
   padding: 16px;
   gap: 12px;
   height: auto;
@@ -247,12 +247,12 @@
   padding: 0;
 }
 
-.linkmatch-game .score-card strong {
+:where(.score-card strong) {
   font-size: 26px;
   line-height: 36px;
 }
 
-.linkmatch-game #detail {
+:where(.linkmatch-game) #detail {
   font-size: 12px;
   line-height: 22px;
   color: var(--muted);
@@ -262,7 +262,7 @@
   margin-top: 4px;
 }
 
-.linkmatch-game .game-status {
+:where(.linkmatch-game) .game-status {
   min-height: 64px;
   margin: 0;
 }
@@ -304,7 +304,7 @@
 
 /* PC端：桌面宽度适配 */
 @media (min-width:1100px) {
-  .linkmatch-game .game-layout {
+  :where(.linkmatch-game) .game-layout {
     --board-size: min(calc(100dvh - var(--game-header-height,64px) - 106px),calc(100vw - 600px));
     max-width: none;
     width: 100%;
@@ -314,10 +314,10 @@
     grid-template-columns: minmax(0,1fr) var(--board-size) minmax(0,1fr);
     gap: 20px;
   }
-  .linkmatch-game .game-stage {
+  :where(.linkmatch-game) .game-stage {
     grid-column: 2;
   }
-  .linkmatch-game .game-panel {
+  :where(.linkmatch-game) .game-panel {
     grid-column: 3;
     width: 260px;
     max-width: 100%;
@@ -326,7 +326,7 @@
 
 /* PC端：桌面宽度适配 */
 @media (min-width:851px) and (max-width:1099px) {
-  .linkmatch-game .game-layout {
+  :where(.linkmatch-game) .game-layout {
     --board-size: min(calc(100dvh - var(--game-header-height,64px) - 106px),calc(100vw - 340px));
     grid-template-columns: minmax(0,1fr) 260px;
     gap: 20px;
@@ -336,26 +336,26 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  .linkmatch-game {
+  :where(.linkmatch-game) {
     display: flex;
     height: auto;
     min-height: 100dvh;
     overflow: auto;
   }
-  .linkmatch-game .game-layout {
+  :where(.game-layout) {
     display: flex;
     flex-direction: column;
     height: auto;
     padding: 12px 12px max(24px,env(safe-area-inset-bottom));
     gap: 12px;
   }
-  .linkmatch-game .game-stage {
+  :where(.linkmatch-game) .game-stage {
     width: 100%;
   }
   .linkmatch-game .board {
     width: min(100%,calc(100dvh - 180px));
   }
-  .linkmatch-game .game-panel {
+  :where(.linkmatch-game) .game-panel {
     display: flex;
     width: 100%;
     max-height: none;
@@ -381,21 +381,21 @@
     height: 100%;
     overflow: hidden;
   }
-  body.linkmatch-game {
+  :where(.linkmatch-game) {
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
     display: grid;
     grid-template-rows: 48px minmax(0,1fr);
   }
-  .linkmatch-game .game-header {
+  :where(.linkmatch-game) .game-header {
     height: 48px;
   }
-  .linkmatch-game .game-header h1 img {
+  :where(.game-logo) {
     width: 30px;
     height: 30px;
   }
-  .linkmatch-game .game-layout {
+  :where(.game-layout) {
     display: grid;
     grid-template-columns: minmax(0,1fr);
     grid-template-rows: 52px minmax(0,1fr) 54px 56px;
@@ -405,7 +405,7 @@
     margin: 0;
     gap: 8px;
   }
-  .linkmatch-game .game-stage {
+  :where(.linkmatch-game) .game-stage {
     display: contents;
   }
   .linkmatch-game .link-board {
@@ -417,39 +417,39 @@
     justify-self: center;
     align-self: center;
   }
-  .linkmatch-game .game-panel {
+  :where(.linkmatch-game) .game-panel {
     display: none;
   }
-  .linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     display: grid;
     grid-row: 1;
     grid-template-columns: 1fr auto;
     gap: 4px 12px;
     align-items: center;
   }
-  .link-mobile-summary .scores {
+  :where(.link-mobile-summary) .scores {
     grid-column: 1;
     grid-row: 1;
     display: block;
   }
-  .link-mobile-summary .score-card {
+  :where(.link-mobile-summary .score-card) {
     display: flex;
     align-items: baseline;
     gap: 8px;
   }
-  .link-mobile-summary .score-card:last-child {
+  :where(.link-mobile-summary .score-card:last-child) {
     display: none;
   }
-  .link-mobile-summary > span {
+  :where(.link-mobile-summary) > span {
     grid-column: 2;
     grid-row: 1;
     font-size: 13px;
   }
-  .link-mobile-summary progress {
+  .pair-progress.summary-progress {
     grid-column: 1 / -1;
     grid-row: 2;
   }
-  .linkmatch-game .game-layout > .game-status {
+  :where(.game-layout > .game-status) {
     grid-row: 3;
     min-height: 0;
     padding: 7px 10px;
@@ -486,56 +486,56 @@
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     max-width: none;
     grid-template-columns: minmax(0,1fr) 260px;
     grid-template-rows: 48px 54px 56px;
     align-content: center;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     grid-column: 2;
     grid-row: 1;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     grid-column: 1;
     grid-row: 1 / 4;
     width: min(calc(100cqw - 280px),100cqh);
     height: min(calc(100cqw - 280px),100cqh);
     max-height: none;
   }
-  html body.linkmatch-game .game-layout > .game-status {
+  :where(.game-layout > .game-status) {
     grid-column: 2;
     grid-row: 2;
   }
-  html body.linkmatch-game .stage-controls {
+  .linkmatch-game .stage-controls {
     grid-column: 2;
     grid-row: 3;
   }
 }
 
 /* 仅打开时使用纵向布局，保持原生dialog关闭状态的隐藏行为。 */
-.linkmatch-game #settings[open] {
+:where(.linkmatch-game) #settings[open] {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-.linkmatch-game #settings > * {
+:where(.linkmatch-game) #settings > * {
   flex-shrink: 0;
 }
 
-.linkmatch-game #settings-close {
+:where(#settings-close) {
   margin-top: auto;
   width: 100%;
 }
 
-.linkmatch-game #settings > p {
+:where(.linkmatch-game) #settings > p {
   padding-bottom: 24px;
 }
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  .linkmatch-game #settings {
+  :where(.linkmatch-game) #settings {
     height: 85dvh;
     padding-bottom: max(20px,env(safe-area-inset-bottom));
   }
@@ -543,54 +543,54 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  .linkmatch-game .game-header {
+  :where(.linkmatch-game) .game-header {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .linkmatch-game .game-header h1 {
+  :where(.linkmatch-game) .game-title {
     gap: 5px;
     font-size: 16px;
   }
-  .linkmatch-game .game-header > a {
+  :where(.hall-link) {
     padding: 0 2px;
   }
-  .linkmatch-game .game-header > .settings-button {
+  :where(.linkmatch-game) .game-header > .settings-button {
     padding: 4px;
     font-size: 12px;
   }
-  .linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     background: white;
     border: 1px solid var(--line);
     border-radius: 10px;
     padding: 6px 10px;
     gap: 4px 12px;
   }
-  .linkmatch-game .link-mobile-summary .scores {
+  :where(.linkmatch-game) :where(.link-mobile-summary) .scores {
     width: auto;
   }
-  .linkmatch-game .link-mobile-summary .score-card {
+  :where(.link-mobile-summary .score-card) {
     justify-content: flex-start;
     gap: 8px;
     padding: 0;
   }
-  .linkmatch-game .link-mobile-summary .score-card span {
+  :where(.link-mobile-summary .score-card span) {
     font-size: 11px;
     line-height: 18px;
   }
-  .linkmatch-game .link-mobile-summary .score-card strong {
+  :where(.link-mobile-summary .score-card strong) {
     font-size: 20px;
     line-height: 24px;
     color: var(--ink);
   }
-  .linkmatch-game .link-mobile-summary > span {
+  :where(.linkmatch-game) :where(.link-mobile-summary) > span {
     color: var(--muted);
     text-align: right;
   }
-  .linkmatch-game .link-mobile-summary progress {
+  .pair-progress.summary-progress {
     height: 4px;
   }
   /* 容器查询单位同时约束宽高，适配小屏和横屏；空余高度留白而非拉伸图块。 */
-  .linkmatch-game .game-layout {
+  :where(.game-layout) {
     container-type: size;
   }
   .linkmatch-game .link-board {
@@ -611,7 +611,7 @@
   .linkmatch-game .cover h2 {
     font-size: 20px;
   }
-  .linkmatch-game .link-mobile-summary .scores {
+  :where(.linkmatch-game) :where(.link-mobile-summary) .scores {
     display: none;
   }
   .link-clock {
@@ -645,45 +645,45 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 174px minmax(0,1fr) 56px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     grid-row: 1;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 26px 4px 20px 20px minmax(38px,1fr);
     gap: 5px 10px;
     padding: 8px 10px;
   }
-  html body.linkmatch-game .link-mobile-summary>span {
+  :where(.linkmatch-game) :where(.link-mobile-summary)>span {
     display: none;
   }
-  html body.linkmatch-game .link-mobile-summary .scores {
+  :where(.linkmatch-game) :where(.link-mobile-summary) .scores {
     display: block;
     grid-row: 1;
     grid-column: 2;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card:first-child {
+  :where(.link-mobile-summary .score-card:first-child) {
     display: none;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card:last-child {
+  :where(.link-mobile-summary .score-card:last-child) {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card strong {
+  :where(.link-mobile-summary .score-card strong) {
     font-size: 16px;
   }
-  html body.linkmatch-game .link-mobile-summary progress {
+  .pair-progress.summary-progress {
     grid-row: 2;
   }
-  html body.linkmatch-game .link-mobile-summary #detail {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #detail {
     grid-row: 3;
     grid-column: 1 / -1;
     font-size: 11px;
     line-height: 20px;
   }
-  html body.linkmatch-game .link-mobile-summary #rule-label {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #rule-label {
     grid-row: 4;
     grid-column: 1 / -1;
     padding: 0;
@@ -691,7 +691,7 @@
     font-size: 11px;
     line-height: 20px;
   }
-  html body.linkmatch-game .link-mobile-summary #status {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #status {
     grid-row: 5;
     grid-column: 1 / -1;
     min-height: 0;
@@ -700,35 +700,35 @@
     line-height: 16px;
     overflow: auto;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     grid-row: 2;
     width: min(100cqw,calc(100cqh - 246px));
     height: auto;
     aspect-ratio: 1;
   }
-  html body.linkmatch-game .stage-controls {
+  .linkmatch-game .stage-controls {
     grid-row: 3;
   }
 }
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 174px 56px;
     grid-template-columns: minmax(0,1fr) 260px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     grid-column: 2;
     grid-row: 1;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     grid-column: 1;
     grid-row: 1 / 3;
     width: min(calc(100cqw - 280px),100cqh);
     height: min(calc(100cqw - 280px),100cqh);
     max-height: none;
   }
-  html body.linkmatch-game .stage-controls {
+  .linkmatch-game .stage-controls {
     grid-column: 2;
     grid-row: 2;
   }
@@ -738,39 +738,39 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 132px minmax(0,1fr) 56px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     grid-template-rows: 26px 4px 18px 16px minmax(30px,1fr);
     gap: 3px 10px;
     padding: 8px 10px;
     border-radius: 12px;
   }
-  html body.linkmatch-game .link-mobile-summary #detail {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #detail {
     display: block;
     color: var(--ink);
     font-size: 11px;
     line-height: 18px;
   }
-  html body.linkmatch-game .link-mobile-summary #rule-label {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #rule-label {
     color: var(--muted);
     line-height: 16px;
   }
-  html body.linkmatch-game .link-mobile-summary #status {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #status {
     padding: 6px 8px;
     border: 0;
     border-radius: 6px;
     font-size: 11px;
     line-height: 16px;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card:last-child {
+  :where(.link-mobile-summary .score-card:last-child) {
     align-items: center;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card span {
+  :where(.link-mobile-summary .score-card span) {
     font-size: 10px;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     width: min(100cqw,calc(100cqh - 204px));
     border-radius: 12px;
   }
@@ -778,10 +778,10 @@
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 132px 56px;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     width: min(calc(100cqw - 280px),100cqh);
     height: min(calc(100cqw - 280px),100cqh);
   }
@@ -795,12 +795,12 @@
     font-weight: 400;
     color: var(--muted);
   }
-  html body.linkmatch-game .link-mobile-summary #detail {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #detail {
     text-align: left;
     justify-self: start;
     font-variant-numeric: tabular-nums;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     border-radius: 12px;
     box-shadow: 0 2px 8px #25304703;
   }
@@ -810,10 +810,10 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 184px minmax(0,1fr) 56px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     padding: 12px 14px;
     gap: 7px 16px;
     grid-template-rows: 32px 4px 20px 20px minmax(44px,1fr);
@@ -830,59 +830,59 @@
     line-height: 28px;
     letter-spacing: 0;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card span {
+  :where(.link-mobile-summary .score-card span) {
     font-size: 12px;
     line-height: 24px;
   }
-  html body.linkmatch-game .link-mobile-summary .score-card strong {
+  :where(.link-mobile-summary .score-card strong) {
     font-size: 20px;
     line-height: 28px;
   }
-  html body.linkmatch-game .link-mobile-summary #detail {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #detail {
     font-size: 12px;
     line-height: 20px;
     color: var(--ink);
   }
-  html body.linkmatch-game .link-mobile-summary #rule-label {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #rule-label {
     font-size: 12px;
     line-height: 20px;
   }
-  html body.linkmatch-game .link-mobile-summary #status {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #status {
     padding: 8px 10px;
     font-size: 12px;
     line-height: 20px;
     border-radius: 8px;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     width: min(100cqw,calc(100cqh - 256px));
   }
 }
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px) and (max-height:650px), (min-width:851px) and (max-width:1200px) and (max-height:650px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 144px minmax(0,1fr) 56px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     padding: 8px 10px;
     gap: 4px 10px;
     grid-template-rows: 26px 4px 18px 18px minmax(30px,1fr);
   }
-  html body.linkmatch-game .link-mobile-summary #status {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #status {
     padding: 5px 7px;
     line-height: 17px;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     width: min(100cqw,calc(100cqh - 216px));
   }
 }
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: 144px 56px;
   }
-  html body.linkmatch-game .link-board {
+  .linkmatch-game .link-board {
     width: min(calc(100cqw - 280px),100cqh);
     height: min(calc(100cqw - 280px),100cqh);
   }
@@ -890,16 +890,16 @@
 
 /* 移动端共用：竖屏与触屏横屏 */
 @media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: auto minmax(0,1fr) 56px;
   }
-  html body.linkmatch-game .link-mobile-summary {
+  :where(.linkmatch-game) :where(.link-mobile-summary) {
     height: auto;
     max-height: none;
     overflow: visible;
     grid-template-rows: 32px 4px auto auto auto;
   }
-  html body.linkmatch-game .link-mobile-summary #status {
+  :where(.linkmatch-game) :where(.link-mobile-summary) #status {
     overflow: visible;
     max-height: none;
     white-space: normal;
@@ -908,7 +908,7 @@
 
 /* 移动横屏：低高度适配 */
 @media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
-  html body.linkmatch-game .game-layout {
+  :where(.game-layout) {
     grid-template-rows: auto 56px;
   }
 }
@@ -916,10 +916,10 @@
 /* 移动横屏：公共区域重排 */
 @media (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
   /* 连连看保留专用入口；仅横屏透传舞台，使原操作栏进入右侧网格。 */
-  html:has(body[data-landscape]) body.linkmatch-game[data-landscape] .game-stage {
+  [data-landscape] .game-stage {
     display: contents;
   }
-  html:has(body[data-landscape]) body.linkmatch-game[data-landscape] .game-stage>.link-board {
+  [data-landscape] .game-stage>.link-board {
     grid-column: 1;
     grid-row: 1 / 5;
     width: min(100%,calc(100dvh - 12px));
@@ -928,7 +928,7 @@
     align-self: center;
     justify-self: center;
   }
-  html:has(body[data-landscape]) body.linkmatch-game[data-landscape] .game-layout .stage-controls {
+  [data-landscape] .game-layout .stage-controls {
     grid-column: 2;
     grid-row: 3;
     width: 100%;
