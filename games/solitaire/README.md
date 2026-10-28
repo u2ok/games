@@ -35,8 +35,8 @@ P 暂停／继续；Enter 在准备、暂停或终局时开始／继续／再玩
 
 本地 `logo.svg` 同时用于标题与浏览器标签图标。`../../shared/base.css`、`../../shared/interface.js` 直接引用根目录公共源，不直接编辑。合集内维护要求见 [统一规范](../../GAME-STANDARD.md)，历史验证范围见 [测试记录](../../TEST-REPORT.md)；仅复制本目录不能完整运行，需携带shared公共文件并保留相对路径。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。公共布局直接维护shared/base.css，玩法私有样式维护本目录style.css；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
 
 牌面花色及空收牌区的SVG由本游戏script.js的suitSVG维护，不依赖公共图标注册表或字符替换；公共icons.js只负责通用界面。

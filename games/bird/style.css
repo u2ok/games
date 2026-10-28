@@ -1,7 +1,21 @@
 /* 小鸟飞行使用统一舞台与大尺寸单键触屏区。 */
-.bird-controls { display:none; }
-canvas { touch-action:none; }
-@media(max-width:850px){
-  .touch-controls.bird-controls { display:grid;grid-template-columns:1fr; }
-  .bird-controls button { min-height:52px;touch-action:manipulation;font-size:16px; }
+.bird-controls {
+  display: none;
+}
+
+canvas {
+  touch-action: none;
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .touch-controls.bird-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .bird-controls button {
+    min-height: 52px;
+    touch-action: manipulation;
+    font-size: 16px;
+  }
 }

@@ -1,36 +1,259 @@
 /* 仅题目、答案与解析区；页面骨架/操作栏/配置沿用公共源。 */
-body[data-game="quiz"] .board{aspect-ratio:auto;background:var(--paper)}
-body[data-game="quiz"] .quiz-play{display:flex;flex-direction:column;gap:14px;padding:16px;min-width:0}
-body[data-game="quiz"] .quiz-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:13px}
-body[data-game="quiz"] #topic-label{color:var(--green);font-weight:600}
-body[data-game="quiz"] #quiz-progress{width:100%;height:6px;border:0;border-radius:6px;overflow:hidden;accent-color:var(--green)}
-body[data-game="quiz"] #quiz-progress::-webkit-progress-bar{background:var(--sage)}
-body[data-game="quiz"] #quiz-progress::-webkit-progress-value{background:var(--green);transition:width .25s ease}
-body[data-game="quiz"] #question-title{font-size:clamp(18px,2vw,24px);line-height:1.5;margin:2px 0 8px;min-height:64px;outline:0}
-body[data-game="quiz"] .quiz-answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-body[data-game="quiz"] .quiz-answer{display:flex;gap:8px;align-items:center;flex-wrap:wrap;text-align:left;min-height:68px;padding:10px;position:relative}
-body[data-game="quiz"] .answer-letter{display:grid;place-items:center;flex:0 0 25px;width:25px;height:25px;background:var(--sage);border-radius:7px;color:var(--green);font-weight:700}
-body[data-game="quiz"] .answer-text{flex:1 1 40px;min-width:0;overflow-wrap:anywhere}
-body[data-game="quiz"] .quiz-answer small{flex-basis:100%;font-size:11px;line-height:16px}
-body[data-game="quiz"] .quiz-answer.is-correct{background:#edf5ee;border-color:#7d9d85;color:#355f42;opacity:1;animation:quiz-correct .25s ease-out}
-body[data-game="quiz"] .quiz-answer.is-wrong{background:#faeeeb;border-color:#c08678;color:var(--danger);opacity:1}
-body[data-game="quiz"] .quiz-feedback{min-height:90px;font-size:14px;line-height:1.5;padding-top:4px}
-body[data-game="quiz"] .quiz-feedback strong{font-size:14px}
-body[data-game="quiz"] .quiz-feedback p{margin:5px 0}
-body[data-game="quiz"] #question-source,body[data-game="quiz"] #source-note{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
-body[data-game="quiz"] #review-field{font-size:13px}
-body[data-game="quiz"] #review-select{display:block;width:100%;margin-top:4px}
-body[data-game="quiz"] .quiz-enter #question-title,body[data-game="quiz"] .quiz-enter .quiz-answers{animation:quiz-enter .2s ease-out}
-body[data-game="quiz"][data-quiz-paused="true"] .quiz-play *{animation-play-state:paused}
-@keyframes quiz-enter{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@keyframes quiz-correct{50%{transform:scale(1.025)}}
-@media(max-width:850px){body[data-game="quiz"] .quiz-play{padding:6px;gap:10px}body[data-game="quiz"] #question-title{font-size:19px;min-height:52px}body[data-game="quiz"] .quiz-answer{min-height:60px;padding:8px}body[data-game="quiz"] .quiz-feedback{min-height:82px}}
+.board {
+  aspect-ratio: auto;
+  background: var(--paper);
+}
+
+.quiz-play {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#topic-label {
+  color: var(--green);
+  font-weight: 600;
+}
+
+#quiz-progress {
+  width: 100%;
+  height: 6px;
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  accent-color: var(--green);
+}
+
+#quiz-progress::-webkit-progress-bar {
+  background: var(--sage);
+}
+
+#quiz-progress::-webkit-progress-value {
+  background: var(--green);
+  transition: width .25s ease;
+}
+
+#question-title {
+  font-size: clamp(18px,2vw,24px);
+  line-height: 1.5;
+  margin: 2px 0 8px;
+  min-height: 64px;
+  outline: 0;
+}
+
+.quiz-answers {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+}
+
+.quiz-answer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: left;
+  min-height: 68px;
+  padding: 10px;
+  position: relative;
+}
+
+.answer-letter {
+  display: grid;
+  place-items: center;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  background: var(--sage);
+  border-radius: 7px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.answer-text {
+  flex: 1 1 40px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.quiz-answer small {
+  flex-basis: 100%;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.quiz-answer.is-correct {
+  background: #edf5ee;
+  border-color: #7d9d85;
+  color: #355f42;
+  opacity: 1;
+  animation: quiz-correct .25s ease-out;
+}
+
+.quiz-answer.is-wrong {
+  background: #faeeeb;
+  border-color: #c08678;
+  color: var(--danger);
+  opacity: 1;
+}
+
+.quiz-feedback {
+  min-height: 90px;
+  font-size: 14px;
+  line-height: 1.5;
+  padding-top: 4px;
+}
+
+.quiz-feedback strong {
+  font-size: 14px;
+}
+
+.quiz-feedback p {
+  margin: 5px 0;
+}
+
+#question-source,#source-note {
+  font-size: 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+#review-field {
+  font-size: 13px;
+}
+
+#review-select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.quiz-enter #question-title,.quiz-enter .quiz-answers {
+  animation: quiz-enter .2s ease-out;
+}
+
+body[data-quiz-paused="true"] .quiz-play * {
+  animation-play-state: paused;
+}
+
+@keyframes quiz-enter {
+  from {
+    opacity: .4;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quiz-correct {
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .quiz-play {
+    padding: 6px;
+    gap: 10px;
+  }
+  #question-title {
+    font-size: 19px;
+    min-height: 52px;
+  }
+  .quiz-answer {
+    min-height: 60px;
+    padding: 8px;
+  }
+  .quiz-feedback {
+    min-height: 82px;
+  }
+}
+
 /* 低高度使用紧凑题目排版，答案依旧至少44px，解析自然展开不裁切。 */
-@media(max-height:650px){body[data-game="quiz"] .quiz-play{padding:0;gap:6px}body[data-game="quiz"] .quiz-meta{font-size:12px}body[data-game="quiz"] #question-title{font-size:16px;line-height:1.4;min-height:42px;margin:0}body[data-game="quiz"] .quiz-answer{min-height:44px;padding:5px;gap:5px;font-size:13px}body[data-game="quiz"] .quiz-answers{gap:6px}body[data-game="quiz"] .answer-letter{flex-basis:20px;width:20px;height:20px;font-size:12px}body[data-game="quiz"] .quiz-feedback{min-height:64px;font-size:12px;padding:0}body[data-game="quiz"] .quiz-feedback strong{font-size:12px}body[data-game="quiz"] .quiz-feedback p{margin:3px 0}body[data-game="quiz"] .quiz-answer small{line-height:14px}}
-@media(prefers-reduced-motion:reduce){body[data-game="quiz"] .quiz-play *{animation:none;transition:none}}
+
+/* 条件适配 */
+@media (max-height:650px) {
+  .quiz-play {
+    padding: 0;
+    gap: 6px;
+  }
+  .quiz-meta {
+    font-size: 12px;
+  }
+  #question-title {
+    font-size: 16px;
+    line-height: 1.4;
+    min-height: 42px;
+    margin: 0;
+  }
+  .quiz-answer {
+    min-height: 44px;
+    padding: 5px;
+    gap: 5px;
+    font-size: 13px;
+  }
+  .quiz-answers {
+    gap: 6px;
+  }
+  .answer-letter {
+    flex-basis: 20px;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+  .quiz-feedback {
+    min-height: 64px;
+    font-size: 12px;
+    padding: 0;
+  }
+  .quiz-feedback strong {
+    font-size: 12px;
+  }
+  .quiz-feedback p {
+    margin: 3px 0;
+  }
+  .quiz-answer small {
+    line-height: 14px;
+  }
+}
+
+/* 无障碍：减少动态效果 */
+@media (prefers-reduced-motion:reduce) {
+  .quiz-play * {
+    animation: none;
+    transition: none;
+  }
+}
 
 /* 回顾用选择框替换题目元信息，不额外堆叠一整行，保证短PC视口内可操作。 */
-body[data-game="quiz"] .quiz-play[data-review="true"] .quiz-meta,body[data-game="quiz"] .quiz-play[data-review="true"] #feedback-title{display:none}
-body[data-game="quiz"] #review-field{order:-1;font-size:0}
-body[data-game="quiz"] #review-select{font-size:14px;margin:0}
-body[data-game="quiz"] .quiz-answer:disabled:not(.is-correct):not(.is-wrong){opacity:1;color:var(--muted)}
+.quiz-play[data-review="true"] .quiz-meta,.quiz-play[data-review="true"] #feedback-title {
+  display: none;
+}
+
+#review-field {
+  order: -1;
+  font-size: 0;
+}
+
+#review-select {
+  font-size: 14px;
+  margin: 0;
+}
+
+.quiz-answer:disabled:not(.is-correct):not(.is-wrong) {
+  opacity: 1;
+  color: var(--muted);
+}

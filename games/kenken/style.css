@@ -1,15 +1,47 @@
 /* 私有样式仅承载画布及玩法专用输入，公共界面保持同源。 */
-body[data-game="kenken"] canvas{touch-action:none}
-body[data-game="kenken"] .play-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));gap:6px;flex-basis:100%;order:-1}
-body[data-game="kenken"] .play-inputs button{min-height:44px;touch-action:manipulation}
-/* 辅助动作采用公共紧凑内边距，矮PC窗口换行后仍保留44px目标。 */
-@media(min-width:851px){
- html body.unified-game[data-game="kenken"] .stage-controls>button,
- html body.unified-game[data-game="kenken"] .kenken-actions>button{padding:6px 8px}
+canvas {
+  touch-action: none;
 }
-@media(max-width:850px){html body.unified-game[data-game="kenken"] .game-layout .stage-controls.unified-controls>button{flex:1 1 0;min-width:0}}
+
+.play-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(44px,1fr));
+  gap: 6px;
+  flex-basis: 100%;
+  order: -1;
+}
+
+.play-inputs button {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* 辅助动作采用公共紧凑内边距，矮PC窗口换行后仍保留44px目标。 */
+
+/* PC端：桌面宽度适配 */
+@media (min-width:851px) {
+  html body.unified-game .stage-controls>button, html body.unified-game .kenken-actions>button {
+    padding: 6px 8px;
+  }
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  html body.unified-game .game-layout .stage-controls.unified-controls>button {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
 
 /* 数字按棋盘尺寸均分首行；手机辅助动作单独三列，PC沿用公共自然排布。 */
-@media(max-width:850px){
- body[data-game="kenken"] .kenken-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;flex-basis:100%;order:-1}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .kenken-actions {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 6px;
+    flex-basis: 100%;
+    order: -1;
+  }
 }

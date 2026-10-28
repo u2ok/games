@@ -1,37 +1,174 @@
 /* 接龙仅定义牌桌与纸牌，页面骨架、信息面板和操作使用公共规范。 */
-.solitaire-board { padding: 10px; background: #dce7d4; }
-#card-table { width: 100%; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
-.solitaire-top { aspect-ratio:5 / 1; }
-@media(max-width:850px) and (max-height:480px) and (orientation:landscape) {
-  .solitaire-game .solitaire-board { container-type:size; }
-  .solitaire-game #card-table { max-width:min(100%,220cqh); margin:auto; }
+.solitaire-board {
+  padding: 10px;
+  background: #dce7d4;
 }
-.solitaire-top, .solitaire-tableau { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; min-height: 0; }
-.card-slot { position: relative; min-width: 0; min-height: 0; }
-.playing-piece, .stock-card, .empty-slot { min-height: 0; min-width: 0; width: 100%; aspect-ratio: 5 / 7; border-radius: 6px; padding: 0; border: 1px solid #a6b39b; }
-.playing-piece { position: absolute; inset: 0 auto auto 0; color: #263b31; background: #fffefa; text-align: left; box-shadow: 0 1px 2px #24352d24; }
-.playing-piece.face:hover { background: #fff8e8; }
-.playing-piece.red-card { color: #ad473b; }
-.card-corner { position: absolute; top: 3px; left: 4px; font-size: clamp(10px, 1.2vw, 16px); font-weight: bold; line-height: 1; white-space: nowrap; }
-.card-suit { position: absolute; top: 38%; left: 0; right: 0; text-align: center; font-size: clamp(17px, 3vw, 38px); line-height: 1; }
-.back { background-color: #35664e; background-image: repeating-linear-gradient(45deg, #ffffff12 0 2px, transparent 2px 6px); color: #fffefa; }
-.back:hover { background-color: #2c5d45; }
-.empty-slot { display: grid; place-items: center; color: #6d8461; background: #cbdcc0; border: 1px dashed #91a184; font-size: clamp(10px, 1.7vw, 22px); }
-.stock-card { font-size: clamp(12px, 2vw, 24px); }
-.chosen { box-shadow: inset 0 0 0 2px #c48735, 0 1px 3px #24352d30; }
-.suggested > .empty-slot { border: 2px solid #c48735; }
+
+#card-table {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+.solitaire-top {
+  aspect-ratio: 5 / 1;
+}
+
+/* 移动横屏：低高度适配 */
+@media (max-width:850px) and (max-height:480px) and (orientation:landscape), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .solitaire-game .solitaire-board {
+    container-type: size;
+  }
+  .solitaire-game #card-table {
+    max-width: min(100%,220cqh);
+    margin: auto;
+  }
+}
+
+.solitaire-top, .solitaire-tableau {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  min-height: 0;
+}
+
+.card-slot {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.playing-piece, .stock-card, .empty-slot {
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  border-radius: 6px;
+  padding: 0;
+  border: 1px solid #a6b39b;
+}
+
+.playing-piece {
+  position: absolute;
+  inset: 0 auto auto 0;
+  color: #263b31;
+  background: #fffefa;
+  text-align: left;
+  box-shadow: 0 1px 2px #24352d24;
+}
+
+.playing-piece.face:hover {
+  background: #fff8e8;
+}
+
+.playing-piece.red-card {
+  color: #ad473b;
+}
+
+.card-corner {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: clamp(10px, 1.2vw, 16px);
+  font-weight: bold;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.card-suit {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(17px, 3vw, 38px);
+  line-height: 1;
+}
+
+.back {
+  background-color: #35664e;
+  background-image: repeating-linear-gradient(45deg, #ffffff12 0 2px, transparent 2px 6px);
+  color: #fffefa;
+}
+
+.back:hover {
+  background-color: #2c5d45;
+}
+
+.empty-slot {
+  display: grid;
+  place-items: center;
+  color: #6d8461;
+  background: #cbdcc0;
+  border: 1px dashed #91a184;
+  font-size: clamp(10px, 1.7vw, 22px);
+}
+
+.stock-card {
+  font-size: clamp(12px, 2vw, 24px);
+}
+
+.chosen {
+  box-shadow: inset 0 0 0 2px #c48735, 0 1px 3px #24352d30;
+}
+
+.suggested > .empty-slot {
+  border: 2px solid #c48735;
+}
+
 /* 牌桌适当横向展开；顶部、侧栏、按钮等不再设置专属视觉规则。 */
-.solitaire-game .solitaire-board{aspect-ratio:6 / 5;height:auto;background:var(--sage);border-color:var(--line)}
-.solitaire-game .playing-piece{background:var(--paper);color:var(--ink)}
-.solitaire-game .playing-piece.red-card{color:var(--danger)}
-.solitaire-game .back{background-color:var(--green)}
-.solitaire-game .empty-slot{background:#e2e7f1;color:var(--muted);border-color:#b9c3d8}
-.solitaire-game .chosen{box-shadow:inset 0 0 0 2px var(--green)}
-@media(max-width:850px){
- .solitaire-game .solitaire-board{padding:6px}
- .solitaire-game #card-table{gap:6px}
- .solitaire-game .solitaire-top,.solitaire-game .solitaire-tableau{gap:3px}
- .solitaire-game .card-corner{top:2px;left:2px;font-size:clamp(8px,2.6vw,12px)}
- .solitaire-game .card-suit{font-size:clamp(12px,4.2vw,22px)}
- .solitaire-game .playing-piece,.solitaire-game .stock-card,.solitaire-game .empty-slot{border-radius:4px}
+.solitaire-game .solitaire-board {
+  aspect-ratio: 6 / 5;
+  height: auto;
+  background: var(--sage);
+  border-color: var(--line);
+}
+
+.solitaire-game .playing-piece {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.solitaire-game .playing-piece.red-card {
+  color: var(--danger);
+}
+
+.solitaire-game .back {
+  background-color: var(--green);
+}
+
+.solitaire-game .empty-slot {
+  background: #e2e7f1;
+  color: var(--muted);
+  border-color: #b9c3d8;
+}
+
+.solitaire-game .chosen {
+  box-shadow: inset 0 0 0 2px var(--green);
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .solitaire-game .solitaire-board {
+    padding: 6px;
+  }
+  .solitaire-game #card-table {
+    gap: 6px;
+  }
+  .solitaire-game .solitaire-top,.solitaire-game .solitaire-tableau {
+    gap: 3px;
+  }
+  .solitaire-game .card-corner {
+    top: 2px;
+    left: 2px;
+    font-size: clamp(8px,2.6vw,12px);
+  }
+  .solitaire-game .card-suit {
+    font-size: clamp(12px,4.2vw,22px);
+  }
+  .solitaire-game .playing-piece,.solitaire-game .stock-card,.solitaire-game .empty-slot {
+    border-radius: 4px;
+  }
 }

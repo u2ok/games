@@ -3,7 +3,7 @@
 新增或修改游戏前，阅读 [GAME-STANDARD.md](GAME-STANDARD.md)，它是当前技术、布局、样式、配色、Logo和交互规范的唯一主入口。用户当前明确指示优先。
 
 - 不使用构建工具、框架、ES6 Modules或外部运行依赖；保留shared公共资源及项目结构后可直接运行。
-- 公共布局、组件和快捷键修改根 `shared/base.css`、`shared/interface.js`，各游戏直接引用shared公共文件，不保存副本；运行 `node scripts/build-shared-css.cjs`更新共享横屏CSS。
+- 公共布局、组件和快捷键修改根 `shared/base.css`、`shared/interface.js`，各游戏直接引用shared公共文件，不保存副本；公共PC、移动竖屏及横屏CSS统一维护base.css，各游戏style.css仅维护私有CSS。
 - 私有CSS仅承载棋盘、玩法和必要输入区，不为某个游戏另造导航、信息卡、按钮或面板主题。PC、手机和横屏规则必须明确区分。
 - 每款游戏有README和本地物件式SVG Logo；新增游戏同步导航登记和规范中的游戏清单。
 - 界面图标统一使用本地SVG：所有页面直接引用shared/icons.js，不使用字符图标、Emoji或图标字体。

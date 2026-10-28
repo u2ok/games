@@ -1,5 +1,25 @@
 /* 私有样式仅承载画布及玩法专用输入，公共界面保持同源。 */
-body[data-game="hex-mines"] canvas{touch-action:none}
-body[data-game="hex-mines"] .play-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;flex-basis:100%;order:-1}
-body[data-game="hex-mines"] .play-inputs button{min-height:44px;touch-action:manipulation}
-@media(max-width:850px){html body.unified-game[data-game="hex-mines"] .game-layout .stage-controls.unified-controls>button{flex:1 1 0;min-width:0}}
+canvas {
+  touch-action: none;
+}
+
+.play-inputs {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 6px;
+  flex-basis: 100%;
+  order: -1;
+}
+
+.play-inputs button {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  html body.unified-game .game-layout .stage-controls.unified-controls>button {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}

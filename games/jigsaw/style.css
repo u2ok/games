@@ -1,5 +1,22 @@
 /* 拼图私有规则仅规定画布比例与拖动手势，其他组件沿用公共源。 */
-body[data-game="jigsaw"] .board{aspect-ratio:5 / 6;height:auto}
-body[data-game="jigsaw"] canvas{touch-action:none;user-select:none;cursor:grab}
-body[data-game="jigsaw"] canvas.dragging{cursor:grabbing}
-@media(min-width:851px){body[data-game="jigsaw"] .board{width:min(100%,calc(var(--board-size)*.8333333333))}}
+.board {
+  aspect-ratio: 5 / 6;
+  height: auto;
+}
+
+canvas {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+
+canvas.dragging {
+  cursor: grabbing;
+}
+
+/* PC端：桌面宽度适配 */
+@media (min-width:851px) {
+  .board {
+    width: min(100%,calc(var(--board-size)*.8333333333));
+  }
+}

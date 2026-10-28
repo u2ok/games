@@ -348,8 +348,6 @@
     if (mode) mode.addEventListener('click', pauseGame, true);
     top.addEventListener('click', function () { pauseGame(); if (!menu.open) menu.showModal(); });
     settings.hidden = true;
-    var oldTools = header.querySelector('.mobile-tools');
-    if (oldTools) oldTools.hidden = true;
     var bottom = bottomButton || document.querySelector('.unified-more, .link-more');
     bottom.setAttribute('aria-haspopup', 'dialog');
     bottom.setAttribute('aria-controls', menu.id);
@@ -434,9 +432,6 @@
   var records = [];
   var compact = document.createElement('div');
   compact.className = 'link-mobile-summary';
-  var pairCount = document.createElement('span');
-  pairCount.className = 'mobile-pair-count';
-  compact.appendChild(pairCount);
   // 手机使用独立的格式化时间展示，原成绩节点保留用于游戏更新和桌面恢复。
   var clock = document.createElement('div');
   clock.className = 'link-clock';
@@ -471,12 +466,6 @@
     records.push({ node:node, marker:marker });
     parent.appendChild(node);
   }
-  function mobileCount() {
-    var match = detail.textContent.match(/已消 (\d+)\/(\d+)/);
-    var text = match ? '已消 ' + match[1] + '/' + match[2] + ' 对' : '';
-    if (pairCount.textContent !== text) pairCount.textContent = text;
-  }
-  new MutationObserver(mobileCount).observe(detail, { childList:true });
   function adapt() {
     if (media.matches && !records.length) {
       layout.prepend(compact);
@@ -487,7 +476,6 @@
       relocate(document.getElementById('status'), compact);
       [document.querySelector('.instructions')].forEach(function (node) { relocate(node, menu); });
       relocate(document.getElementById('storage'), compact);
-      mobileCount();
     } else if (!media.matches && records.length) {
       if (menu.open) menu.close();
       records.forEach(function (record) { record.marker.parentNode.replaceChild(record.node, record.marker); });
@@ -498,7 +486,7 @@
   adapt();
 
   }
-  // 专用适配器由同步脚本注入同一文件，连连看无需再维护第二个入口。
+  // 连连看保留专属配对进度和时钟，公共导航仍走同一个入口。
   if (document.body.dataset.game === 'linkmatch') { initLinkmatchLayout(); installResponsiveChrome(); return; }
   var layout = document.querySelector('.game-layout');
   var stage = document.querySelector('.game-stage');
@@ -556,14 +544,6 @@
     homes.push({ node: node, marker: marker });
     target.appendChild(node);
   }
-  var tools = document.createElement('div');
-  tools.className = 'mobile-tools';
-  header.appendChild(tools);
-  var menuButton = document.createElement('button');
-  menuButton.className = 'icon-button';
-  menuButton.type = 'button';
-  menuButton.setAttribute('aria-label', '打开游戏菜单与玩法说明');
-  menuButton.textContent = '☰';
   var menu = document.createElement('dialog');
   menu.className = 'mobile-menu';
   menu.setAttribute('aria-labelledby', 'mobile-menu-title');
@@ -574,7 +554,6 @@
   var summary = document.createElement('div');
   summary.className = 'mobile-summary';
   layout.appendChild(summary);
-  tools.appendChild(menuButton);
   var moreButton = document.createElement('button');
   moreButton.textContent = '更多';
   moreButton.className = 'unified-more';
@@ -590,11 +569,6 @@
     menu.showModal();
   }
   moreButton.addEventListener('click', openMenu);
-  menuButton.addEventListener('click', function () {
-    // 复用原暂停入口，保证计时器、配对等待和物理循环一起暂停。
-    if (!pause.disabled && pause.textContent.trim() === '暂停') pause.click();
-    menu.showModal();
-  });
   restart.addEventListener('click', function () { if (menu.open) menu.close(); });
 
   function syncHeight() {
@@ -636,7 +610,6 @@
       if (powerInfo) move(powerInfo, summary);
       move(stageControls, layout);
       stageControls.appendChild(moreButton);
-      tools.appendChild(menuButton);
       [panel.querySelector('.mode-switch'), document.getElementById('level-progress'), document.getElementById('storage')].forEach(function (node) { move(node, summary); });
       [document.getElementById('level-section'), document.querySelector('.instructions')].forEach(function (node) {
           move(node, menuContent);

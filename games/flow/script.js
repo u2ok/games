@@ -1,4 +1,4 @@
-/* 通用界面逻辑随游戏一起保存，不引用导航站资源；闭包隔离全部状态。 */
+/* 游戏私有规则、状态与存储；公共界面由shared入口处理，闭包隔离业务状态。 */
 (function () {
   'use strict';
   var id = document.title.split(' · ')[0];

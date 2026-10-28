@@ -1,2 +1,11 @@
 /* 只定义本游戏棋盘，不覆盖基础布局与组件。 */
-@media (max-width: 850px) { .grid { gap: 8px; } .mines-grid { gap: 4px; } }
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width: 850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .grid {
+    gap: 8px;
+  }
+  .mines-grid {
+    gap: 4px;
+  }
+}

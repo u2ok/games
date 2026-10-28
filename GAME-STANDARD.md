@@ -19,15 +19,13 @@ index.html                                    导航站入口
 src/style.css / src/script.js / src/logo.svg   导航站资源
 shared/                                      全站公共代码（只维护一份）
   base.css / interface.js / icons.js
-  landscape.css                              开发脚本生成的共享横屏CSS
-scripts/build-shared-css.cjs                  生成shared共享横屏CSS
 tests/                                       结构、规则与快捷键回归
 games/<小写连字符标识>/
   index.html / style.css
   script.js / logo.svg / README.md
 ```
 
-页面声明 `<body data-game="游戏标识">`；依次加载 `../../shared/base.css`、`style.css`、`../../shared/landscape.css`；脚本加载顺序为`../../shared/icons.js`、业务`script.js`、`../../shared/interface.js`。不要加载过期的 `layout.js`。
+页面声明 `<body data-game="游戏标识">`；依次加载 `../../shared/base.css`、`style.css`；脚本加载顺序为`../../shared/icons.js`、业务`script.js`、`../../shared/interface.js`。不要加载过期的 `layout.js`。
 
 ## 2. 配色与基础样式
 
@@ -133,10 +131,11 @@ PC侧栏与手机弹层的关卡列表统一每行5关（不足5关保留空余�
 |---|---|
 | 令牌、字体、页面骨架、按钮、信息卡、弹层、手机重排、通用快捷键 | 规则、关卡、AI、计分、坐标、碰撞、牌列、特殊输入区、棋盘图形 |
 
-各游戏不得保留base.css、interface.js、icons.js、landscape.css公共副本，页面直接引用shared公共文件。修改公共JS立即生效；修改公共或私有CSS后运行`node scripts/build-shared-css.cjs`更新shared/landscape.css，并用--check检查。新增通用能力应使用明确游戏标识或适配参数，而不是凭 `.stage-controls` 猜测动态文本是按钮容器。
-私有 `style.css` 不覆盖 `:root`、整个header、公共面板/按钮/菜单。必要的舞台比例、数字键盘等差异以 `body[data-game="..."]` 限定，注释说明原因、端别与影响范围。
-PC规则写入 `min-width:851px`，手机规则写入 `max-width:850px`；横屏另设条件。禁止无边界地用 `!important` 或不断追加相互覆盖的临时补丁。修改已有规则，失效规则应清理。
-公共CSS清理须保留选择器交错顺序、兼容回退声明与注释，不按属性名全局去重。完成后更新共享横屏CSS并做浏览器回归。
+各游戏不得保留base.css、interface.js、icons.js、landscape.css公共副本，页面直接引用shared公共文件。公共样式全部维护在shared/base.css；私有样式维护在各游戏style.css。修改直接生效，无需生成、提取或复制CSS。新增通用能力应使用明确游戏标识或适配参数，而不是凭 `.stage-controls` 猜测动态文本是按钮容器。
+私有 `style.css` 不覆盖 `:root`、整个header、公共面板/按钮/菜单。每个页面只加载本游戏的私有CSS，无需以`body[data-game="..."]`重复隔离；直接使用棋盘、玩法和专属输入区选择器。必要的优先级由实际组件容器表达，注释说明原因、端别与影响范围。HTML上的data-game仍供公共适配使用，不能删除。
+PC规则与移动规则明确区分；移动媒体查询同时覆盖宽度≤850px及宽度851–1200px、高度≤480px、横屏、粗指针条件，声明只维护一份。公共横屏区域重排位于base.css末尾。禁止无边界地用 `!important` 或不断追加相互覆盖的临时补丁。修改已有规则，失效规则应清理。
+公共CSS清理须保留选择器交错顺序、兼容回退声明与注释，不按属性名全局去重。完成后做浏览器回归。
+CSS采用两空格缩进、每条声明独占一行；按组件和适用端添加分区注释，移动通用规则同时服务竖屏及触屏横屏，方向专属规则单独标明。存在覆盖依赖时保留原级联顺序，不为集中媒体查询而机械搬动规则。可运行`node scripts/format-css.cjs`统一排版；此工具只修改源文件空白与注释，不是运行或部署步骤。
 响应式重排移动原节点、保留占位，切回PC还原；设置控件移出原设置窗口后，必须保留其原保存事件链，不能维护两份设置；不要克隆有事件的按钮或维护两份成绩。动态 `textContent` 容器禁止插入操作按钮。
 
 ## 8. 现有游戏规则与差异清单
@@ -229,7 +228,7 @@ PC规则写入 `min-width:851px`，手机规则写入 `max-width:850px`；横屏
 
 1. 明确规则、输入、胜负、记录及设置，按当前会话要求进行设计确认。
 2. 创建独立目录与README，复用公共骨架和标准ID。必需：`start/pause/restart/settings/settings-open/settings-close/sound/status/storage/score/best/rule-label`，遮罩使用`game-cover/cover-action`，专用字段需注明。历史贪吃蛇、打砖块有旧ID，新游戏不照搬。
-3. 公共入口适配、Logo、导航登记，更新shared共享横屏CSS；不得复制历史过期布局补丁。
+3. 公共入口适配、Logo、导航登记，复用shared/base.css公共布局；不得复制历史过期布局补丁。
 4. README包含启动、规则、操作/快捷键、设置、存储、文件说明、已知限制与验证范围。
 5. 执行 `node tests/layout.cjs`（页面、资源与公共引用）、`node tests/check.cjs`（全站语法、登记与现存贪吃蛇规则回归）、`node tests/shortcuts.cjs`（公共快捷键模拟DOM），为修改的规则增加有意义的回归用例。现有入口不代表全部游戏规则覆盖。
 6. 浏览器至少覆盖1440×900、1024×768、430×932、320×568、844×390。检查公共布局、弹窗、设置保存和断点往返。历史记录中的 `tests-interface.cjs` 当前仓库未提供，不作为可执行入口；浏览器验证需另行实施，游戏运行无需测试依赖。检查真实边界、信息内容是否裁切、按钮能否点击，而非仅看scrollWidth。
@@ -238,14 +237,14 @@ PC规则写入 `min-width:851px`，手机规则写入 `max-width:850px`；横屏
 
 ## 10. 全站移动横屏
 
-全部游戏声明`data-landscape="游戏标识"`并直接引用根`shared/landscape.css`。新增横屏骨架仅在触屏粗指针（pointer:coarse）、横屏、高度≤480px且宽度≤1200px时启用。PC鼠标窗口和手机竖屏不参与；宽度≤850px继续使用原手机适配，大手机横屏的CSS与JS使用相同的附加条件。混合设备按浏览器主指针能力判定，不能仅按宽度或高度猜测手机。
+全部游戏声明`data-landscape="游戏标识"`，公共横屏CSS直接维护在根`shared/base.css`。新增横屏骨架仅在触屏粗指针（pointer:coarse）、横屏、高度≤480px且宽度≤1200px时启用。PC鼠标窗口和手机竖屏不参与；宽度≤850px继续使用原手机适配，大手机横屏的CSS与JS使用相同的附加条件。混合设备按浏览器主指针能力判定，不能仅按宽度或高度猜测手机。
 
 - 左侧棋盘贯穿可用高度，按原比例缩放；右侧依次为移动端导航、信息卡、普通操作、专用触控区。顶部导航及底部按钮完全复用竖屏移动样式和自然换行规则，不另设横屏字号、Logo大小、按钮列数或分组主题。
 - 横屏是竖屏组件的区域重排：棋盘在左，其他组件在右。信息卡内部Flex结构、内边距、详情间距、字号、配色、展开/收起及提示处理直接复用竖屏规则，不另建横屏信息卡主题；右栏按min(52vw,clamp(320px,42vw,430px))随可用宽度增长；窄横屏限制侧栏占比，宽横屏适当加宽。信息卡展开/收起复用竖屏summary-head布局和44px点击高度，不做绝对定位；空间足够时在成绩旁，容器不足261px时自然独立一行；收起时显示精简摘要，展开时隐藏摘要并显示原始详情与提示框；详情允许换行，仅纵向滚动，不裁切长数字或文字。
 - 普通操作及actions组复用竖屏移动规则，按容器宽度自然换行；不再为横屏强制每行三个或将动作组按PC规则展平。数字键盘、方向/开火、节奏轨道、选机等专用输入同样复用各游戏移动布局。
 - 数独数字键盘和辅助动作组继承原移动样式，不维护第二套横屏键盘。连连看保留专用入口和计时显示，但采用同一横屏骨架。接龙沿CSS声明的6:5比例计算横屏尺寸，竖屏尺寸策略不变。
 - 复用原节点、事件和设置保存链，切回PC恢复原节点位置，横竖屏切换不重复创建业务控件。顶部与底部更多均保留，与竖屏共用原弹窗入口；大手机横屏通过mobile-layout标记排除PC专用动作展平规则。
-- 公共横屏源维护根`shared/base.css`、`shared/interface.js`；大手机补充样式由`scripts/build-shared-css.cjs`读取现有公共及私有移动规则生成shared目录唯一的`landscape.css`，先复用移动规则，最后应用公共横屏骨架。生成规则同时受媒体查询与页面声明限定，不手改生成文件。`node scripts/build-shared-css.cjs --check`只读检查同步状态。
+- 公共布局、组件以及横屏重排统一维护根`shared/base.css`，适配逻辑维护`shared/interface.js`；各游戏`style.css`只维护棋盘、玩法和专属输入区。移动端同一条规则通过组合媒体条件覆盖竖屏与触屏横屏，不聚合、不复制游戏私有CSS，不再生成landscape.css。
 - 公共文件由根目录唯一提供，保留完整项目结构仍支持file://运行，无新增外部运行依赖；不再承诺单独游戏目录自包含。浏览器回归检查端别样式指纹、实际棋盘和按钮边界、展开/收起、更多弹窗和旋转恢复；真机触控、系统安全区与完整通关另行验证。
 
 横屏信息卡按内容自然占高（height:auto、align-self:start），仅以所在网格可用高度为上限，超长内容纵向滚动；不再用height:100%拉满造成卡内留白，棋盘与操作区位置保持稳定。

@@ -1,29 +1,142 @@
 /* 仅湖面内的玩法提示、张力和输入状态；沿用公共导航、面板与按钮主题。 */
-body[data-game="fishing"] .fishing-hud { position:absolute; z-index:1; left:14px; right:14px; bottom:14px; padding:12px 14px; border:1px solid #ffffffa0; border-radius:12px; background:#fffef5f0; box-shadow:0 4px 16px #355f6320; pointer-events:none; }
-body[data-game="fishing"] .fishing-hud strong { display:block; font-size:16px; line-height:24px; color:#284d49; }
-body[data-game="fishing"] .fishing-hud p { margin-top:2px; font-size:12px; line-height:18px; color:#526b69; }
-body[data-game="fishing"] .fishing-meters { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
-body[data-game="fishing"] .fishing-meters label { font-size:11px; line-height:16px; color:#526b69; }
-body[data-game="fishing"] .fishing-meters span { float:right; font-weight:700; color:#284d49; }
-body[data-game="fishing"] .fishing-meters progress { display:block; width:100%; height:9px; margin-top:4px; border:0; border-radius:8px; overflow:hidden; appearance:none; background:#dfe8de; }
-body[data-game="fishing"] progress::-webkit-progress-bar { background:#dfe8de; border-radius:8px; }
-body[data-game="fishing"] progress::-webkit-progress-value { background:#5a9e8a; border-radius:8px; }
-body[data-game="fishing"] progress::-moz-progress-bar { background:#5a9e8a; border-radius:8px; }
-body[data-game="fishing"] #line-tension::-webkit-progress-value { background:#b39b64; }
-body[data-game="fishing"] #line-tension::-moz-progress-bar { background:#b39b64; }
-body[data-game="fishing"] .fishing-hud.danger strong,body[data-game="fishing"] .fishing-hud.danger #tension-text { color:#a8493d; }
-body[data-game="fishing"] .fishing-hud.danger #line-tension::-webkit-progress-value { background:#bf715e; }
-body[data-game="fishing"] .fishing-hud.danger #line-tension::-moz-progress-bar { background:#bf715e; }
-body[data-game="fishing"] #reel { touch-action:none; user-select:none; -webkit-user-select:none; }
-body[data-game="fishing"] #reel[aria-pressed="true"] { background:var(--sage); border-color:var(--green); color:var(--green); }
-@media(max-width:850px) {
- body[data-game="fishing"] .fishing-hud { left:8px; right:8px; bottom:8px; padding:8px 10px; }
- body[data-game="fishing"] .fishing-hud strong { font-size:14px; line-height:20px; }
- body[data-game="fishing"] .fishing-hud p { font-size:11px; line-height:16px; }
- body[data-game="fishing"] .fishing-meters { gap:10px; margin-top:5px; }
+.fishing-hud {
+  position: absolute;
+  z-index: 1;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 12px 14px;
+  border: 1px solid #ffffffa0;
+  border-radius: 12px;
+  background: #fffef5f0;
+  box-shadow: 0 4px 16px #355f6320;
+  pointer-events: none;
 }
-@media(max-width:850px) and (max-height:500px) {
- body[data-game="fishing"] .fishing-hud { padding:5px 8px; }
- body[data-game="fishing"] .fishing-hud p { font-size:10px; line-height:14px; }
- body[data-game="fishing"] .fishing-meters { margin-top:3px; }
+
+.fishing-hud strong {
+  display: block;
+  font-size: 16px;
+  line-height: 24px;
+  color: #284d49;
+}
+
+.fishing-hud p {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #526b69;
+}
+
+.fishing-meters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.fishing-meters label {
+  font-size: 11px;
+  line-height: 16px;
+  color: #526b69;
+}
+
+.fishing-meters span {
+  float: right;
+  font-weight: 700;
+  color: #284d49;
+}
+
+.fishing-meters progress {
+  display: block;
+  width: 100%;
+  height: 9px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  appearance: none;
+  background: #dfe8de;
+}
+
+progress::-webkit-progress-bar {
+  background: #dfe8de;
+  border-radius: 8px;
+}
+
+progress::-webkit-progress-value {
+  background: #5a9e8a;
+  border-radius: 8px;
+}
+
+progress::-moz-progress-bar {
+  background: #5a9e8a;
+  border-radius: 8px;
+}
+
+#line-tension::-webkit-progress-value {
+  background: #b39b64;
+}
+
+#line-tension::-moz-progress-bar {
+  background: #b39b64;
+}
+
+.fishing-hud.danger strong,.fishing-hud.danger #tension-text {
+  color: #a8493d;
+}
+
+.fishing-hud.danger #line-tension::-webkit-progress-value {
+  background: #bf715e;
+}
+
+.fishing-hud.danger #line-tension::-moz-progress-bar {
+  background: #bf715e;
+}
+
+#reel {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#reel[aria-pressed="true"] {
+  background: var(--sage);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .fishing-hud {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    padding: 8px 10px;
+  }
+  .fishing-hud strong {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .fishing-hud p {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .fishing-meters {
+    gap: 10px;
+    margin-top: 5px;
+  }
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px) and (max-height:500px), (min-width:851px) and (max-width:1200px) and (max-height:500px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .fishing-hud {
+    padding: 5px 8px;
+  }
+  .fishing-hud p {
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .fishing-meters {
+    margin-top: 3px;
+  }
 }

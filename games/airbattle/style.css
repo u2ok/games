@@ -1,4 +1,24 @@
 /* 飞机、子弹与敌机由 Canvas 本地绘制，画布比例遵循基础布局。 */
-.canvas-board canvas { cursor: crosshair; touch-action: none; user-select: none; }
-.air-hint { color: var(--muted); }
-.weapon-hud { position: absolute; top: 8px; left: 8px; max-width: calc(100% - 16px); pointer-events: none; padding: 4px 8px; border-radius: 8px; background: #fffefae8; color: #245c4a; font-size: 12px; line-height: 20px; }
+.canvas-board canvas {
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+}
+
+.air-hint {
+  color: var(--muted);
+}
+
+.weapon-hud {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  pointer-events: none;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: #fffefae8;
+  color: #245c4a;
+  font-size: 12px;
+  line-height: 20px;
+}

@@ -1,26 +1,139 @@
 /* 玩法专用数字牌和运算输入区，页面骨架使用公共样式。 */
-body[data-game="twenty-four"] .twenty-four-play { height:100%; display:flex; flex-direction:column; justify-content:center; gap:16px; padding:clamp(12px,3vw,28px); }
-.twenty-four-target { margin:0; text-align:center; color:var(--muted); }
-.twenty-four-target strong { display:block; font-size:clamp(36px,7vw,64px); color:var(--ink); }
-.twenty-four-selection { margin:0; text-align:center; color:var(--muted); font-size:13px; }
-.twenty-four-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-.twenty-four-card { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:90px; gap:8px; padding:12px; }
-.twenty-four-card strong { font-size:clamp(24px,5vw,36px); color:var(--green); }
-.twenty-four-card span { font-size:12px; max-width:100%; overflow-wrap:anywhere; }
-.twenty-four-card[aria-pressed="true"] { border-color:var(--green); box-shadow:inset 0 0 0 1px var(--green); background:var(--sage); }
-.twenty-four-operators { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
-.twenty-four-operators button { min-width:0; padding:8px 4px; }
-.twenty-four-calculation { margin:0; min-height:24px; text-align:center; overflow-wrap:anywhere; color:var(--muted); font-size:13px; }
-@media(max-width:850px){ body[data-game="twenty-four"] .twenty-four-play { gap:10px; padding:12px; } .twenty-four-card { min-height:64px; padding:8px; gap:4px; } .twenty-four-cards { gap:8px; } }
+.twenty-four-play {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: clamp(12px,3vw,28px);
+}
+
+.twenty-four-target {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.twenty-four-target strong {
+  display: block;
+  font-size: clamp(36px,7vw,64px);
+  color: var(--ink);
+}
+
+.twenty-four-selection {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.twenty-four-cards {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+
+.twenty-four-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  gap: 8px;
+  padding: 12px;
+}
+
+.twenty-four-card strong {
+  font-size: clamp(24px,5vw,36px);
+  color: var(--green);
+}
+
+.twenty-four-card span {
+  font-size: 12px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.twenty-four-card[aria-pressed="true"] {
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 1px var(--green);
+  background: var(--sage);
+}
+
+.twenty-four-operators {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 8px;
+}
+
+.twenty-four-operators button {
+  min-width: 0;
+  padding: 8px 4px;
+}
+
+.twenty-four-calculation {
+  margin: 0;
+  min-height: 24px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .twenty-four-play {
+    gap: 10px;
+    padding: 12px;
+  }
+  .twenty-four-card {
+    min-height: 64px;
+    padding: 8px;
+    gap: 4px;
+  }
+  .twenty-four-cards {
+    gap: 8px;
+  }
+}
+
 /* 低高度时目标由信息卡呈现，四张牌并排，为运算按钮保留完整触控高度。 */
-@media(max-height:600px){
- body[data-game="twenty-four"] .twenty-four-play { gap:6px; padding:4px; }
- .twenty-four-target { display:none; }
- .twenty-four-selection { font-size:11px; line-height:1.3; }
- .twenty-four-cards { grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; }
- .twenty-four-card { min-height:48px; padding:4px 2px; gap:2px; }
- .twenty-four-card strong { font-size:20px; line-height:1.1; }
- .twenty-four-card span { font-size:10px; line-height:1.2; }
- .twenty-four-calculation { min-height:0; font-size:11px; line-height:1.3; }
- .twenty-four-calculation:empty { display:none; }
+
+/* 条件适配 */
+@media (max-height:600px) {
+  .twenty-four-play {
+    gap: 6px;
+    padding: 4px;
+  }
+  .twenty-four-target {
+    display: none;
+  }
+  .twenty-four-selection {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .twenty-four-cards {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 4px;
+  }
+  .twenty-four-card {
+    min-height: 48px;
+    padding: 4px 2px;
+    gap: 2px;
+  }
+  .twenty-four-card strong {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+  .twenty-four-card span {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  .twenty-four-calculation {
+    min-height: 0;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .twenty-four-calculation:empty {
+    display: none;
+  }
 }

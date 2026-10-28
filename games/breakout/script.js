@@ -1,8 +1,7 @@
-/* 通用界面逻辑随游戏一起保存，不引用导航站资源；闭包隔离全部状态。 */
+/* 打砖块私有状态与物理循环；导航和响应式界面由shared公共入口处理。 */
 (function () {
   'use strict';
-  var id = document.title.split(' · ')[0];
-  var key = 'mini-games:' + ({ '2048': '2048', '扫雷': 'mines', '记忆翻牌': 'memory', '打砖块': 'breakout' }[id]);
+  var key = 'mini-games:breakout';
   var settings = { sound: false, option: null };
   var memoryStore = {};
   var audio = null;
@@ -22,10 +21,10 @@
     if (!settings.sound) return;
     try { var Audio = window.AudioContext || window.webkitAudioContext; if (!Audio) return; if (!audio) audio = new Audio(); if (audio.state === 'suspended') audio.resume().catch(function () {}); var oscillator = audio.createOscillator(); var gain = audio.createGain(); oscillator.connect(gain); gain.connect(audio.destination); oscillator.frequency.value = frequency || 600; gain.gain.setValueAtTime(.045, audio.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + .12); oscillator.start(); oscillator.stop(audio.currentTime + .12); } catch (error) { /* 声音失败时游戏继续运行。 */ }
   }
-  function pause(reason) { if (paused || ended) return; paused = true; document.getElementById('pause').textContent = '继续游戏'; onPause(); showCover('已暂停', '准备好后继续刚才的一局。', '继续游戏'); syncStart(); status(reason || '已暂停，点击继续恢复游戏。'); }
-  function resume() { if (!paused || ended || dialog.open) return; paused = false; document.getElementById('pause').textContent = '暂停'; onResume(); hideCover(); syncStart(); }
-  function resetState() { document.getElementById('status').dataset.tone = 'normal'; ready = false; hideCover(); paused = false; ended = false; document.getElementById('pause').disabled = false; document.getElementById('pause').textContent = '暂停'; }
-  function finish(text) { ended = true; paused = false; document.getElementById('pause').disabled = true; document.getElementById('status').dataset.tone = /成功|赢了|已找到/.test(text) ? 'normal' : 'error'; status(text); showCover('本局已结束', text, '再玩一局'); syncStart(); sound(880); }
+  function pause(reason) { if (paused || ended) return; paused = true; document.getElementById('pause').textContent = '继续游戏'; onPause(); syncStart(); status(reason || '已暂停，点击继续恢复游戏。'); }
+  function resume() { if (!paused || ended || dialog.open) return; paused = false; document.getElementById('pause').textContent = '暂停'; onResume(); syncStart(); }
+  function resetState() { document.getElementById('status').dataset.tone = 'normal'; ready = false; paused = false; ended = false; document.getElementById('pause').disabled = false; document.getElementById('pause').textContent = '暂停'; }
+  function finish(text) { ended = true; paused = false; document.getElementById('pause').disabled = true; document.getElementById('status').dataset.tone = /成功|赢了|已找到/.test(text) ? 'normal' : 'error'; status(text); syncStart(); sound(880); }
   try { var saved = JSON.parse(read(key + ':settings')); if (saved && typeof saved === 'object') { settings.sound = saved.sound === true; settings.option = saved.option; } } catch (error) { /* 历史设置损坏时使用默认值。 */ }
   document.getElementById('sound').checked = settings.sound;
   if (option.type === 'checkbox') { if (typeof settings.option === 'boolean') option.checked = settings.option; } else if (Array.from(option.options).some(function (item) { return item.value === settings.option; })) option.value = settings.option;
@@ -78,34 +77,13 @@
   onPause = function () { held.left = held.right = false; overlay('已暂停', '准备好后继续刚才的一局。', '继续游戏'); }; onResume = function () { cover.hidden = flying; if (!flying) overlay('准备发球', '移动挡板，点击按钮继续。', '继续发球'); status('继续游戏。'); };
   document.getElementById('launch').addEventListener('click', launch); document.getElementById('restart').addEventListener('click', restart); restart(); requestAnimationFrame(frame);
 
-  // 统一的准备、暂停与结束遮罩；控件位置和命名在所有游戏中保持一致。
-  function showCover(title, note, action) {
-    var cover = document.getElementById('game-cover');
-    if (!cover) return;
-    cover.hidden = false;
-    document.getElementById('cover-title').textContent = title;
-    document.getElementById('cover-note').textContent = note;
-    document.getElementById('cover-action').textContent = action;
-  }
-  function hideCover() { var cover = document.getElementById('game-cover'); if (cover) cover.hidden = true; }
   function syncStart() {
     document.getElementById('start').textContent = paused ? '继续游戏' : ended ? '再玩一局' : '开始游戏';
     document.getElementById('start').disabled = flying && !paused && !ended;
   }
-  function startGame() {
-    if (dialog.open) return;
-    if (id === '打砖块') { launch(); syncStart(); return; }
-    if (ended) restart();
-    if (paused) resume();
-    ready = false;
-    hideCover(); syncStart(); status('游戏进行中。');
-  }
-  document.getElementById('start').addEventListener('click', startGame);
-  var coverAction = document.getElementById('cover-action');
-  if (coverAction) coverAction.addEventListener('click', startGame);
+  document.getElementById('start').addEventListener('click', launch);
   document.getElementById('restart').addEventListener('click', function () { syncStart(); });
-  if (id === '打砖块') ready = true;
-  if (id !== '打砖块') { ready = true; showCover('准备好了吗？', '点击开始游戏，享受轻松一局。', '开始游戏'); }
+  ready = true;
   syncStart();
 
 }());

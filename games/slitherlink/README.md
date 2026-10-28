@@ -22,6 +22,6 @@ script.js 为独立规则，style.css 仅维护玩法舞台，logo.svg 为本地
 
 规则参考：[Nikoli官方说明](https://www.nikoli.co.jp/en/puzzles/slitherlink/)。题面、代码和SVG均为本项目实现，运行不请求外站。
 
-移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。shared/landscape.css为根目录唯一共享生成资源，不直接编辑；验证范围见根TEST-REPORT.md。
+移动横屏：触屏设备横屏、宽≤1200px且高≤480px时采用左棋盘、右导航/信息/操作；导航、普通操作和专用输入均复用竖屏移动规则，按可用宽度自然换行。PC与竖屏沿用原布局。公共布局直接维护shared/base.css，玩法私有样式维护本目录style.css；验证范围见根TEST-REPORT.md。
 
-公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js、shared/landscape.css；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。
+公共资源：本游戏直接引用shared/base.css、shared/interface.js、shared/icons.js；目录内不保存公共副本。运行或部署须保留项目结构，单独复制游戏目录不再完整可用。详见根README.md。

@@ -1,47 +1,400 @@
 /* 游戏私有纸笺、选字与答题反馈；导航、面板、普通操作按钮沿用公共主题。 */
-body[data-game="idiom"] .board{aspect-ratio:auto;background:var(--paper)}
-body[data-game="idiom"] .idiom-play{display:flex;flex-direction:column;gap:12px;padding:16px;min-width:0}
-body[data-game="idiom"] .idiom-meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
-body[data-game="idiom"] #topic-label{color:#607858;font-weight:600}
-body[data-game="idiom"] #idiom-progress{appearance:none;width:100%;height:5px;border:0;border-radius:5px;overflow:hidden;accent-color:#8ca77d}
-body[data-game="idiom"] #idiom-progress::-webkit-progress-bar{background:#edf1e8}
-body[data-game="idiom"] #idiom-progress::-webkit-progress-value{background:#8ca77d}
-body[data-game="idiom"] .idiom-prompt{position:relative;padding:14px 16px;background:#faf5e8 url(logo.svg) no-repeat right 12px top 10px / 42px;border:1px solid #e8ddc3;border-radius:12px;box-shadow:0 3px 0 #f0ead9}
-body[data-game="idiom"] #task-label{display:block;padding-right:40px;font-size:12px;color:#756645;letter-spacing:.04em}
-body[data-game="idiom"] #question-title{margin:8px 0 0;font-family:"Songti SC","SimSun",serif;font-size:clamp(20px,2vw,25px);line-height:1.6;color:#3d5143;outline:0;overflow-wrap:anywhere}
-body[data-game="idiom"] #character-row{display:flex;justify-content:center;gap:10px;margin-top:12px}
-body[data-game="idiom"] #character-row[hidden]{display:none}
-body[data-game="idiom"] #character-row span{display:grid;place-items:center;width:48px;height:48px;border:1px solid #d9ccb0;border-radius:6px;background:#fffdf5;box-shadow:0 3px 0 #e6dac0;font-family:"Songti SC","SimSun",serif;font-size:30px;font-weight:700;color:#53674d}
-body[data-game="idiom"] #character-row .is-blank{border-style:dashed;color:#7e6035;background:#f4ebd5}
-body[data-game="idiom"] #character-row .is-filled{color:#4b7658;border-color:#9bb28f;animation:idiom-reveal .24s ease-out}
-body[data-game="idiom"] .idiom-answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-body[data-game="idiom"] .idiom-answer{display:grid;grid-template-columns:24px minmax(0,1fr);grid-template-rows:1fr 14px;column-gap:8px;align-items:center;min-width:0;min-height:72px;padding:8px 10px;text-align:center}
-body[data-game="idiom"] .answer-letter{grid-row:1 / 3;display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:var(--sage);color:var(--green);font-size:12px;font-weight:600}
-body[data-game="idiom"] .answer-text{grid-column:2;grid-row:1 / 3;font-family:"Songti SC","SimSun",serif;font-size:22px;line-height:1.25;letter-spacing:.08em;font-weight:700;overflow-wrap:anywhere}
-body[data-game="idiom"] .answer-mark{grid-column:2;grid-row:2;min-height:14px;font-size:11px;line-height:14px;letter-spacing:0}
+.board {
+  aspect-ratio: auto;
+  background: var(--paper);
+}
+
+.idiom-play {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.idiom-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+#topic-label {
+  color: #607858;
+  font-weight: 600;
+}
+
+#idiom-progress {
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  accent-color: #8ca77d;
+}
+
+#idiom-progress::-webkit-progress-bar {
+  background: #edf1e8;
+}
+
+#idiom-progress::-webkit-progress-value {
+  background: #8ca77d;
+}
+
+.idiom-prompt {
+  position: relative;
+  padding: 14px 16px;
+  background: #faf5e8 url(logo.svg) no-repeat right 12px top 10px / 42px;
+  border: 1px solid #e8ddc3;
+  border-radius: 12px;
+  box-shadow: 0 3px 0 #f0ead9;
+}
+
+#task-label {
+  display: block;
+  padding-right: 40px;
+  font-size: 12px;
+  color: #756645;
+  letter-spacing: .04em;
+}
+
+#question-title {
+  margin: 8px 0 0;
+  font-family: "Songti SC","SimSun",serif;
+  font-size: clamp(20px,2vw,25px);
+  line-height: 1.6;
+  color: #3d5143;
+  outline: 0;
+  overflow-wrap: anywhere;
+}
+
+#character-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+#character-row[hidden] {
+  display: none;
+}
+
+#character-row span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #d9ccb0;
+  border-radius: 6px;
+  background: #fffdf5;
+  box-shadow: 0 3px 0 #e6dac0;
+  font-family: "Songti SC","SimSun",serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #53674d;
+}
+
+#character-row .is-blank {
+  border-style: dashed;
+  color: #7e6035;
+  background: #f4ebd5;
+}
+
+#character-row .is-filled {
+  color: #4b7658;
+  border-color: #9bb28f;
+  animation: idiom-reveal .24s ease-out;
+}
+
+.idiom-answers {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+}
+
+.idiom-answer {
+  display: grid;
+  grid-template-columns: 24px minmax(0,1fr);
+  grid-template-rows: 1fr 14px;
+  column-gap: 8px;
+  align-items: center;
+  min-width: 0;
+  min-height: 72px;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.answer-letter {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--sage);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.answer-text {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  font-family: "Songti SC","SimSun",serif;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: .08em;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.answer-mark {
+  grid-column: 2;
+  grid-row: 2;
+  min-height: 14px;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0;
+}
+
 /* 未标记选项跨满两行居中；有结果标记时再让出下方说明行。 */
-body[data-game="idiom"] .answer-mark:empty{display:none}
-body[data-game="idiom"] .idiom-answer:is(.is-correct,.is-wrong,.is-eliminated) .answer-text{grid-row:1}
-body[data-game="idiom"] .idiom-answer:disabled{opacity:1}
-body[data-game="idiom"] .idiom-answer.is-correct{background:#edf4e9;border-color:#9bb28f;color:#426246;animation:idiom-correct .25s ease-out}
-body[data-game="idiom"] .idiom-answer.is-wrong{background:#faeeeb;border-color:#c08678;color:var(--danger)}
-body[data-game="idiom"] .idiom-answer.is-eliminated .answer-text{text-decoration:line-through;color:var(--muted)}
-body[data-game="idiom"] .idiom-answer.is-eliminated .answer-mark{color:var(--muted)}
-body[data-game="idiom"] .idiom-feedback{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr;column-gap:6px;min-height:96px;font-size:14px;line-height:1.5}
-body[data-game="idiom"] #feedback-title{grid-column:1;grid-row:1;font-size:14px}
-body[data-game="idiom"] #explanation{grid-column:1 / -1;grid-row:2;margin:5px 0}
-body[data-game="idiom"] #question-source{grid-column:2;grid-row:1;align-self:center;font-size:12px;color:var(--muted)}
-body[data-game="idiom"] .idiom-play[data-kind="complete"] #question-title{display:none}
-body[data-game="idiom"] #review-field{display:flex;flex:1 1 110px;min-width:100px;margin:0;font-size:0}
-body[data-game="idiom"] #review-field[hidden]{display:none}
-body[data-game="idiom"] #review-select{display:block;flex:1;min-width:0;width:100%;max-width:none;margin:0;font-size:12px;padding:6px 26px 6px 8px;background-position:right 6px center}
-body[data-game="idiom"] .idiom-enter .idiom-prompt,body[data-game="idiom"] .idiom-enter .idiom-answers{animation:idiom-enter .2s ease-out}
-body[data-game="idiom"][data-idiom-paused="true"] .idiom-play *,body[data-game="idiom"][data-idiom-paused="true"] #character-row .is-filled{animation-play-state:paused}
-@keyframes idiom-enter{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@keyframes idiom-reveal{from{transform:rotateX(70deg);opacity:.3}to{transform:rotateX(0);opacity:1}}
-@keyframes idiom-correct{50%{transform:translateY(-2px)}}
-@media(min-width:851px){body[data-game="idiom"] .board{width:min(100%,600px)}body[data-game="idiom"] .idiom-prompt{min-height:115px}}
-@media(max-width:850px){body[data-game="idiom"] .idiom-play{padding:8px;gap:10px}body[data-game="idiom"] #question-title{font-size:20px}body[data-game="idiom"] .idiom-answer{min-height:64px;padding:6px 8px;column-gap:5px}body[data-game="idiom"] .answer-text{font-size:20px}body[data-game="idiom"] .idiom-feedback{min-height:86px}}
+.answer-mark:empty {
+  display: none;
+}
+
+.idiom-answer:is(.is-correct,.is-wrong,.is-eliminated) .answer-text {
+  grid-row: 1;
+}
+
+.idiom-answer:disabled {
+  opacity: 1;
+}
+
+.idiom-answer.is-correct {
+  background: #edf4e9;
+  border-color: #9bb28f;
+  color: #426246;
+  animation: idiom-correct .25s ease-out;
+}
+
+.idiom-answer.is-wrong {
+  background: #faeeeb;
+  border-color: #c08678;
+  color: var(--danger);
+}
+
+.idiom-answer.is-eliminated .answer-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.idiom-answer.is-eliminated .answer-mark {
+  color: var(--muted);
+}
+
+.idiom-feedback {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  grid-template-rows: auto 1fr;
+  column-gap: 6px;
+  min-height: 96px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#feedback-title {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 14px;
+}
+
+#explanation {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin: 5px 0;
+}
+
+#question-source {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.idiom-play[data-kind="complete"] #question-title {
+  display: none;
+}
+
+#review-field {
+  display: flex;
+  flex: 1 1 110px;
+  min-width: 100px;
+  margin: 0;
+  font-size: 0;
+}
+
+#review-field[hidden] {
+  display: none;
+}
+
+#review-select {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  font-size: 12px;
+  padding: 6px 26px 6px 8px;
+  background-position: right 6px center;
+}
+
+.idiom-enter .idiom-prompt,.idiom-enter .idiom-answers {
+  animation: idiom-enter .2s ease-out;
+}
+
+body[data-idiom-paused="true"] .idiom-play *,body[data-idiom-paused="true"] #character-row .is-filled {
+  animation-play-state: paused;
+}
+
+@keyframes idiom-enter {
+  from {
+    opacity: .45;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes idiom-reveal {
+  from {
+    transform: rotateX(70deg);
+    opacity: .3;
+  }
+  to {
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes idiom-correct {
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* PC端：桌面宽度适配 */
+@media (min-width:851px) {
+  .board {
+    width: min(100%,600px);
+  }
+  .idiom-prompt {
+    min-height: 115px;
+  }
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .idiom-play {
+    padding: 8px;
+    gap: 10px;
+  }
+  #question-title {
+    font-size: 20px;
+  }
+  .idiom-answer {
+    min-height: 64px;
+    padding: 6px 8px;
+    column-gap: 5px;
+  }
+  .answer-text {
+    font-size: 20px;
+  }
+  .idiom-feedback {
+    min-height: 86px;
+  }
+}
+
 /* 短屏压缩题面留白和字笺，答案触控高度仍至少44px；不裁切解析。 */
-@media(max-height:650px){body[data-game="idiom"] .board{padding:8px}body[data-game="idiom"] .idiom-play{padding:0;gap:3px}body[data-game="idiom"] #idiom-progress{height:3px}body[data-game="idiom"] .idiom-prompt{padding:6px 10px;min-height:0;background-size:30px}body[data-game="idiom"] #question-title{font-size:14px;line-height:1.45;margin-top:4px}body[data-game="idiom"] #task-label{line-height:16px}body[data-game="idiom"] #character-row{margin-top:7px;gap:8px}body[data-game="idiom"] #character-row span{width:32px;height:32px;font-size:23px}body[data-game="idiom"] .idiom-answers{gap:6px}body[data-game="idiom"] .idiom-answer{min-height:44px;padding:4px 6px;grid-template-columns:20px minmax(0,1fr);grid-template-rows:1fr 12px}body[data-game="idiom"] .answer-letter{width:20px;height:20px;font-size:11px}body[data-game="idiom"] .answer-text{font-size:18px;line-height:1.1}body[data-game="idiom"] .answer-mark{font-size:10px;line-height:12px;min-height:12px}body[data-game="idiom"] .idiom-feedback{min-height:0;font-size:12px}body[data-game="idiom"] #feedback-title{font-size:12px}body[data-game="idiom"] #explanation{margin:3px 0}}
-@media(prefers-reduced-motion:reduce){body[data-game="idiom"] .idiom-play .idiom-prompt,body[data-game="idiom"] .idiom-play .idiom-answers,body[data-game="idiom"] #character-row .is-filled,body[data-game="idiom"] .idiom-play .is-correct{animation:none;transition:none}}
+
+/* 条件适配 */
+@media (max-height:650px) {
+  .board {
+    padding: 8px;
+  }
+  .idiom-play {
+    padding: 0;
+    gap: 3px;
+  }
+  #idiom-progress {
+    height: 3px;
+  }
+  .idiom-prompt {
+    padding: 6px 10px;
+    min-height: 0;
+    background-size: 30px;
+  }
+  #question-title {
+    font-size: 14px;
+    line-height: 1.45;
+    margin-top: 4px;
+  }
+  #task-label {
+    line-height: 16px;
+  }
+  #character-row {
+    margin-top: 7px;
+    gap: 8px;
+  }
+  #character-row span {
+    width: 32px;
+    height: 32px;
+    font-size: 23px;
+  }
+  .idiom-answers {
+    gap: 6px;
+  }
+  .idiom-answer {
+    min-height: 44px;
+    padding: 4px 6px;
+    grid-template-columns: 20px minmax(0,1fr);
+    grid-template-rows: 1fr 12px;
+  }
+  .answer-letter {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+  .answer-text {
+    font-size: 18px;
+    line-height: 1.1;
+  }
+  .answer-mark {
+    font-size: 10px;
+    line-height: 12px;
+    min-height: 12px;
+  }
+  .idiom-feedback {
+    min-height: 0;
+    font-size: 12px;
+  }
+  #feedback-title {
+    font-size: 12px;
+  }
+  #explanation {
+    margin: 3px 0;
+  }
+}
+
+/* 无障碍：减少动态效果 */
+@media (prefers-reduced-motion:reduce) {
+  .idiom-play .idiom-prompt,.idiom-play .idiom-answers,#character-row .is-filled,.idiom-play .is-correct {
+    animation: none;
+    transition: none;
+  }
+}

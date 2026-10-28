@@ -1,2 +1,5 @@
 /* 私有输入只作用于游戏画布，导航、信息卡、按钮和菜单沿用公共源。 */
-body[data-game="stack-tower"] canvas{touch-action:none;user-select:none}
+canvas {
+  touch-action: none;
+  user-select: none;
+}

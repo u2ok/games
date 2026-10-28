@@ -1,30 +1,163 @@
 /* 仅棋盘、棋子和走法提示；公共导航、信息卡、按钮不另设主题。 */
-body[data-game="chess"] .board { padding:14px; background:linear-gradient(135deg,#d6c49e,#b8a27c); border-color:#b9a782; box-shadow:inset 0 0 0 4px #f1e5c55c; }
-body[data-game="chess"] .play-grid { height:100%; display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); grid-template-rows:repeat(8,minmax(0,1fr)); border:1px solid #657967; box-shadow:0 2px 7px #344b4025; }
-body[data-game="chess"] .chess-cell { min-width:0; min-height:0; border:0; border-radius:0; padding:0; position:relative; display:grid; place-items:center; overflow:hidden; }
-body[data-game="chess"] .chess-cell.light { background-color:#f0e5ce; }
-body[data-game="chess"] .chess-cell.dark { background-color:#7e9784; }
-body[data-game="chess"] .chess-cell:hover { background-image:linear-gradient(#fff2,#fff2); }
-body[data-game="chess"] .chess-piece { width:84%; height:88%; display:block; filter:drop-shadow(0 2px 1px #20372b20); position:relative; z-index:1; pointer-events:none; }
-body[data-game="chess"] .move-dot { width:100%; height:100%; display:block; pointer-events:none; }
-body[data-game="chess"] .chess-cell.last-square { background-image:linear-gradient(#e9ce6455,#e9ce6455); }
-body[data-game="chess"] .chess-cell.selected { box-shadow:inset 0 0 0 3px #5366d6; background-image:linear-gradient(#aab5ff50,#aab5ff50); z-index:2; }
-body[data-game="chess"] .play-grid:focus-visible .cursor { outline:2px dashed #5366d6; outline-offset:-4px; z-index:2; }
-body[data-game="chess"] .chess-cell:focus-visible { outline:2px solid #5366d6; outline-offset:-3px; z-index:3; }
-body[data-game="chess"] .chess-cell.check { background-image:radial-gradient(#d58775b0,#b6564540); box-shadow:inset 0 0 0 3px #a75042; }
-body[data-game="chess"] .target:after { content:""; position:absolute; inset:5%; border:3px solid #bb7355; border-radius:50%; pointer-events:none; z-index:2; }
-body[data-game="chess"] .rank-label, body[data-game="chess"] .file-label { position:absolute; font-size:clamp(8px,1vw,12px); line-height:1; font-weight:700; pointer-events:none; color:#4e6753; z-index:3; }
-body[data-game="chess"] .dark .rank-label, body[data-game="chess"] .dark .file-label { color:#182b20; }
-body[data-game="chess"] .rank-label { left:3px; top:3px; }
-body[data-game="chess"] .file-label { right:3px; bottom:2px; }
-body[data-game="chess"] .arriving .chess-piece { animation:chess-arrive .18s ease-out; }
-@keyframes chess-arrive { from { transform:translateY(-4px) scale(.94); } to { transform:translateY(0) scale(1); } }
-@media(max-width:850px) {
- body[data-game="chess"] .board { padding:7px; }
- body[data-game="chess"] .chess-piece { width:87%; height:89%; }
- body[data-game="chess"] .chess-cell.selected { box-shadow:inset 0 0 0 2px #5366d6; }
- body[data-game="chess"] .target:after { border-width:2px; }
- body[data-game="chess"] .rank-label { left:2px; top:2px; }
- body[data-game="chess"] .file-label { right:2px; bottom:1px; }
+.board {
+  padding: 14px;
+  background: linear-gradient(135deg,#d6c49e,#b8a27c);
+  border-color: #b9a782;
+  box-shadow: inset 0 0 0 4px #f1e5c55c;
 }
-@media(prefers-reduced-motion:reduce) { body[data-game="chess"] .arriving .chess-piece { animation:none; } }
+
+.play-grid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(8,minmax(0,1fr));
+  grid-template-rows: repeat(8,minmax(0,1fr));
+  border: 1px solid #657967;
+  box-shadow: 0 2px 7px #344b4025;
+}
+
+.chess-cell {
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.chess-cell.light {
+  background-color: #f0e5ce;
+}
+
+.chess-cell.dark {
+  background-color: #7e9784;
+}
+
+.chess-cell:hover {
+  background-image: linear-gradient(#fff2,#fff2);
+}
+
+.chess-piece {
+  width: 84%;
+  height: 88%;
+  display: block;
+  filter: drop-shadow(0 2px 1px #20372b20);
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.move-dot {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.chess-cell.last-square {
+  background-image: linear-gradient(#e9ce6455,#e9ce6455);
+}
+
+.chess-cell.selected {
+  box-shadow: inset 0 0 0 3px #5366d6;
+  background-image: linear-gradient(#aab5ff50,#aab5ff50);
+  z-index: 2;
+}
+
+.play-grid:focus-visible .cursor {
+  outline: 2px dashed #5366d6;
+  outline-offset: -4px;
+  z-index: 2;
+}
+
+.chess-cell:focus-visible {
+  outline: 2px solid #5366d6;
+  outline-offset: -3px;
+  z-index: 3;
+}
+
+.chess-cell.check {
+  background-image: radial-gradient(#d58775b0,#b6564540);
+  box-shadow: inset 0 0 0 3px #a75042;
+}
+
+.target:after {
+  content: "";
+  position: absolute;
+  inset: 5%;
+  border: 3px solid #bb7355;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.rank-label, .file-label {
+  position: absolute;
+  font-size: clamp(8px,1vw,12px);
+  line-height: 1;
+  font-weight: 700;
+  pointer-events: none;
+  color: #4e6753;
+  z-index: 3;
+}
+
+.dark .rank-label, .dark .file-label {
+  color: #182b20;
+}
+
+.rank-label {
+  left: 3px;
+  top: 3px;
+}
+
+.file-label {
+  right: 3px;
+  bottom: 2px;
+}
+
+.arriving .chess-piece {
+  animation: chess-arrive .18s ease-out;
+}
+
+@keyframes chess-arrive {
+  from {
+    transform: translateY(-4px) scale(.94);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 移动端共用：竖屏与触屏横屏 */
+@media (max-width:850px), (min-width:851px) and (max-width:1200px) and (max-height:480px) and (orientation:landscape) and (pointer:coarse) {
+  .board {
+    padding: 7px;
+  }
+  .chess-piece {
+    width: 87%;
+    height: 89%;
+  }
+  .chess-cell.selected {
+    box-shadow: inset 0 0 0 2px #5366d6;
+  }
+  .target:after {
+    border-width: 2px;
+  }
+  .rank-label {
+    left: 2px;
+    top: 2px;
+  }
+  .file-label {
+    right: 2px;
+    bottom: 1px;
+  }
+}
+
+/* 无障碍：减少动态效果 */
+@media (prefers-reduced-motion:reduce) {
+  .arriving .chess-piece {
+    animation: none;
+  }
+}
